@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, ServiceUnavailableException } from "@nestjs/common";
+import { ConflictException, Injectable, Logger, ServiceUnavailableException } from "@nestjs/common";
 import { DeleteResult, EntityRepository, Repository } from "typeorm";
 
 import { CourseEntity } from '../../entity/course.entity';
@@ -12,6 +12,8 @@ import { UserEntity } from '../../entity/user.entity';
 @EntityRepository(CourseEntity)
 export class DatabaseCourseRepository extends Repository<CourseEntity> implements CourseRepository {
 
+    private logger = new Logger('DatabaseCourseRepository')
+
     async createCourse(request: CourseRequestModel, user: UserEntity): Promise<CourseEntity> {
         const { name } = request
         const entity = this.create({ name: name, user: user })
@@ -22,6 +24,7 @@ export class DatabaseCourseRepository extends Repository<CourseEntity> implement
             if (error.code === '23505') {
                 throw new ConflictException("Course already exists")
             } else {
+                this.logger.error("Database connection error: ", JSON.stringify(error))
                 throw new ServiceUnavailableException("Database connection error")
             }
         }
@@ -32,6 +35,7 @@ export class DatabaseCourseRepository extends Repository<CourseEntity> implement
         try {
             return await this.findOne({ id: id, user: user })
         } catch (error) {
+            this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
         }
     }
@@ -50,6 +54,7 @@ export class DatabaseCourseRepository extends Repository<CourseEntity> implement
 
             return await query.getMany()
         } catch (error) {
+            this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
         }
     }
@@ -59,6 +64,7 @@ export class DatabaseCourseRepository extends Repository<CourseEntity> implement
         try {
             return await this.delete({ id: id, user: user })
         } catch (error) {
+            this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
         }
     }
@@ -71,6 +77,7 @@ export class DatabaseCourseRepository extends Repository<CourseEntity> implement
             entity.name = name
             return await this.save(entity)
         } catch (error) {
+            this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
         }
     }

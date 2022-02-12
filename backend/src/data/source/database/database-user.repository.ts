@@ -1,7 +1,6 @@
-import { ConflictException, Injectable, ServiceUnavailableException } from "@nestjs/common";
+import { ConflictException, Injectable, Logger, ServiceUnavailableException } from "@nestjs/common";
 import { EntityRepository, Repository } from "typeorm";
 
-import { RoleEntity } from "src/data/entity/role.entity";
 import { UserEntity } from "../../entity/user.entity";
 import { UserRepository } from "../user.repository";
 import { UserRequestModel } from "src/domain/model/user-request.model";
@@ -9,6 +8,8 @@ import { UserRequestModel } from "src/domain/model/user-request.model";
 @Injectable()
 @EntityRepository(UserEntity)
 export class DatabaseUserRepository extends Repository<UserEntity> implements UserRepository {
+
+    private logger = new Logger('DatabaseRoleRepository')
 
     async createUser(request: UserRequestModel, hash: string): Promise<UserEntity> {
         const { username, name, email } = request
@@ -21,6 +22,7 @@ export class DatabaseUserRepository extends Repository<UserEntity> implements Us
             if (error.code === '23505') {
                 throw new ConflictException("User already exists")
             } else {
+                this.logger.error("Database connection error: ", JSON.stringify(error))
                 throw new ServiceUnavailableException("Database connection error")
             }
         }
@@ -30,6 +32,7 @@ export class DatabaseUserRepository extends Repository<UserEntity> implements Us
         try {
             return await this.findOne({ username: username }, { relations: ['roles'] })
         } catch (error) {
+            this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
         }
     }
@@ -38,6 +41,7 @@ export class DatabaseUserRepository extends Repository<UserEntity> implements Us
         try {
             return await this.findOne({ id: id }, { relations: ['roles'] })
         } catch (error) {
+            this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
         }
     }

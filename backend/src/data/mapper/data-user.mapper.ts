@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import { UserModel } from "src/domain/model/user.model";
-import { UserEntity } from '../entity/user.entity';
 import { DataRolesMapper } from './data-roles.mapper';
+import { Injectable } from "@nestjs/common";
+import { UserEntity } from '../entity/user.entity';
+import { UserModel } from "src/domain/model/user.model";
 
 @Injectable()
 export class DataUserMapper {
@@ -14,9 +14,10 @@ export class DataUserMapper {
             return undefined
         }
 
-        const { id, name, email, roles } = entity
+        const { id, username, name, email, roles } = entity
         const model: UserModel = {
             id: id,
+            username: username,
             name: name,
             email: email,
             roles: this.dataRolesMapper.fromEntityToModel(roles)

@@ -1,10 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { SignInRepository } from '../domain/repository/sign-in.repository';
-import { UserRepository } from './source/user.repository';
-import { SignInRequestModel } from 'src/domain/model/sign-in-request.model';
+
+import { DataUserMapper } from './mapper/data-user.mapper';
 import { PasswordService } from './security/password/password.service';
-import { SignInResponseModel } from 'src/domain/model/sign-in-response.model';
-import { AccessTokenService } from './security/access-token/access-token.service';
+import { SignInRepository } from '../domain/repository/sign-in.repository';
+import { SignInRequestModel } from 'src/domain/model/sign-in-request.model';
+import { UserModel } from 'src/domain/model/user.model';
+import { UserRepository } from './source/user.repository';
 
 @Injectable()
 export class DataSignInRepository implements SignInRepository {
@@ -12,10 +13,10 @@ export class DataSignInRepository implements SignInRepository {
     constructor(
         private readonly userRepository: UserRepository,
         private readonly passwordService: PasswordService,
-        private readonly accessTokenService: AccessTokenService
+        private readonly dataUserMapper: DataUserMapper
     ) { }
 
-    async signIn(request: SignInRequestModel): Promise<SignInResponseModel> {
+    async signIn(request: SignInRequestModel): Promise<UserModel> {
         const { username, password } = request
         const entity = await this.userRepository.getUserByUsername(username)
 
@@ -23,11 +24,7 @@ export class DataSignInRepository implements SignInRepository {
             throw new UnauthorizedException("Please check the credentials")
         }
 
-        const response: SignInResponseModel = {
-            accessToken: this.accessTokenService.createToken(entity)
-        }
-
-        return response
+        return this.dataUserMapper.fromEntityToModel(entity)
     }
 
 }

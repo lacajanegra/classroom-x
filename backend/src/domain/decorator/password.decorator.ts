@@ -1,5 +1,5 @@
-import { registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
-import { passwordValidate, failDetails } from 'src/config/password.validator';
+import { ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface, registerDecorator } from 'class-validator';
+import { failDetails, passwordValidate } from 'src/domain/helpers/password.validator';
 
 export function Password(validationOptions?: ValidationOptions) {
 
