@@ -17,4 +17,9 @@ export class DataGetUserRepository implements GetUserRepository {
         return this.dataUserMapper.fromEntityToModel(entity)
     }
 
+    async getUserByUsername(username: string): Promise<UserModel> {
+        const entity = await this.userRepository.getUserByUsername(username)
+        return this.dataUserMapper.fromEntityToModel(entity)
+    }
+
 }

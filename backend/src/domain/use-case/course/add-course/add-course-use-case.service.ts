@@ -9,7 +9,7 @@ export class AddCourseUseCaseService implements AddCourseService {
 
     constructor(private readonly addCourseRepository: AddCourseRepository) { }
 
-    async execute(request: CourseRequestModel, userId: string): Promise<CourseModel> {
-        return await this.addCourseRepository.addCourse(request, userId)
+    async execute(request: CourseRequestModel): Promise<CourseModel> {
+        return await this.addCourseRepository.addCourse(request)
     }
 }

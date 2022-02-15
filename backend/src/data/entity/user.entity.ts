@@ -1,7 +1,8 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-import { CourseEntity } from './course.entity';
-import { RoleEntity } from './role.entity';
+import { CourseStudentEntity } from './course-student.entity';
+import { CourseTeacherEntity } from './course-teacher.entity';
+import { UserRoleEntity } from './user-role.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -9,21 +10,28 @@ export class UserEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string
 
-    @Column({ unique: true, nullable: false })
+    @Column({ name: "username" })
     username: string
 
-    @Column({ nullable: false })
+    @Column({ name: "name" })
     name: string
 
-    @Column({ nullable: false })
+    @Column({ name: "email" })
     email: string
 
-    @Column({ nullable: false })
+    @Column({ name: "password" })
     password: string
 
-    @OneToMany(() => RoleEntity, (role) => role.user)
-    roles: RoleEntity[]
+    @Column({ type: 'timestamptz' })
+    expiration: Date
 
-    @OneToMany(() => CourseEntity, (course) => course.user)
-    courses: CourseEntity[]
+    @OneToMany(() => UserRoleEntity, userRole => userRole.user)
+    userRoles: UserRoleEntity[]
+
+    @OneToMany(() => CourseStudentEntity, courseStudent => courseStudent.user)
+    courseStudents: CourseStudentEntity[]
+
+    @OneToMany(() => CourseTeacherEntity, courseTeacher => courseTeacher.user)
+    courseTeachers: CourseTeacherEntity[]
+
 }

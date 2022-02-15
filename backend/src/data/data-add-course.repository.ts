@@ -11,14 +11,12 @@ import { UserRepository } from './source/user.repository';
 export class DataAddCourseRepository implements AddCourseRepository {
 
     constructor(
-        private readonly userRepository: UserRepository,
         private readonly courseRepository: CourseRepository,
         private readonly dataCourseMapper: DataCourseMapper
     ) { }
 
-    async addCourse(request: CourseRequestModel, userId: string): Promise<CourseModel> {
-        const user = await this.userRepository.getUserById(userId)
-        return await this.courseRepository.createCourse(request, user)
+    async addCourse(request: CourseRequestModel): Promise<CourseModel> {
+        return await this.courseRepository.createCourse(request)
             .then((response: CourseEntity) => { return this.dataCourseMapper.fromEntityToModel(response) })
     }
 

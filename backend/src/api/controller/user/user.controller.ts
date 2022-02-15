@@ -10,10 +10,11 @@ export class UserController {
 
     @Get()
     info(@GetUser() user: UserModel): UserResponseModel {
-        const { name, email, roles } = user
+        const { name, email, status, roles } = user
         const response: UserResponseModel = {
             name: name,
             email: email,
+            status: status,
             roles: roles
         }
         return response

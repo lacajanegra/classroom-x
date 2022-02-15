@@ -12,9 +12,9 @@ export class UpdateCourseUseCaseService implements UpdateCourseService {
         private readonly updateCourseRepository: UpdateCourseRepository
     ) { }
 
-    async execute(id: string, name: string, userId: string): Promise<CourseModel> {
-        const found = await this.getCourseService.execute(id, userId)
+    async execute(id: string, name: string): Promise<CourseModel> {
+        const found = await this.getCourseService.execute(id)
         found.name = name
-        return await this.updateCourseRepository.updateCourse(found, userId)
+        return await this.updateCourseRepository.updateCourse(found)
     }
 }

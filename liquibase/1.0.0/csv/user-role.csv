@@ -1,0 +1,2 @@
+'user_id'|'role_id'
+(select id from "user" WHERE username='admin' fetch first 1 rows only)|(select id from "role" WHERE name='ADMIN' fetch first 1 rows only)

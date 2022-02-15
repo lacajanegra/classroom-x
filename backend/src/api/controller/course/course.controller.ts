@@ -8,13 +8,15 @@ import { DelCourseService } from 'src/domain/use-case/course/del-course/del-cour
 import { CourseRequestModel } from 'src/domain/model/course-request.model';
 import { CoursesFilterRequestModel } from 'src/domain/model/courses-filter-request.model';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUserId } from 'src/api/decorate/get-user-id.decorator';
 import { RoleEnum } from '../../../domain/model/role.enum';
 import { Roles } from 'src/api/decorate/roles.decorator';
 import { RolesGuard } from 'src/api/guard/roles.guard';
+import { StatusGuard } from 'src/api/guard/status.guard';
+import { Status } from 'src/api/decorate/status.decorator';
+import { StatusEnum } from 'src/domain/model/status.enum';
 
 @Controller('course')
-@UseGuards(AuthGuard(), RolesGuard)
+@UseGuards(AuthGuard(), RolesGuard, StatusGuard)
 export class CourseController {
 
     constructor(
@@ -25,34 +27,39 @@ export class CourseController {
         private readonly delCourseService: DelCourseService
     ) { }
 
-    @Roles(RoleEnum.TEACHER)
+    @Roles(RoleEnum.ADMIN)
+    @Status(StatusEnum.ACTIVE)
     @Get('all')
-    getCourses(@GetUserId() userId: string,@Query() filter: CoursesFilterRequestModel): Promise<CourseModel[]> {
-        return this.getCoursesService.execute(filter, userId)
+    getCourses(@Query() filter: CoursesFilterRequestModel): Promise<CourseModel[]> {
+        return this.getCoursesService.execute(filter)
     }
 
-    @Roles(RoleEnum.TEACHER)
+    @Roles(RoleEnum.ADMIN)
+    @Status(StatusEnum.ACTIVE)
     @Get(':id')
-    getCourse(@GetUserId() userId: string,@Param('id') id: string): Promise<CourseModel> {
-        return this.getCourseService.execute(id, userId)
+    getCourse(@Param('id') id: string): Promise<CourseModel> {
+        return this.getCourseService.execute(id)
     }
 
-    @Roles(RoleEnum.TEACHER)
+    @Roles(RoleEnum.ADMIN)
+    @Status(StatusEnum.ACTIVE)
     @Post()
-    addCourse(@GetUserId() userId: string,@Body() request: CourseRequestModel): Promise<CourseModel> {
-        return this.addCourseService.execute(request, userId)
+    addCourse(@Body() request: CourseRequestModel): Promise<CourseModel> {
+        return this.addCourseService.execute(request)
     }
 
-    @Roles(RoleEnum.TEACHER)
+    @Roles(RoleEnum.ADMIN)
+    @Status(StatusEnum.ACTIVE)
     @Patch(':id/name')
-    updateCourse(@GetUserId() userId: string,@Param('id') id: string, @Body() request: CourseRequestModel): Promise<CourseModel> {
+    updateCourse(@Param('id') id: string, @Body() request: CourseRequestModel): Promise<CourseModel> {
         const { name } = request
-        return this.updateCourseService.execute(id, name, userId)
+        return this.updateCourseService.execute(id, name)
     }
 
-    @Roles(RoleEnum.TEACHER)
+    @Roles(RoleEnum.ADMIN)
+    @Status(StatusEnum.ACTIVE)
     @Delete(':id')
-    deleteCourse(@GetUserId() userId: string,@Param('id') id: string): Promise<void> {
-        return this.delCourseService.execute(id, userId)
+    deleteCourse(@Param('id') id: string): Promise<void> {
+        return this.delCourseService.execute(id)
     }
 }

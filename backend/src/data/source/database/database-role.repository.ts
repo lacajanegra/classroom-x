@@ -12,11 +12,9 @@ export class DatabaseRoleRepository extends Repository<RoleEntity> implements Ro
 
     private logger = new Logger('DatabaseRoleRepository')
 
-    async createRole(role: RoleEnum, user: UserEntity): Promise<RoleEntity> {
-        const entity = this.create({ name: role, user: user })
-
+    async getRoleByName(role: RoleEnum): Promise<RoleEntity> {
         try {
-            return await this.save(entity)
+            return await this.findOne({ name: role })
         } catch (error) {
             this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")

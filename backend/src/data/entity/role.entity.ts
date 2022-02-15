@@ -1,18 +1,18 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm"
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
-import { RoleEnum } from '../../domain/model/role.enum';
-import { UserEntity } from './user.entity';
+import { RoleEnum } from 'src/domain/model/role.enum';
+import { UserRoleEntity } from './user-role.entity';
 
 @Entity('role')
-@Unique('role_unique_constraint', ['name', 'user'])
 export class RoleEntity {
 
     @PrimaryGeneratedColumn('uuid')
     id: string
 
-    @Column({ nullable: false, enum: RoleEnum })
+    @Column({ name: "name", enum: RoleEnum })
     name: RoleEnum
 
-    @ManyToOne(() => UserEntity, (user) => user.roles)
-    user: UserEntity
+    @OneToMany(() => UserRoleEntity, userRole => userRole.role)
+    userRoles: UserRoleEntity[]
+
 }

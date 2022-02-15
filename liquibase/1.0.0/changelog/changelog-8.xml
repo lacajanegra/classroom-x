@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!-- load data -->
+
+    <changeSet id="1.0.0-8.0" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-8.0"/>
+    </changeSet>
+
+    <!-- user table -->
+
+    <changeSet id="1.0.0-8.1" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-8.1"/>
+
+        <loadData
+                encoding="UTF-8"
+                file="../csv/users.csv"
+                quotchar="'"
+                relativeToChangelogFile="true"
+                separator="|"
+                tableName="user">
+        </loadData>
+
+        <rollback>
+            <delete tableName="user"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- role table -->
+
+    <changeSet id="1.0.0-8.2" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-8.2"/>
+
+        <loadData
+                encoding="UTF-8"
+                file="../csv/roles.csv"
+                quotchar="#"
+                relativeToChangelogFile="true"
+                separator="|"
+                tableName="role">
+        </loadData>
+
+        <rollback>
+            <delete tableName="role"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- user-role table -->
+
+    <changeSet id="1.0.0-8.3" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-8.3"/>
+
+        <loadData
+                encoding="UTF-8"
+                file="../csv/user-role.csv"
+                quotchar="'"
+                relativeToChangelogFile="true"
+                separator="|"
+                tableName="user_role">
+                
+            <column header="role_id" name="role_id" type="NUMERIC"/>
+            <column header="user_id" name="user_id" type="NUMERIC"/>
+        </loadData>
+
+        <rollback>
+            <delete tableName="user_role"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>

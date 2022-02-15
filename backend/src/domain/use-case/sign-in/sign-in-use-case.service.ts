@@ -1,5 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { SignInRepository } from '../../repository/sign-in.repository';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+
+import { GetUserRepository } from 'src/domain/repository/get-user.repository';
+import { PasswordRepository } from 'src/domain/repository/password.repository';
 import { SignInRequestModel } from 'src/domain/model/sign-in-request.model';
 import { SignInService } from './sign-in.service';
 import { UserModel } from 'src/domain/model/user.model';
@@ -7,9 +9,19 @@ import { UserModel } from 'src/domain/model/user.model';
 @Injectable()
 export class SignInUseCaseService implements SignInService {
 
-    constructor(private readonly signInRepository: SignInRepository) { }
+    constructor(
+        private readonly getUserRepository: GetUserRepository,
+        private readonly passwordRepository: PasswordRepository
+    ) { }
 
     async execute(request: SignInRequestModel): Promise<UserModel> {
-        return await this.signInRepository.signIn(request)
+        const { username, password } = request
+        const user = await this.getUserRepository.getUserByUsername(username)
+
+        if (!(user && await this.passwordRepository.validate(password, user.hash))) {
+            throw new UnauthorizedException("User or password credentials failed")
+        }
+
+        return user
     }
 }

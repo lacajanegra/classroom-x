@@ -9,7 +9,7 @@ export class GetCoursesUseCaseService implements GetCoursesService {
 
     constructor(private readonly getCoursesRepository: GetCoursesRepository) { }
 
-    async execute(filter: CoursesFilterRequestModel, userId: string): Promise<CourseModel[]> {
-        return await this.getCoursesRepository.getCourses(filter, userId)
+    async execute(filter: CoursesFilterRequestModel): Promise<CourseModel[]> {
+        return await this.getCoursesRepository.getCourses(filter)
     }
 }

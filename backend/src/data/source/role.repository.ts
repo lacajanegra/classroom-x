@@ -1,9 +1,8 @@
-import { RoleEnum } from "src/domain/model/role.enum";
 import { RoleEntity } from "../entity/role.entity";
-import { UserEntity } from "../entity/user.entity";
+import { RoleEnum } from "src/domain/model/role.enum";
 
 export abstract class RoleRepository {
 
-    abstract createRole(role: RoleEnum, user: UserEntity): Promise<RoleEntity>
+    abstract getRoleByName(role: RoleEnum): Promise<RoleEntity>
 
 }

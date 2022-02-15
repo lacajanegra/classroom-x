@@ -1,18 +1,19 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
+import { AuthModule } from 'src/domain/use-case/auth/auth.module';
 import { AuthService } from './auth.service';
-import { AuthUserModule } from 'src/domain/use-case/auth-user/auth-user.module';
 import { JwtGuard } from './jwt.guard';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { RolesGuard } from './roles.guard';
+import { StatusGuard } from './status.guard';
 
 @Module({
   imports: [
     ConfigModule,
-    AuthUserModule,
+    AuthModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -25,7 +26,7 @@ import { RolesGuard } from './roles.guard';
       })
     })
   ],
-  providers: [JwtGuard, JwtStrategy, RolesGuard, AuthService],
-  exports: [JwtGuard, JwtStrategy, RolesGuard, AuthService, PassportModule]
+  providers: [JwtGuard, JwtStrategy, RolesGuard, StatusGuard, AuthService],
+  exports: [JwtGuard, JwtStrategy, RolesGuard, StatusGuard, AuthService, PassportModule]
 })
 export class GuardModule { }

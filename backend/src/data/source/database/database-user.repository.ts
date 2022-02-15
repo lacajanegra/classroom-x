@@ -9,11 +9,11 @@ import { UserRequestModel } from "src/domain/model/user-request.model";
 @EntityRepository(UserEntity)
 export class DatabaseUserRepository extends Repository<UserEntity> implements UserRepository {
 
-    private logger = new Logger('DatabaseRoleRepository')
+    private logger = new Logger('DatabaseUserRepository')
 
-    async createUser(request: UserRequestModel, hash: string): Promise<UserEntity> {
+    async createUser(request: UserRequestModel, expiration: Date, hash: string): Promise<UserEntity> {
         const { username, name, email } = request
-        
+
         const entity = this.create({ username: username, name: name, email: email, password: hash })
 
         try {
@@ -30,8 +30,9 @@ export class DatabaseUserRepository extends Repository<UserEntity> implements Us
 
     async getUserByUsername(username: string): Promise<UserEntity> {
         try {
-            return await this.findOne({ username: username }, { relations: ['roles'] })
+            return await this.findOne({ username: username }, { relations: ['userRoles'] })
         } catch (error) {
+            console.log(error)
             this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
         }
@@ -39,7 +40,17 @@ export class DatabaseUserRepository extends Repository<UserEntity> implements Us
 
     async getUserById(id: string): Promise<UserEntity> {
         try {
-            return await this.findOne({ id: id }, { relations: ['roles'] })
+            return await this.findOne({ id: id }, { relations: ['userRoles'] })
+        } catch (error) {
+            console.log(error)
+            this.logger.error("Database connection error: ", JSON.stringify(error))
+            throw new ServiceUnavailableException("Database connection error")
+        }
+    }
+
+    async updateUser(entity: UserEntity): Promise<void> {
+        try {
+            await this.save(entity)
         } catch (error) {
             this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")

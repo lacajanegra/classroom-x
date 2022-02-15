@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!-- Create index -->
+
+    <changeSet id="1.0.0-3.0" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-3.0"/>
+    </changeSet>
+
+    <changeSet id="1.0.0-3.1" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-3.1"/>
+
+        <createIndex indexName="IndexUserId" tableName="user">
+            <column name="id"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="user" indexName="IndexUserId"/>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="1.0.0-3.2" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-3.2"/>
+
+        <createIndex indexName="IndexUserName" tableName="user">
+            <column name="username"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="user" indexName="IndexUserName"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- role table -->
+
+    <changeSet id="1.0.0-3.3" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-3.3"/>
+
+        <createIndex indexName="IndexRoleId" tableName="role">
+            <column name="id"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="role" indexName="IndexRoleId"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- user-role table -->
+
+    <changeSet id="1.0.0-3.4" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-3.4"/>
+
+        <createIndex indexName="Index_UserRole_Id" tableName="user_role">
+            <column name="user_id"/>
+            <column name="role_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="user_role" indexName="Index_UserRole_Id"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- course table -->
+
+    <changeSet id="1.0.0-3.5" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-3.5"/>
+
+        <createIndex indexName="IndexCourseId" tableName="course">
+            <column name="id"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="course" indexName="IndexCourseId"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- course-teacher table -->
+
+    <changeSet id="1.0.0-3.6" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-3.6"/>
+
+        <createIndex indexName="Index_CourseTeacher_Id" tableName="course_teacher">
+            <column name="course_id"/>
+            <column name="user_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="course_teacher" indexName="Index_CourseTeacher_Id"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- course-student table -->
+
+    <changeSet id="1.0.0-3.7" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-3.7"/>
+
+        <createIndex indexName="Index_CourseStudent_Id" tableName="course_student">
+            <column name="course_id"/>
+            <column name="user_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="course_student" indexName="Index_CourseStudent_Id"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>

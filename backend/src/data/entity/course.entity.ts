@@ -1,18 +1,21 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm"
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
-import { UserEntity } from "./user.entity"
+import { CourseStudentEntity } from "./course-student.entity"
+import { CourseTeacherEntity } from "./course-teacher.entity"
 
 @Entity('course')
-@Unique('course_unique_constraint', ['name', 'user'])
 export class CourseEntity {
 
     @PrimaryGeneratedColumn('uuid')
     id: string
 
-    @Column({ nullable: false })
+    @Column({ name: "name" })
     name: string
 
-    @ManyToOne(() => UserEntity, (user) => user.courses)
-    user: UserEntity
+    @OneToMany(() => CourseStudentEntity, courseStudent => courseStudent.course)
+    courseStudents: CourseStudentEntity[]
+
+    @OneToMany(() => CourseTeacherEntity, courseTeacher => courseTeacher.course)
+    courseTeachers: CourseTeacherEntity[]
 
 }

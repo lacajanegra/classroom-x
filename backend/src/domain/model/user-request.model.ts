@@ -1,6 +1,5 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator"
+import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator"
 
-import { } from "password-validator"
 import { Match } from "../decorator/match.decorator"
 import { Password } from "../decorator/password.decorator"
 

@@ -5,7 +5,7 @@ export class CourseRequestModel {
     @IsNotEmpty()
     @IsString()
     @MinLength(2)
-    @MaxLength(40)
+    @MaxLength(100)
     name: string
 
 }

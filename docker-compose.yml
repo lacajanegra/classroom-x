@@ -1,0 +1,61 @@
+version: "3.7"
+services:
+  redis:
+    container_name: redis
+    image: redis:6.2-alpine
+    hostname: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - dockernet
+  database:
+    container_name: database
+    image: postgres:14-alpine
+    hostname: database
+    ports:
+      - "5432:5432"
+    networks:
+      - dockernet
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+  migration:
+    container_name: migration
+    image: liquibase/liquibase:4.7.1
+    networks:
+      - dockernet
+    depends_on:
+      - database
+    volumes:
+      - ./liquibase:/liquibase/changelog
+    command: --url=jdbc:postgresql://database:5432/${DB_NAME}?user=${DB_USER}&password=${DB_PASS} --changeLogFile=masterchangelog.xml update
+  backend:
+    container_name: backend
+    image: backend:1.0.0
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - dockernet
+    environment:
+      NODE_ENV: production
+      NODE_PORT: 3000
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: MiSupoerMegaClave789.*/{}
+      JWT_EXPIRES_IN: 3600
+    depends_on:
+      - redis
+      - database
+      - migration
+networks:
+  dockernet:
+    driver: bridge

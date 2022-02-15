@@ -5,20 +5,17 @@ import { CoursesFilterRequestModel } from 'src/domain/model/courses-filter-reque
 import { DataCoursesMapper } from './mapper/data-courses.mapper';
 import { GetCoursesRepository } from 'src/domain/repository/get-courses.repository';
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from './source/user.repository';
 
 @Injectable()
 export class DataGetCoursesRepository implements GetCoursesRepository {
 
     constructor(
-        private readonly userRepository: UserRepository,
         private readonly courseRepository: CourseRepository,
         private readonly dataCoursesMapper: DataCoursesMapper
     ) { }
 
-    async getCourses(filter: CoursesFilterRequestModel, userId: string): Promise<CourseModel[]> {
-        const user = await this.userRepository.getUserById(userId)
-        return await this.courseRepository.findCoursesByFilter(filter, user)
+    async getCourses(filter: CoursesFilterRequestModel): Promise<CourseModel[]> {
+        return await this.courseRepository.findCoursesByFilter(filter)
             .then((responses: CourseEntity[]) => { return this.dataCoursesMapper.fromEntityToModel(responses) })
     }
 

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!-- Create unique -->
+
+    <changeSet id="1.0.0-4.0" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-4.0"/>
+    </changeSet>
+
+    <!-- user table -->
+
+    <changeSet id="1.0.0-4.1" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-4.1"/>
+
+        <addUniqueConstraint columnNames="username" constraintName="UniqueUsername" tableName="user"/>
+
+        <rollback>
+            <dropUniqueConstraint tableName="user" constraintName="UniqueUsername"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- role table -->
+
+    <changeSet id="1.0.0-4.2" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-4.2"/>
+
+        <addUniqueConstraint columnNames="name" constraintName="UniqueRoleName" tableName="role"/>
+
+        <rollback>
+            <dropUniqueConstraint tableName="role" constraintName="UniqueRoleName"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- user-role table -->
+
+    <changeSet id="1.0.0-4.3" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-4.3"/>
+
+        <addUniqueConstraint columnNames="user_id,role_id" constraintName="UniqueUserRole" tableName="user_role"/>
+
+        <rollback>
+            <dropUniqueConstraint tableName="user_role" constraintName="UniqueUserRole"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- course table -->
+
+    <changeSet id="1.0.0-4.4" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-4.4"/>
+
+        <addUniqueConstraint columnNames="name" constraintName="UniqueCourseName" tableName="course"/>
+
+        <rollback>
+            <dropUniqueConstraint tableName="course" constraintName="UniqueCourseName"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- course-teacher table -->
+
+    <changeSet id="1.0.0-4.5" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-4.5"/>
+
+        <addUniqueConstraint columnNames="course_id,user_id" constraintName="UniqueCourseTeacher" tableName="course_teacher"/>
+
+        <rollback>
+            <dropUniqueConstraint tableName="course_teacher" constraintName="UniqueCourseTeacher"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- course-student table -->
+
+    <changeSet id="1.0.0-4.6" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-4.6"/>
+
+        <addUniqueConstraint columnNames="course_id,user_id" constraintName="UniqueCourseStudent" tableName="course_student"/>
+
+        <rollback>
+            <dropUniqueConstraint tableName="course_student" constraintName="UniqueCourseStudent"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>

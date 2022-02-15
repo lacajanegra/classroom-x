@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!-- Create foreign key -->
+
+    <changeSet id="1.0.0-7.0" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-7.0"/>
+    </changeSet>
+
+    <!-- user-role table -->
+
+    <changeSet id="1.0.0-7.1" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-7.1"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_role"
+                                 constraintName="ForeignKey_UserRole_UserId"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="user_role" constraintName="ForeignKey_UserRole_UserId"/>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="1.0.0-7.2" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-7.2"/>
+
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 baseTableName="user_role"
+                                 constraintName="ForeignKey_UserRole_RoleId"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="role"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="user_role" constraintName="ForeignKey_UserRole_RoleId"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- course-teacher table -->
+
+    <changeSet id="1.0.0-7.3" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-7.3"/>
+
+        <addForeignKeyConstraint baseColumnNames="course_id"
+                                 baseTableName="course_teacher"
+                                 constraintName="ForeignKey_CourseTeacher_CourseId"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="course"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="course_teacher" constraintName="ForeignKey_CourseTeacher_CourseId"/>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="1.0.0-7.4" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-7.4"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="course_teacher"
+                                 constraintName="ForeignKey_CourseTeacher_UserId"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="course_teacher" constraintName="ForeignKey_CourseTeacher_UserId"/>
+        </rollback>
+
+    </changeSet>
+
+    <!-- course-student table -->
+
+    <changeSet id="1.0.0-7.5" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-7.5"/>
+
+        <addForeignKeyConstraint baseColumnNames="course_id"
+                                 baseTableName="course_student"
+                                 constraintName="ForeignKey_CourseStudent_CourseId"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="course"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="course_student" constraintName="ForeignKey_CourseStudent_CourseId"/>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="1.0.0-7.6" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-7.6"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="course_student"
+                                 constraintName="ForeignKey_CourseStudent_UserId"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="course_student" constraintName="ForeignKey_CourseStudent_UserId"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>

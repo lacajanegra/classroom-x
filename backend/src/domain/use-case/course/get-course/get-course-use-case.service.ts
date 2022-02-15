@@ -9,8 +9,8 @@ export class GetCourseUseCaseService implements GetCourseService {
 
     constructor(private readonly getCourseRepository: GetCourseRepository) { }
 
-    async execute(id: string, userId: string): Promise<CourseModel> {
-        const found = await this.getCourseRepository.getCourse(id, userId)
+    async execute(id: string): Promise<CourseModel> {
+        const found = await this.getCourseRepository.getCourse(id)
 
         if (!found) {
             throw new NotFoundException(`The course by id "${id}" not found."`);

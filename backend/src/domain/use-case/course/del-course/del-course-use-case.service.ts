@@ -8,8 +8,8 @@ export class DelCourseUseCaseService implements DelCourseService {
 
 constructor(private readonly delCourseRepository : DelCourseRepository) {}
 
-    async execute(id: string, userId: string) : Promise<void> {
-        const response = await this.delCourseRepository.delCourse(id, userId)
+    async execute(id: string) : Promise<void> {
+        const response = await this.delCourseRepository.delCourse(id)
 
         if (!response) {
             throw new NotFoundException(`The course by id "${id}" not found."`);

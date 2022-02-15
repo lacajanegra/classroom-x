@@ -1,29 +1,39 @@
-import { Module } from '@nestjs/common';
-import { GetCourseRepository } from 'src/domain/repository/get-course.repository';
 import { AddCourseRepository } from 'src/domain/repository/add-course.repository';
-import { DataAddCourseRepository } from './data-add-course.repository';
-import { DataMapperModule } from './mapper/data-mapper.module';
-import { DataGetCourseRepository } from './data-get-course.repository';
-import { GetCoursesRepository } from 'src/domain/repository/get-courses.repository';
-import { DelCourseRepository } from 'src/domain/repository/del-course.repository';
-import { DataGetCoursesRepository } from './data-get-courses.repository';
-import { DataDelCourseRepository } from './data-del-course.repository';
-import { UpdateCourseRepository } from 'src/domain/repository/update-course.repository';
-import { DataUpdateCourseRepository } from './data-update-course.repository';
-import { SignInRepository } from 'src/domain/repository/sign-in.repository';
+import { AddCourseStudentRepository } from 'src/domain/repository/add-course-student.repository';
+import { AddCourseTeacherRepository } from 'src/domain/repository/add-course-teacher.repository';
 import { AddUserRepository } from '../domain/repository/add-user.repository';
-import { DataSignInRepository } from './data-sign-in.repository';
+import { DataAddCourseRepository } from './data-add-course.repository';
+import { DataAddCourseStudentRepository } from './data-add-course-student.repository';
+import { DataAddCourseTeacherRepository } from './data-add-course-teacher.repository';
 import { DataAddUserRepository } from './data-add-user.repository';
-import { SecurityModule } from './security/security.module';
-import { SourceModule } from './source/source.module';
-import { GetUserRepository } from 'src/domain/repository/get-user.repository';
+import { DataDelCourseRepository } from './data-del-course.repository';
+import { DataGetCourseRepository } from './data-get-course.repository';
+import { DataGetCourseStudentRepository } from './data-get-course-student.repository';
+import { DataGetCourseTeacherRepository } from './data-get-course-teacher.repository';
+import { DataGetCoursesRepository } from './data-get-courses.repository';
 import { DataGetUserRepository } from './data-get-user.repository';
+import { DataMapperModule } from './mapper/data-mapper.module';
+import { DataPasswordRepository } from './data-password.repository';
+import { DataUpdateCourseRepository } from './data-update-course.repository';
+import { DataUpdatePasswordRepository } from './data-update-password.repository';
+import { DelCourseRepository } from 'src/domain/repository/del-course.repository';
+import { GetCourseRepository } from 'src/domain/repository/get-course.repository';
+import { GetCourseStudentRepository } from 'src/domain/repository/get-course-student.repository';
+import { GetCourseTeacherRepository } from 'src/domain/repository/get-course-teacher.repository';
+import { GetCoursesRepository } from 'src/domain/repository/get-courses.repository';
+import { GetUserRepository } from 'src/domain/repository/get-user.repository';
+import { Module } from '@nestjs/common';
+import { PasswordRepository } from 'src/domain/repository/password.repository';
+import { SourceModule } from './source/source.module';
+import { UpdateCourseRepository } from 'src/domain/repository/update-course.repository';
+import { UpdatePasswordRepository } from '../domain/repository/update-password.repository';
+import { UtilModule } from './util/util.module';
 
 @Module({
     imports: [
+        UtilModule,
         SourceModule,
-        DataMapperModule,
-        SecurityModule
+        DataMapperModule
     ],
     providers: [
         { provide: AddCourseRepository, useClass: DataAddCourseRepository },
@@ -31,9 +41,15 @@ import { DataGetUserRepository } from './data-get-user.repository';
         { provide: GetCoursesRepository, useClass: DataGetCoursesRepository },
         { provide: DelCourseRepository, useClass: DataDelCourseRepository },
         { provide: UpdateCourseRepository, useClass: DataUpdateCourseRepository },
-        { provide: SignInRepository, useClass: DataSignInRepository },
+        { provide: PasswordRepository, useClass: DataPasswordRepository },
+        { provide: UpdatePasswordRepository, useClass: DataUpdatePasswordRepository },
         { provide: AddUserRepository, useClass: DataAddUserRepository },
-        { provide: GetUserRepository, useClass: DataGetUserRepository }
+        { provide: GetUserRepository, useClass: DataGetUserRepository },
+        { provide: AddCourseTeacherRepository, useClass: DataAddCourseTeacherRepository },
+        { provide: AddCourseStudentRepository, useClass: DataAddCourseStudentRepository },
+        { provide: GetCourseTeacherRepository, useClass: DataGetCourseTeacherRepository },
+        { provide: GetCourseStudentRepository, useClass: DataGetCourseStudentRepository }
+        
     ],
     exports: [
         AddCourseRepository,
@@ -41,9 +57,14 @@ import { DataGetUserRepository } from './data-get-user.repository';
         GetCoursesRepository,
         DelCourseRepository,
         UpdateCourseRepository,
-        SignInRepository,
+        PasswordRepository,
+        UpdatePasswordRepository,
         AddUserRepository,
-        GetUserRepository
+        GetUserRepository,
+        AddCourseTeacherRepository,
+        AddCourseStudentRepository,
+        GetCourseTeacherRepository,
+        GetCourseStudentRepository
     ]
 })
 export class DataModule { }
