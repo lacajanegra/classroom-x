@@ -1,19 +1,18 @@
-import { AddCourseTeacherService } from './add-course/add-course-teacher.service';
-import { AddCourseTeacherUseCaseService } from './add-course/add-course-teacher-use-case.service';
-import { DataModule } from 'src/data/data.module';
-import { GetCourseTeacherService } from './get-course/get-course-teacher.service';
-import { GetCourseTeacherUseCaseService } from './get-course/get-course-teacher-use-case.service';
+import { AddCourseTeacherModule } from './add-course/add-course-teacher.module';
+import { GetCourseTeacherModule } from './get-course/get-course-teacher.module';
+import { GetCoursesTeacherModule } from './get-courses/get-courses-teacher.module';
 import { Module } from '@nestjs/common';
 
 @Module({
-    imports: [DataModule],
-    providers: [
-        { provide: AddCourseTeacherService, useClass: AddCourseTeacherUseCaseService },
-        { provide: GetCourseTeacherService, useClass: GetCourseTeacherUseCaseService }
+    imports: [
+        AddCourseTeacherModule,
+        GetCourseTeacherModule,
+        GetCoursesTeacherModule
     ],
     exports: [
-        AddCourseTeacherService,
-        GetCourseTeacherService
+        AddCourseTeacherModule,
+        GetCourseTeacherModule,
+        GetCoursesTeacherModule
     ]
 })
 export class TeacherModule { }

@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import { RoleEnum } from '../../domain/model/role.enum';
-import { RoleEntity } from "../entity/role.entity";
 import { DataRoleMapper } from "./data-role.mapper";
+import { Injectable } from "@nestjs/common";
+import { RoleEntity } from "../entity/role.entity";
+import { RoleEnum } from '../../domain/model/role.enum';
 
 @Injectable()
 export class DataRolesMapper {
@@ -14,7 +14,7 @@ export class DataRolesMapper {
             return []
         }
 
-        return entities.map(this.dataRoleMapper.fromEntityToModel)
+        return entities.map((entity: RoleEntity) => this.dataRoleMapper.fromEntityToModel(entity))
     }
 
 }

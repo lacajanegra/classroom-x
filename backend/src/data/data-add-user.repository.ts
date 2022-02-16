@@ -18,8 +18,9 @@ export class DataAddUserRepository implements AddUserRepository {
     ) { }
 
     async addUser(request: UserRequestModel, role: RoleEnum, hash: string): Promise<void> {
+        const { username, name, email } = request
         const expiration = this.dateUtilService.getExpiration()
-        const userEntity = await this.userRepository.createUser(request, expiration, hash)
+        const userEntity = await this.userRepository.createUser(username, name, email, expiration, hash)
         const roleEntity = await this.roleRepository.getRoleByName(role)
         await this.userRoleRepository.addRelation(roleEntity.id, userEntity.id)
     }

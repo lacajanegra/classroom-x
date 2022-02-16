@@ -1,9 +1,8 @@
 import { UserEntity } from "../entity/user.entity";
-import { UserRequestModel } from "src/domain/model/user-request.model";
 
 export abstract class UserRepository {
 
-    abstract createUser(request: UserRequestModel, expiration: Date, hash: string): Promise<UserEntity>
+    abstract createUser(username: string, name: string, email: string, expiration: Date, hash: string): Promise<UserEntity>
 
     abstract getUserByUsername(username: string): Promise<UserEntity>
 

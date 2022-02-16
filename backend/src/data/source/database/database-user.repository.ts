@@ -11,10 +11,9 @@ export class DatabaseUserRepository extends Repository<UserEntity> implements Us
 
     private logger = new Logger('DatabaseUserRepository')
 
-    async createUser(request: UserRequestModel, expiration: Date, hash: string): Promise<UserEntity> {
-        const { username, name, email } = request
+    async createUser(username: string, name: string, email: string, expiration: Date, hash: string): Promise<UserEntity> {
 
-        const entity = this.create({ username: username, name: name, email: email, password: hash })
+        const entity = this.create({ username: username, name: name, email: email, password: hash, expiration: expiration })
 
         try {
             return await this.save(entity)
@@ -32,7 +31,6 @@ export class DatabaseUserRepository extends Repository<UserEntity> implements Us
         try {
             return await this.findOne({ username: username }, { relations: ['userRoles'] })
         } catch (error) {
-            console.log(error)
             this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
         }
@@ -42,7 +40,6 @@ export class DatabaseUserRepository extends Repository<UserEntity> implements Us
         try {
             return await this.findOne({ id: id }, { relations: ['userRoles'] })
         } catch (error) {
-            console.log(error)
             this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
         }

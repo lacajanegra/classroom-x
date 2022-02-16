@@ -26,13 +26,13 @@ export class AuthController {
 
     @Post('signup/teacher')
     async signUpTeacher(@Body() request: UserRequestModel): Promise<void> {
-        this.logger.log(`Register a teacher ${request.name}`)
+        this.logger.log(`Register a teacher ${request.username}`)
         return await this.signUpService.execute(request, RoleEnum.TEACHER)
     }
 
     @Post('signup/student')
     async signUpStudent(@Body() request: UserRequestModel): Promise<void> {
-        this.logger.log(`Register a student ${request.name}`)
+        this.logger.log(`Register a student ${request.username}`)
         return await this.signUpService.execute(request, RoleEnum.STUDENT)
     }
 

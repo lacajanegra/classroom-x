@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import { CourseModel } from "src/domain/model/course.model";
 import { CourseEntity } from '../entity/course.entity';
+import { CourseModel } from "src/domain/model/course.model";
 import { DataCourseMapper } from './data-course.mapper';
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class DataCoursesMapper {
@@ -14,7 +14,7 @@ export class DataCoursesMapper {
             return []
         }
 
-        return entities.map(this.dataCourseMapper.fromEntityToModel)
+        return entities.map((entity: CourseEntity) => this.dataCourseMapper.fromEntityToModel(entity))
     }
 
 }

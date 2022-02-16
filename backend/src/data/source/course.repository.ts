@@ -1,11 +1,10 @@
 import { CourseEntity } from '../entity/course.entity';
-import { CourseRequestModel } from "src/domain/model/course-request.model";
 import { CoursesFilterRequestModel } from "src/domain/model/courses-filter-request.model";
 import { DeleteResult } from "typeorm";
 
 export abstract class CourseRepository {
 
-    abstract createCourse(request: CourseRequestModel): Promise<CourseEntity>
+    abstract createCourse(name: string): Promise<CourseEntity>
 
     abstract findCourseById(id: string): Promise<CourseEntity>
 

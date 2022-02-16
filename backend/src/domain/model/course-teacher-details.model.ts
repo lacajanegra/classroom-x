@@ -1,11 +1,11 @@
 import { CourseModel } from './course.model';
-import { StudentDetailModel } from './student-detail.model';
+import { StudentDetailsModel } from './student-details.model';
 import { TeacherModel } from './teacher.model';
 
 export interface CourseTeacherDetailsModel {
     id: string
     course: CourseModel
     teacher: TeacherModel
-    students: StudentDetailModel[]
+    students: StudentDetailsModel[]
     total: number
 }

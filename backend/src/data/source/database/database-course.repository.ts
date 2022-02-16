@@ -3,7 +3,6 @@ import { DeleteResult, EntityRepository, Repository } from "typeorm";
 
 import { CourseEntity } from '../../entity/course.entity';
 import { CourseRepository } from "../course.repository";
-import { CourseRequestModel } from "src/domain/model/course-request.model";
 import { CoursesFilterRequestModel } from "src/domain/model/courses-filter-request.model";
 
 @Injectable()
@@ -12,8 +11,7 @@ export class DatabaseCourseRepository extends Repository<CourseEntity> implement
 
     private logger = new Logger('DatabaseCourseRepository')
 
-    async createCourse(request: CourseRequestModel): Promise<CourseEntity> {
-        const { name } = request
+    async createCourse(name: string): Promise<CourseEntity> {
         const entity = this.create({ name: name })
 
         try {

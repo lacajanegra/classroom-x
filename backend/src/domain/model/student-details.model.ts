@@ -1,6 +1,6 @@
 import { StudentModel } from "./student.model";
 
-export interface StudentDetailModel {
+export interface StudentDetailsModel {
     student: StudentModel
     qualification: number
 }

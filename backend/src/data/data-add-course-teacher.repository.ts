@@ -1,37 +1,21 @@
-import { Injectable, NotImplementedException } from '@nestjs/common';
-
-import { AddCourseRepository } from '../domain/repository/add-course.repository';
-import { AddCourseStudentRepository } from 'src/domain/repository/add-course-student.repository';
 import { AddCourseTeacherRepository } from 'src/domain/repository/add-course-teacher.repository';
-import { CourseEntity } from './entity/course.entity';
-import { CourseModel } from 'src/domain/model/course.model';
-import { CourseRepository } from './source/course.repository';
-import { CourseRequestModel } from 'src/domain/model/course-request.model';
-import { CourseStudentModel } from 'src/domain/model/course-student.model';
-import { CourseStudentRepository } from './source/course-student.repository';
-import { CourseStudentRequestModel } from 'src/domain/model/course-student-request.model';
+import { CourseTeacherEntity } from './entity/course-teacher.entity';
 import { CourseTeacherModel } from 'src/domain/model/course-teacher.model';
-import { DataCourseMapper } from './mapper/data-course.mapper';
-import { DataCourseStudentMapper } from './mapper/data-course-student.mapper';
-import { UserModel } from 'src/domain/model/user.model';
-import { UserRepository } from './source/user.repository';
+import { CourseTeacherRepository } from './source/course-teacher.repository';
+import { DataCourseTeacherMapper } from './mapper/data-course-teacher.mapper';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class DataAddCourseTeacherRepository implements AddCourseTeacherRepository {
-/*
+
     constructor(
-        private readonly userRepository: UserRepository,
-        private readonly courseRepository: CourseRepository,
-        private readonly courseStudentRepository: CourseStudentRepository,
-        private readonly dataCourseStudentMapper: DataCourseStudentMapper
+        private readonly courseTeacherRepository: CourseTeacherRepository,
+        private readonly dataCourseTeacherMapper: DataCourseTeacherMapper
     ) { }
-*/
+
     async addRelation(courseId: string, userId: string): Promise<CourseTeacherModel> {
-        throw new NotImplementedException()
-        /*const user = await this.userRepository.getUserById(userId)
-        return await this.courseRepository.createCourse(request, user)
-            .then((response: CourseEntity) => { return this.dataCourseMapper.fromEntityToModel(response) })
-            */
+        return await this.courseTeacherRepository.createRelation(courseId, userId)
+            .then((response: CourseTeacherEntity) => { return this.dataCourseTeacherMapper.fromEntityToModel(response) })
     }
 
 }

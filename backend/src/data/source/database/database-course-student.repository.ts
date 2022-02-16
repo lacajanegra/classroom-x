@@ -3,6 +3,7 @@ import { EntityRepository, Repository } from "typeorm";
 
 import { CourseEntity } from "src/data/entity/course.entity";
 import { CourseStudentEntity } from "../../entity/course-student.entity";
+import { CourseStudentModel } from "src/domain/model/course-student.model";
 import { CourseStudentRepository } from "../course-student.repository";
 import { UserEntity } from '../../entity/user.entity';
 
@@ -12,12 +13,16 @@ export class DatabaseCourseStudentRepository extends Repository<CourseStudentEnt
 
     private logger = new Logger('DatabaseCourseStudentRepository')
 
-    async createRelation(course: CourseEntity, student: UserEntity): Promise<CourseStudentEntity> {
+    async createRelation(courseId: string, userId: string): Promise<CourseStudentModel> {
         throw new NotImplementedException()
     }
 
-    async updateQualification(id: string, qualification: number): Promise<CourseStudentEntity> {
-        throw new NotImplementedException()
+    async getRelation(courseStudentId: string): Promise<CourseStudentEntity> {
+        throw new Error("Method not implemented.");
+    }
+    
+    async updateRelation(entity: CourseStudentEntity): Promise<CourseStudentEntity> {
+        throw new Error("Method not implemented.");
     }
 
 }

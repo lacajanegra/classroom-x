@@ -1,11 +1,12 @@
-import { CourseEntity } from "../entity/course.entity";
-import { CourseStudentEntity } from "../entity/course-student.entity";
-import { UserEntity } from "../entity/user.entity";
+import { CourseStudentEntity } from '../entity/course-student.entity';
+import { CourseStudentModel } from 'src/domain/model/course-student.model';
 
 export abstract class CourseStudentRepository {
 
-    abstract createRelation(course: CourseEntity, student: UserEntity): Promise<CourseStudentEntity>
+    abstract createRelation(courseId: string, userId: string): Promise<CourseStudentModel>
 
-    abstract updateQualification(id: string, qualification: number): Promise<CourseStudentEntity>
+    abstract getRelation(courseStudentId: string): Promise<CourseStudentEntity>
+
+    abstract updateRelation(entity: CourseStudentEntity): Promise<CourseStudentEntity>
 
 }
