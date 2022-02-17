@@ -8,4 +8,6 @@ export abstract class CourseStudentRepository {
 
     abstract getAll(userId: string): Promise<CourseStudentEntity[]>
 
+    abstract updateCourse(entity: CourseStudentEntity): Promise<CourseStudentEntity>
+
 }

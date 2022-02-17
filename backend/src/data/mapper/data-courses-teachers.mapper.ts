@@ -15,8 +15,6 @@ export class DataCoursesTeachersMapper {
             return []
         }
 
-console.log(entities)
-
         return entities.map((entity: CourseEntity) => this.dataCourseTeachersMapper.fromEntityToModel(entity))
     }
 

@@ -1,12 +1,8 @@
-import { ConflictException, Injectable, Logger, NotImplementedException, ServiceUnavailableException } from "@nestjs/common";
+import { ConflictException, Injectable, Logger, ServiceUnavailableException } from "@nestjs/common";
 import { EntityRepository, Repository } from "typeorm";
 
-import { CourseEntity } from "src/data/entity/course.entity";
 import { CourseStudentEntity } from "../../entity/course-student.entity";
-import { CourseStudentModel } from "src/domain/model/course-student.model";
 import { CourseStudentRepository } from "../course-student.repository";
-import { CourseTeacherEntity } from "src/data/entity/course-teacher.entity";
-import { UserEntity } from '../../entity/user.entity';
 
 @Injectable()
 @EntityRepository(CourseStudentEntity)
@@ -32,7 +28,7 @@ export class DatabaseCourseStudentRepository extends Repository<CourseStudentEnt
     async getRelation(courseStudentId: string, userId: string): Promise<CourseStudentEntity> {
 
         try {
-            return await this.findOne({ id: courseStudentId, userId: userId }, { relations: ['student', 'course'] })
+            return await this.findOne({ id: courseStudentId, userId: userId }, { relations: ['student', 'courseTeacher'] })
         } catch (error) {
             this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
@@ -44,6 +40,28 @@ export class DatabaseCourseStudentRepository extends Repository<CourseStudentEnt
 
         try {
             return await this.find({ userId: userId })
+        } catch (error) {
+            this.logger.error("Database connection error: ", JSON.stringify(error))
+            throw new ServiceUnavailableException("Database connection error")
+        }
+
+    }
+
+    async getRelationWithTeacher(userId: string): Promise<CourseStudentEntity> {
+
+        try {
+            return await this.findOne({ userId: userId }, { relations: ['courseTeacher'] })
+        } catch (error) {
+            this.logger.error("Database connection error: ", JSON.stringify(error))
+            throw new ServiceUnavailableException("Database connection error")
+        }
+
+    }
+
+    async updateCourse(entity: CourseStudentEntity): Promise<CourseStudentEntity> {
+
+        try {
+            return await this.save(entity)
         } catch (error) {
             this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")

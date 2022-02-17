@@ -1,4 +1,4 @@
-import { ApiCoursesStudentDetailsMapper } from "./api-courses-student-details.mapper";
+import { ApiCoursesTeacherStudentDetailsMapper } from "./api-courses-teacher-student-details.mapper";
 import { CourseStudentDetailsModel } from 'src/domain/model/course-student-details.model';
 import { CourseTeacherDetailsDto } from "../model/course-teacher-details.dto";
 import { CourseTeacherDetailsModel } from "src/domain/model/course-teacher-details.model";
@@ -7,7 +7,7 @@ import { Injectable } from "@nestjs/common";
 @Injectable()
 export class ApiCourseTeacherDetailsMapper {
 
-    constructor(private readonly apiCoursesStudentDetailsMapper: ApiCoursesStudentDetailsMapper) { }
+    constructor(private readonly apiCoursesTeacherStudentDetailsMapper: ApiCoursesTeacherStudentDetailsMapper) { }
 
     fromModelToDto(courseTeacher: CourseTeacherDetailsModel): CourseTeacherDetailsDto {
         const { id, course, students } = courseTeacher
@@ -16,6 +16,6 @@ export class ApiCourseTeacherDetailsMapper {
     }
 
     private getStudents(students: CourseStudentDetailsModel[]) {
-        return this.apiCoursesStudentDetailsMapper.fromModelToDto(students)
+        return this.apiCoursesTeacherStudentDetailsMapper.fromModelToDto(students)
     }
 }

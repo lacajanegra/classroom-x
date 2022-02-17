@@ -4,6 +4,7 @@ import { ApiCourseStudentMapper } from './api-course-student.mapper';
 import { ApiCourseTeacherDetailsMapper } from './api-course-teacher-details.mapper';
 import { ApiCourseTeacherForStudentMapper } from './api-course-teacher-for-student.mapper';
 import { ApiCourseTeacherMapper } from './api-course-teacher.mapper';
+import { ApiCourseTeacherStudentDetailsMapper } from './api-course-teacher-student-details.mapper';
 import { ApiCourseTeachersForStudentMapper } from './api-course-teachers-for-student.mapper';
 import { ApiCourseTeachersMapper } from './api-course-teachers.mapper';
 import { ApiCoursesFilterMapper } from './api-courses-filter.mapper';
@@ -12,6 +13,7 @@ import { ApiCoursesStudentDetailsMapper } from './api-courses-student-details.ma
 import { ApiCoursesStudentMapper } from './api-courses-student.mapper';
 import { ApiCoursesTeacherDetailsMapper } from './api-courses-teacher-details.mapper';
 import { ApiCoursesTeacherMapper } from './api-courses-teacher.mapper';
+import { ApiCoursesTeacherStudentDetailsMapper } from './api-courses-teacher-student-details.mapper';
 import { ApiCoursesTeachersMapper } from './api-courses-teachers.mapper';
 import { ApiCreateCourseMapper } from './api-create-course.mapper';
 import { ApiCreateUserMapper } from './api-create-user.mapper';
@@ -47,7 +49,9 @@ import { Module } from '@nestjs/common';
         ApiCourseTeachersMapper,
         ApiCoursesTeachersMapper,
         ApiCourseTeacherForStudentMapper,
-        ApiCourseTeachersForStudentMapper
+        ApiCourseTeachersForStudentMapper,
+        ApiCourseTeacherStudentDetailsMapper,
+        ApiCoursesTeacherStudentDetailsMapper
     ],
     exports: [
         ApiLoginMapper,
@@ -70,7 +74,9 @@ import { Module } from '@nestjs/common';
         ApiCourseTeachersMapper,
         ApiCoursesTeachersMapper,
         ApiCourseTeacherForStudentMapper,
-        ApiCourseTeachersForStudentMapper
+        ApiCourseTeachersForStudentMapper,
+        ApiCourseTeacherStudentDetailsMapper,
+        ApiCoursesTeacherStudentDetailsMapper
     ]
 })
 export class ApiMapperModule { }

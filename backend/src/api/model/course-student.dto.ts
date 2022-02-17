@@ -1,4 +1,5 @@
 export interface CourseStudentDto {
     id: string
-    name: string
+    course: string
+    teacher: string
 }

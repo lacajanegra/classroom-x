@@ -9,24 +9,24 @@ export class CreateUserRequestDto {
     @IsString()
     @MinLength(4)
     @MaxLength(20)
-    username: string
+    readonly username: string
 
     @IsNotEmpty()
     @IsString()
     @MinLength(4)
     @MaxLength(100)
-    name: string
+    readonly name: string
 
     @IsNotEmpty()
     @IsEmail()
     @MaxLength(100)
-    email: string
+    readonly email: string
 
     @IsNotEmpty()
     @Password()
-    password: string
+    readonly password: string
 
     @IsNotEmpty()
     @Match('password')
-    passwordConfirm: string;
+    readonly passwordConfirm: string;
 }

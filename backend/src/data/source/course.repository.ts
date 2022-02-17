@@ -17,6 +17,4 @@ export abstract class CourseRepository {
 
     abstract getRelationWithTeachers(): Promise<CourseEntity[]>
 
-    abstract getRelationWithStudents(userId: string): Promise<CourseEntity[]>
-
 }

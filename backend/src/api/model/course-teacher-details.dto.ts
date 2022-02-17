@@ -1,7 +1,7 @@
-import { CourseStudentDetailsDto } from './course-student-details.dto';
+import { CourseTeacherStudentDetailsDto } from './course-teacher-student-details.dto';
 
 export interface CourseTeacherDetailsDto {
     id: string
     name: string
-    students: CourseStudentDetailsDto[]
+    students: CourseTeacherStudentDetailsDto[]
 }

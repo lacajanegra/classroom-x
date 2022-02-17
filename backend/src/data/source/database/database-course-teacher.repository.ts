@@ -50,7 +50,7 @@ export class DatabaseCourseTeacherRepository extends Repository<CourseTeacherEnt
     async getRelationWithStudents(courseTeacherId: string, userId: string): Promise<CourseTeacherEntity> {
 
         try {
-            return await this.findOne({ id: courseTeacherId, userId: userId }, { relations: ['teacher', 'course', 'teacher.courseTeachers'] })
+            return await this.findOne({ id: courseTeacherId, userId: userId }, { relations: ['teacher', 'course', 'courseStudents'] })
         } catch (error) {
             this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")

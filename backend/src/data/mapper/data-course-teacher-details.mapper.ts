@@ -1,6 +1,7 @@
 import { CourseEntity } from '../entity/course.entity';
 import { CourseModel } from 'src/domain/model/course.model';
 import { CourseStudentDetailsModel } from "src/domain/model/course-student-details.model";
+import { CourseStudentEntity } from '../entity/course-student.entity';
 import { CourseTeacherDetailsModel } from 'src/domain/model/course-teacher-details.model';
 import { CourseTeacherEntity } from "../entity/course-teacher.entity";
 import { DataCourseMapper } from './data-course.mapper';
@@ -25,12 +26,12 @@ export class DataCourseTeacherDetailsMapper {
             return undefined
         }
 
-        const { id, course, teacher } = entity
+        const { id, course, teacher, courseStudents } = entity
         const model: CourseTeacherDetailsModel = {
             id: id,
             course: this.getCourse(course),
             teacher: this.getTeacher(teacher),
-            students: this.getStudentsDetails(teacher)
+            students: this.getStudentsDetails(courseStudents)
         }
 
         return model
@@ -44,8 +45,8 @@ export class DataCourseTeacherDetailsMapper {
         return this.dataTeacherMapper.fromEntityToModel(teacher)
     }
 
-    private getStudentsDetails(teacher: UserEntity): CourseStudentDetailsModel[] {
-        return this.dataStudentsDetailsMapper.fromEntityToModel(teacher.courseStudents)
+    private getStudentsDetails(courseStudents: CourseStudentEntity[]): CourseStudentDetailsModel[] {
+        return this.dataStudentsDetailsMapper.fromEntityToModel(courseStudents)
     }
 
 }

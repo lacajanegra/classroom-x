@@ -1,14 +1,8 @@
-import { IsNotEmpty, IsNumber, IsString, Max, Min } from "class-validator";
+import { IsNotEmpty } from "class-validator";
 
-export class CourseStudentRequestDto {
+export class CourseStudentQualificationRequestDto {
 
     @IsNotEmpty()
-    @IsString()
-    courseStudentId: string
-
-    @IsNumber({ maxDecimalPlaces: 0 })
-    @Min(0)
-    @Max(7)
-    qualification: number
+    readonly qualification: number
 
 }

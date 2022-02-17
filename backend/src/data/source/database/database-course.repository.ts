@@ -73,6 +73,7 @@ export class DatabaseCourseRepository extends Repository<CourseEntity> implement
             this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
         }
+
     }
 
     async getRelationWithTeachers(): Promise<CourseEntity[]> {
@@ -80,18 +81,6 @@ export class DatabaseCourseRepository extends Repository<CourseEntity> implement
         try {
             return await this.find({ relations: ['courseTeachers'] })
         } catch (error) {
-            this.logger.error("Database connection error: ", JSON.stringify(error))
-            throw new ServiceUnavailableException("Database connection error")
-        }
-
-    }
-
-    async getRelationWithStudents(userId: string): Promise<CourseEntity[]> {
-
-        try {
-            return await this.find({ relations: [ 'courseTeachers' , 'courseTeachers.courseStudents'] })
-        } catch (error) {
-            console.log(error)
             this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
         }

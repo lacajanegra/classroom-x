@@ -1,11 +1,13 @@
-import { CourseEntity } from '../entity/course.entity';
 import { CourseModel } from 'src/domain/model/course.model';
 import { CourseStudentDetailsModel } from 'src/domain/model/course-student-details.model';
 import { CourseStudentEntity } from '../entity/course-student.entity';
+import { CourseTeacherEntity } from '../entity/course-teacher.entity';
 import { DataCourseMapper } from './data-course.mapper';
 import { DataStudentMapper } from './data-student.mapper';
+import { DataTeacherMapper } from './data-teacher.mapper';
 import { Injectable } from "@nestjs/common";
 import { StudentModel } from 'src/domain/model/student.model';
+import { TeacherModel } from 'src/domain/model/teacher.model';
 import { UserEntity } from '../entity/user.entity';
 
 @Injectable()
@@ -13,6 +15,7 @@ export class DataCourseStudentDetailsMapper {
 
     constructor(
         private readonly dataCourseMapper: DataCourseMapper,
+        private readonly dataTeacherMapper: DataTeacherMapper,
         private readonly dataStudentMapper: DataStudentMapper
     ) { }
 
@@ -22,19 +25,24 @@ export class DataCourseStudentDetailsMapper {
             return undefined
         }
 
-        const { id, qualification } = entity
+        const { id, qualification, courseTeacher, student } = entity
         const model: CourseStudentDetailsModel = {
             id: id,
-            course: undefined, //this.getCourse(course),
-            student: undefined, //this.getStudent(student),
+            course: this.getCourse(courseTeacher),
+            teacher: this.getTeacher(courseTeacher),
+            student: this.getStudent(student),
             qualification: qualification
         }
 
         return model
     }
 
-    private getCourse(course: CourseEntity): CourseModel {
-        return this.dataCourseMapper.fromEntityToModel(course)
+    private getCourse(courseTeacher: CourseTeacherEntity): CourseModel {
+        return this.dataCourseMapper.fromEntityToModel(courseTeacher.course)
+    }
+
+    private getTeacher(courseTeacher: CourseTeacherEntity): TeacherModel {
+        return this.dataTeacherMapper.fromEntityToModel(courseTeacher.teacher)
     }
 
     private getStudent(user: UserEntity): StudentModel {

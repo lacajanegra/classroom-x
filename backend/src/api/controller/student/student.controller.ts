@@ -1,4 +1,4 @@
-import { Controller, Get, Logger, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, Patch, Post, UseGuards } from '@nestjs/common';
 
 import { AuthGuard } from '@nestjs/passport';
 import { CourseTeachersDto } from 'src/api/model/course-teachers.dto';

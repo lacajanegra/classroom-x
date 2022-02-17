@@ -1,4 +1,4 @@
-import { Controller, Get, Logger, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, Patch, Post, UseGuards } from '@nestjs/common';
 
 import { AddCourseTeacherService } from 'src/domain/use-case/teacher/add-course/add-course-teacher.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -17,6 +17,11 @@ import { ApiCourseTeacherMapper } from 'src/api/mapper/api-course-teacher.mapper
 import { CourseTeacherDto } from 'src/api/model/course-teacher.dto';
 import { CourseTeacherDetailsDto } from 'src/api/model/course-teacher-details.dto';
 import { ApiCourseTeacherDetailsMapper } from 'src/api/mapper/api-course-teacher-details.mapper';
+import { CourseStudentQualificationRequestDto } from 'src/api/model/course-student-qualification-request.dto';
+import { UpdateQualificationModel } from 'src/domain/model/update-qualification.model';
+import { UpdateQualificationService } from 'src/domain/use-case/teacher/update-qualification/update-qualification.service';
+import { ApiCourseTeacherStudentDetailsMapper } from 'src/api/mapper/api-course-teacher-student-details.mapper';
+import { CourseTeacherStudentDetailsDto } from 'src/api/model/course-teacher-student-details.dto';
 
 @Controller('teacher')
 @UseGuards(AuthGuard(), RolesGuard, StatusGuard)
@@ -28,9 +33,11 @@ export class TeacherController {
         private readonly addCourseTeacherService: AddCourseTeacherService,
         private readonly getCourseTeacherService: GetCourseTeacherService,
         private readonly getCoursesTeacherService: GetCoursesTeacherService,
+        private readonly updateQualificationService: UpdateQualificationService,
         private readonly apiCourseTeacherMapper: ApiCourseTeacherMapper,
         private readonly apiCourseTeacherDetailsMapper: ApiCourseTeacherDetailsMapper,
-        private readonly apiCoursesTeacherMapper: ApiCoursesTeacherMapper
+        private readonly apiCoursesTeacherMapper: ApiCoursesTeacherMapper,
+        private readonly apiCourseTeacherStudentDetailsMapper: ApiCourseTeacherStudentDetailsMapper
     ) { }
 
     @Roles(RoleEnum.TEACHER)
@@ -58,5 +65,16 @@ export class TeacherController {
         this.logger.debug(`Get all courses - user: ${user.username}`)
         return await this.getCoursesTeacherService.execute(user.id)
             .then((relations) => this.apiCoursesTeacherMapper.fromModelToDto(relations))
+    }
+
+    @Roles(RoleEnum.TEACHER)
+    @Status(StatusEnum.ACTIVE)
+    @Patch('course/:id/student/:student/qualification')
+    async updateCourse(@Body() request: CourseStudentQualificationRequestDto, @Param('id') courseTeacherId: string, @Param('student') courseStudentId: string, @GetUser() user: UserModel): Promise<CourseTeacherStudentDetailsDto> {
+        const { qualification } = request
+        this.logger.debug(`Update relation courseTeacherId ${courseTeacherId} -> courseStudentId ${courseStudentId} -> qualification ${qualification} - user: ${user.username}`)
+        const requestModel: UpdateQualificationModel = { courseTeacherId: courseTeacherId, courseStudentId: courseStudentId, qualification: qualification }
+        return await this.updateQualificationService.execute(requestModel, user.id)
+            .then((relation) => this.apiCourseTeacherStudentDetailsMapper.fromModelToDto(relation))
     }
 }

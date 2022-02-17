@@ -9,11 +9,11 @@ export class GetCourseStudentUseCaseService implements GetCourseStudentService {
 
     constructor(private readonly getCourseStudentRepository: GetCourseStudentRepository) { }
 
-    async execute(courseTeacherId: string, userId: string): Promise<CourseStudentDetailsModel> {
-        const found = await this.getCourseStudentRepository.getCourse(courseTeacherId, userId)
+    async execute(courseStudentId: string, userId: string): Promise<CourseStudentDetailsModel> {
+        const found = await this.getCourseStudentRepository.getCourse(courseStudentId, userId)
 
         if (!found) {
-            throw new NotFoundException(`The course teacher by id "${courseTeacherId}" not found."`);
+            throw new NotFoundException(`The course student by id "${courseStudentId}" not found."`);
         }
 
         return found

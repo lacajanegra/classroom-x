@@ -4,6 +4,6 @@ export class CourseStudentRequestDto {
 
     @IsNotEmpty()
     @IsString()
-    courseId: string
+    readonly courseId: string
 
 }

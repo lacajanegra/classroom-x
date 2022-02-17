@@ -1,5 +1,6 @@
 export interface CourseStudentDetailsDto {
-    name: string
-    email: string
+    id: string
+    course: string
+    teacher: string
     qualification: number
 }

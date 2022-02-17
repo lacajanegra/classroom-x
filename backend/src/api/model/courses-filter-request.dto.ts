@@ -5,5 +5,5 @@ export class CoursesFilterRequestDto {
     @IsOptional()
     @IsString()
     @MaxLength(40)
-    search?: string
+    readonly search?: string
 }

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
 import { CourseTeacherEntity } from "./course-teacher.entity"
 import { UserEntity } from "./user.entity"
@@ -18,7 +18,7 @@ export class CourseStudentEntity {
     @Column({ name: "qualification" })
     qualification: number
 
-    @OneToMany(() => CourseTeacherEntity, courseTeacher => courseTeacher.courseStudents)
+    @ManyToOne(() => CourseTeacherEntity, courseTeacher => courseTeacher.courseStudents, { eager: true })
     @JoinColumn({ name: "course_teacher_id" })
     courseTeacher: CourseTeacherEntity
 

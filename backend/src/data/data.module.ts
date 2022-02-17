@@ -19,6 +19,7 @@ import { DataMapperModule } from './mapper/data-mapper.module';
 import { DataPasswordRepository } from './data-password.repository';
 import { DataUpdateCourseRepository } from './data-update-course.repository';
 import { DataUpdatePasswordRepository } from './data-update-password.repository';
+import { DataUpdateQualificationRepository } from './data-update-qualification.repository';
 import { DelCourseRepository } from 'src/domain/repository/del-course.repository';
 import { GetCourseRepository } from 'src/domain/repository/get-course.repository';
 import { GetCourseStudentRepository } from 'src/domain/repository/get-course-student.repository';
@@ -33,6 +34,7 @@ import { PasswordRepository } from 'src/domain/repository/password.repository';
 import { SourceModule } from './source/source.module';
 import { UpdateCourseRepository } from 'src/domain/repository/update-course.repository';
 import { UpdatePasswordRepository } from '../domain/repository/update-password.repository';
+import { UpdateQualificationRepository } from 'src/domain/repository/update-qualification.repository';
 import { UtilModule } from './util/util.module';
 
 @Module({
@@ -57,7 +59,8 @@ import { UtilModule } from './util/util.module';
         { provide: GetCoursesTeacherRepository, useClass: DataGetCoursesTeacherRepository },
         { provide: GetCourseStudentRepository, useClass: DataGetCourseStudentRepository },
         { provide: GetCoursesStudentRepository, useClass: DataGetCoursesStudentRepository },
-        { provide: GetCoursesTeachersRepository, useClass: DataGetCoursesTeachersRepository }
+        { provide: GetCoursesTeachersRepository, useClass: DataGetCoursesTeachersRepository },
+        { provide: UpdateQualificationRepository, useClass: DataUpdateQualificationRepository }
     ],
     exports: [
         AddCourseRepository,
@@ -75,7 +78,8 @@ import { UtilModule } from './util/util.module';
         GetCoursesTeacherRepository,
         GetCourseStudentRepository,
         GetCoursesStudentRepository,
-        GetCoursesTeachersRepository
+        GetCoursesTeachersRepository,
+        UpdateQualificationRepository
     ]
 })
 export class DataModule { }
