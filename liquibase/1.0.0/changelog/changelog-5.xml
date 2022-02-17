@@ -68,12 +68,12 @@
         <ext:tagDatabase tag="1.0.0-5.5"/>
 
         <addPrimaryKey
-                columnNames="course_id,user_id"
-                constraintName="PrimaryKey_CourseTeacher_Id"
+                columnNames="id"
+                constraintName="PrimaryKeyCourseTeacherId"
                 tableName="course_teacher"/>
 
         <rollback>
-            <dropPrimaryKey tableName="course_teacher" constraintName="PrimaryKey_CourseTeacher_Id"/>
+            <dropPrimaryKey tableName="course_teacher" constraintName="PrimaryKeyCourseTeacherId"/>
         </rollback>
 
     </changeSet>
@@ -84,12 +84,12 @@
         <ext:tagDatabase tag="1.0.0-5.6"/>
 
         <addPrimaryKey
-                columnNames="course_id,user_id"
-                constraintName="PrimaryKey_CourseStudent_Id"
+                columnNames="id"
+                constraintName="PrimaryKeyCourseStudentId"
                 tableName="course_student"/>
 
         <rollback>
-            <dropPrimaryKey tableName="course_student" constraintName="PrimaryKey_CourseStudent_Id"/>
+            <dropPrimaryKey tableName="course_student" constraintName="PrimaryKeyCourseStudentId"/>
         </rollback>
 
     </changeSet>

@@ -14,10 +14,10 @@ $ docker-compose build frontend
 
 ## Levantar cada contenedor en el siguiente orden
 
-$ docker-compose --env-file ./config/.env.dev up database
-$ docker-compose --env-file ./config/.env.dev up migration
-$ docker-compose --env-file ./config/.env.dev up backend
-$ docker-compose --env-file ./config/.env.dev up frontend
+$ docker-compose up database
+$ docker-compose up migration
+$ docker-compose up backend
+$ docker-compose up frontend
 
 ## Probar backend
 
