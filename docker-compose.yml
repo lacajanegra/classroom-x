@@ -1,19 +1,9 @@
 version: "3.7"
 services:
-  redis:
-    container_name: redis
-    image: redis:6.2-alpine
-    hostname: redis
-    ports:
-      - "6379:6379"
-    networks:
-      - dockernet
   database:
     container_name: database
     image: postgres:14-alpine
     hostname: database
-    ports:
-      - "5432:5432"
     networks:
       - dockernet
     environment:
@@ -49,12 +39,9 @@ services:
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
       DB_SSL: 'false'
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
       JWT_SECRET: MiSuperMegaClave123456789.*/{}
       JWT_EXPIRES_IN: 3600
     depends_on:
-      - redis
       - database
       - migration
 networks:
