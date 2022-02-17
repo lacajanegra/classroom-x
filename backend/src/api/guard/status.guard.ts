@@ -1,10 +1,10 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from "@nestjs/common"
 
 import { Observable } from "rxjs"
-import { ROLES_KEY } from "../decorate/roles.decorator"
+import { ROLES_KEY } from "../decorator/roles.decorator"
 import { Reflector } from "@nestjs/core"
 import { RoleEnum } from "src/domain/model/role.enum"
-import { STATUS_KEY } from "../decorate/status.decorator"
+import { STATUS_KEY } from "../decorator/status.decorator"
 import { StatusEnum } from "src/domain/model/status.enum"
 import { UserModel } from "src/domain/model/user.model"
 

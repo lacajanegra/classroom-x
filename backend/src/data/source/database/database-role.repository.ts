@@ -4,7 +4,6 @@ import { Injectable, Logger, ServiceUnavailableException } from "@nestjs/common"
 import { RoleEntity } from "../../entity/role.entity";
 import { RoleEnum } from "src/domain/model/role.enum";
 import { RoleRepository } from "../role.repository";
-import { UserEntity } from '../../entity/user.entity';
 
 @Injectable()
 @EntityRepository(RoleEntity)

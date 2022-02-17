@@ -1,23 +1,19 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/api/decorate/get-user.decorator';
-import { UserResponseModel } from 'src/domain/model/user-response.model';
+import { GetUser } from 'src/api/decorator/get-user.decorator';
+import { ApiUserMapper } from 'src/api/mapper/api-user.mapper';
+import { UserDto } from 'src/api/model/user.dto';
 import { UserModel } from 'src/domain/model/user.model';
 
 @Controller('user')
 @UseGuards(AuthGuard())
 export class UserController {
 
+    constructor(private readonly apiUserMapper: ApiUserMapper) { }
+
     @Get()
-    info(@GetUser() user: UserModel): UserResponseModel {
-        const { name, email, status, roles } = user
-        const response: UserResponseModel = {
-            name: name,
-            email: email,
-            status: status,
-            roles: roles
-        }
-        return response
+    info(@GetUser() user: UserModel): UserDto {
+        return this.apiUserMapper.fromModelToDto(user)
     }
 
 }

@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from "@nestjs/common";
 
 import { GetUserRepository } from "src/domain/repository/get-user.repository";
 import { PasswordRepository } from "src/domain/repository/password.repository";
-import { ResetPasswordRequestModel } from "src/domain/model/reset-password-request.model";
+import { ResetPasswordModel } from "src/domain/model/reset-password.model";
 import { ResetPasswordService } from "./reset-password.service";
 import { UpdatePasswordRepository } from "src/domain/repository/update-password.repository";
 
@@ -15,9 +15,10 @@ export class ResetPasswordUseCaseService implements ResetPasswordService {
         private readonly updatePasswordRepository: UpdatePasswordRepository
     ) { }
 
-    async execute(request: ResetPasswordRequestModel, userId: string): Promise<void> {
-        const user = await this.getUserRepository.getUserById(userId)
+    async execute(request: ResetPasswordModel, userId: string): Promise<void> {
         const { password, newPassword } = request
+
+        const user = await this.getUserRepository.getUserById(userId)
 
         if (!(user && await this.passwordRepository.validate(password, user.hash))) {
             throw new UnauthorizedException("User or password credentials failed")

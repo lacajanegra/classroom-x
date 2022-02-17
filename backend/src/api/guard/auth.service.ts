@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { JwtPayloadModel } from 'src/domain/model/jwt-payload.model';
+import { JwtPayloadDto } from 'src/api/model/jwt-payload.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserModel } from 'src/domain/model/user.model';
 
@@ -9,7 +9,7 @@ export class AuthService {
 
     createToken(user: UserModel): string {
         const { id, status, roles } = user
-        const payload: JwtPayloadModel = { id: id, status: status, roles: roles }
+        const payload: JwtPayloadDto = { id: id, status: status, roles: roles }
         return this.jwtService.sign(payload)
     }
 }

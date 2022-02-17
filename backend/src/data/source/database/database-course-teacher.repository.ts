@@ -25,10 +25,10 @@ export class DatabaseCourseTeacherRepository extends Repository<CourseTeacherEnt
         }
     }
 
-    async getRelation(courseId: string, userId: string): Promise<CourseTeacherEntity> {
+    async getRelation(courseTeacherId: string, userId: string): Promise<CourseTeacherEntity> {
 
         try {
-            return await this.findOne({ courseId: courseId, userId: userId })
+            return await this.findOne({ id: courseTeacherId, userId: userId }, { relations: ['teacher', 'course'] })
         } catch (error) {
             this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
@@ -40,6 +40,17 @@ export class DatabaseCourseTeacherRepository extends Repository<CourseTeacherEnt
 
         try {
             return await this.find({ userId: userId })
+        } catch (error) {
+            this.logger.error("Database connection error: ", JSON.stringify(error))
+            throw new ServiceUnavailableException("Database connection error")
+        }
+
+    }
+
+    async getRelationWithStudents(courseTeacherId: string, userId: string): Promise<CourseTeacherEntity> {
+
+        try {
+            return await this.findOne({ id: courseTeacherId, userId: userId }, { relations: ['teacher', 'course', 'teacher.courseTeachers'] })
         } catch (error) {
             this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")

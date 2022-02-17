@@ -29,11 +29,11 @@ import { UserRoleRepository } from '../user-role.repository';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        const isProducion = configService.get("NODE_ENV") === 'production'
+        const hasSsl = configService.get("DB_SSL") === 'true'
         return {
-          ssl: isProducion,
+          ssl: hasSsl,
           extra: {
-            ssl: isProducion ? { rejectUnauthorized: false } : null
+            ssl: hasSsl ? { rejectUnauthorized: false } : null
           },
           type: 'postgres',
           autoLoadEntities: true,

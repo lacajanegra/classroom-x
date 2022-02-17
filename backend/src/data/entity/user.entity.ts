@@ -28,10 +28,10 @@ export class UserEntity {
     @OneToMany(() => UserRoleEntity, userRole => userRole.user)
     userRoles: UserRoleEntity[]
 
-    @OneToMany(() => CourseStudentEntity, courseStudent => courseStudent.user)
-    courseStudents: CourseStudentEntity[]
-
-    @OneToMany(() => CourseTeacherEntity, courseTeacher => courseTeacher.user)
+    @OneToMany(() => CourseTeacherEntity, courseTeacher => courseTeacher.teacher)
     courseTeachers: CourseTeacherEntity[]
+
+    @OneToMany(() => CourseStudentEntity, courseStudent => courseStudent.student)
+    courseStudents: CourseStudentEntity[]
 
 }

@@ -3,7 +3,7 @@ import { CourseModel } from 'src/domain/model/course.model';
 import { CourseTeacherEntity } from "../entity/course-teacher.entity";
 import { CourseTeacherModel } from "src/domain/model/course-teacher.model";
 import { DataCourseMapper } from './data-course.mapper';
-import { DataTeacherMapper } from "./data-teacher.mapper";
+import { DataTeacherMapper } from './data-teacher.mapper';
 import { Injectable } from "@nestjs/common";
 import { TeacherModel } from 'src/domain/model/teacher.model';
 import { UserEntity } from '../entity/user.entity';
@@ -22,12 +22,11 @@ export class DataCourseTeacherMapper {
             return undefined
         }
 
-        const { id, course, user } = entity
+        const { id, course, teacher } = entity
         const model: CourseTeacherModel = {
             id: id,
             course: this.getCourse(course),
-            teacher: this.getTeacher(user),
-            total: this.getTotal(course)
+            teacher: this.getTeacher(teacher)
         }
 
         return model
@@ -39,10 +38,6 @@ export class DataCourseTeacherMapper {
 
     private getTeacher(teacher: UserEntity): TeacherModel {
         return this.dataTeacherMapper.fromEntityToModel(teacher)
-    }
-
-    private getTotal(course: CourseEntity): number {
-        return (!course || !course.courseTeachers) ? 0 : course.courseTeachers.length
     }
 
 }

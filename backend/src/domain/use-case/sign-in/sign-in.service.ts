@@ -1,6 +1,6 @@
-import { SignInRequestModel } from "src/domain/model/sign-in-request.model";
+import { LoginModel } from "src/domain/model/login.model";
 import { UserModel } from "src/domain/model/user.model";
 
 export abstract class SignInService {
-    abstract execute(request: SignInRequestModel): Promise<UserModel>
+    abstract execute(request: LoginModel): Promise<UserModel>
 }

@@ -1,16 +1,15 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { JwtPayloadModel } from "src/domain/model/jwt-payload.model";
-import { UserModel } from "src/domain/model/user.model";
-import { GetUserRepository } from "src/domain/repository/get-user.repository";
+
 import { GetAuthUserService } from "./get-auth-user.service";
+import { GetUserRepository } from "src/domain/repository/get-user.repository";
+import { UserModel } from "src/domain/model/user.model";
 
 @Injectable()
 export class GetAuthUserUseCaseService implements GetAuthUserService {
 
     constructor(private readonly getUserRepository: GetUserRepository) { }
 
-    async execute(payload: JwtPayloadModel): Promise<UserModel> {
-        const { id } = payload
+    async execute(id: string): Promise<UserModel> {
         const user = await this.getUserRepository.getUserById(id)
 
         if (!user) {

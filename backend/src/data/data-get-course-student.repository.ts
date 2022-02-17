@@ -1,25 +1,21 @@
-import { Injectable, NotImplementedException } from '@nestjs/common';
-
-import { CourseEntity } from './entity/course.entity';
-import { CourseModel } from 'src/domain/model/course.model';
-import { CourseRepository } from './source/course.repository';
-import { CourseStudentModel } from 'src/domain/model/course-student.model';
-import { CourseTeacherDetailsModel } from 'src/domain/model/course-teacher-details.model';
-import { DataCourseMapper } from './mapper/data-course.mapper';
-import { GetCourseRepository } from 'src/domain/repository/get-course.repository';
+import { CourseStudentDetailsModel } from 'src/domain/model/course-student-details.model';
+import { CourseStudentEntity } from './entity/course-student.entity';
+import { CourseStudentRepository } from './source/course-student.repository';
+import { DataCourseStudentDetailsMapper } from './mapper/data-course-student-details.mapper';
 import { GetCourseStudentRepository } from 'src/domain/repository/get-course-student.repository';
-import { GetCourseTeacherRepository } from 'src/domain/repository/get-course-teacher.repository';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class DataGetCourseStudentRepository implements GetCourseStudentRepository {
 
     constructor(
-        private readonly courseRepository: CourseRepository,
-        private readonly dataCourseMapper: DataCourseMapper
+        private readonly courseStudentRepository: CourseStudentRepository,
+        private readonly dataCourseStudentDetailsMapper: DataCourseStudentDetailsMapper
     ) { }
 
-    async getCourse(courseId: string, userId: string): Promise<CourseStudentModel> {
-        throw new NotImplementedException()
+    async getCourse(courseStudentId: string, userId: string): Promise<CourseStudentDetailsModel> {
+        return await this.courseStudentRepository.getRelation(courseStudentId, userId)
+            .then((response: CourseStudentEntity) => { return this.dataCourseStudentDetailsMapper.fromEntityToModel(response) })
     }
 
 }

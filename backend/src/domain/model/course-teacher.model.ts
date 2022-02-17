@@ -5,5 +5,4 @@ export interface CourseTeacherModel {
     id: string
     course: CourseModel
     teacher: TeacherModel
-    total: number
 }

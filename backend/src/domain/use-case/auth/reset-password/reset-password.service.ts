@@ -1,5 +1,5 @@
-import { ResetPasswordRequestModel } from 'src/domain/model/reset-password-request.model';
+import { ResetPasswordModel } from "src/domain/model/reset-password.model";
 
 export abstract class ResetPasswordService {
-    abstract execute(request: ResetPasswordRequestModel, userId: string): Promise<void>
+    abstract execute(request: ResetPasswordModel, userId: string): Promise<void>
 }

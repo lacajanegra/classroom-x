@@ -1,17 +1,22 @@
 import { CourseEntity } from '../entity/course.entity';
-import { CoursesFilterRequestModel } from "src/domain/model/courses-filter-request.model";
+import { CoursesFilterModel } from 'src/domain/model/courses-filter.model';
+import { CreateCourseModel } from 'src/domain/model/create-course.model';
 import { DeleteResult } from "typeorm";
 
 export abstract class CourseRepository {
 
-    abstract createCourse(name: string): Promise<CourseEntity>
+    abstract createCourse(request: CreateCourseModel): Promise<CourseEntity>
 
     abstract findCourseById(id: string): Promise<CourseEntity>
 
-    abstract findCoursesByFilter(filter: CoursesFilterRequestModel): Promise<CourseEntity[]>
+    abstract findCoursesByFilter(filter: CoursesFilterModel): Promise<CourseEntity[]>
 
     abstract delCourseById(id: string): Promise<DeleteResult>
 
     abstract updateCourse(entity: CourseEntity): Promise<CourseEntity>
+
+    abstract getRelationWithTeachers(): Promise<CourseEntity[]>
+
+    abstract getRelationWithStudents(userId: string): Promise<CourseEntity[]>
 
 }

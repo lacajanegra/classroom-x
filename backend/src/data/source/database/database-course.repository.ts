@@ -3,7 +3,8 @@ import { DeleteResult, EntityRepository, Repository } from "typeorm";
 
 import { CourseEntity } from '../../entity/course.entity';
 import { CourseRepository } from "../course.repository";
-import { CoursesFilterRequestModel } from "src/domain/model/courses-filter-request.model";
+import { CoursesFilterModel } from 'src/domain/model/courses-filter.model';
+import { CreateCourseModel } from "src/domain/model/create-course.model";
 
 @Injectable()
 @EntityRepository(CourseEntity)
@@ -11,7 +12,8 @@ export class DatabaseCourseRepository extends Repository<CourseEntity> implement
 
     private logger = new Logger('DatabaseCourseRepository')
 
-    async createCourse(name: string): Promise<CourseEntity> {
+    async createCourse(request: CreateCourseModel): Promise<CourseEntity> {
+        const { name } = request
         const entity = this.create({ name: name })
 
         try {
@@ -36,10 +38,10 @@ export class DatabaseCourseRepository extends Repository<CourseEntity> implement
         }
     }
 
-    async findCoursesByFilter(filter: CoursesFilterRequestModel): Promise<CourseEntity[]> {
+    async findCoursesByFilter(filter: CoursesFilterModel): Promise<CourseEntity[]> {
+        const { search } = filter
 
         try {
-            const { search } = filter
             const query = this.createQueryBuilder('course')
 
             if (search) {
@@ -71,6 +73,29 @@ export class DatabaseCourseRepository extends Repository<CourseEntity> implement
             this.logger.error("Database connection error: ", JSON.stringify(error))
             throw new ServiceUnavailableException("Database connection error")
         }
+    }
+
+    async getRelationWithTeachers(): Promise<CourseEntity[]> {
+
+        try {
+            return await this.find({ relations: ['courseTeachers'] })
+        } catch (error) {
+            this.logger.error("Database connection error: ", JSON.stringify(error))
+            throw new ServiceUnavailableException("Database connection error")
+        }
+
+    }
+
+    async getRelationWithStudents(userId: string): Promise<CourseEntity[]> {
+
+        try {
+            return await this.find({ relations: [ 'courseTeachers' , 'courseTeachers.courseStudents'] })
+        } catch (error) {
+            console.log(error)
+            this.logger.error("Database connection error: ", JSON.stringify(error))
+            throw new ServiceUnavailableException("Database connection error")
+        }
+
     }
 
 }

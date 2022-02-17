@@ -1,6 +1,6 @@
 import { CourseModel } from 'src/domain/model/course.model';
-import { CourseRequestModel } from '../model/course-request.model';
+import { CreateCourseModel } from '../model/create-course.model';
 
 export abstract class AddCourseRepository {
-    abstract addCourse(request: CourseRequestModel): Promise<CourseModel>
+    abstract addCourse(request: CreateCourseModel): Promise<CourseModel>
 }

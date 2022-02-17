@@ -13,6 +13,7 @@ import { DataGetCourseTeacherRepository } from './data-get-course-teacher.reposi
 import { DataGetCoursesRepository } from './data-get-courses.repository';
 import { DataGetCoursesStudentRepository } from './data-get-courses-student.repository';
 import { DataGetCoursesTeacherRepository } from './data-get-courses-teacher.repository';
+import { DataGetCoursesTeachersRepository } from './data-get-courses-teachers.repository';
 import { DataGetUserRepository } from './data-get-user.repository';
 import { DataMapperModule } from './mapper/data-mapper.module';
 import { DataPasswordRepository } from './data-password.repository';
@@ -25,6 +26,7 @@ import { GetCourseTeacherRepository } from 'src/domain/repository/get-course-tea
 import { GetCoursesRepository } from 'src/domain/repository/get-courses.repository';
 import { GetCoursesStudentRepository } from 'src/domain/repository/get-courses-student.repository';
 import { GetCoursesTeacherRepository } from 'src/domain/repository/get-courses-teacher.repository';
+import { GetCoursesTeachersRepository } from 'src/domain/repository/get-courses-teachers.repository';
 import { GetUserRepository } from 'src/domain/repository/get-user.repository';
 import { Module } from '@nestjs/common';
 import { PasswordRepository } from 'src/domain/repository/password.repository';
@@ -54,8 +56,8 @@ import { UtilModule } from './util/util.module';
         { provide: GetCourseTeacherRepository, useClass: DataGetCourseTeacherRepository },
         { provide: GetCoursesTeacherRepository, useClass: DataGetCoursesTeacherRepository },
         { provide: GetCourseStudentRepository, useClass: DataGetCourseStudentRepository },
-        { provide: GetCoursesStudentRepository, useClass: DataGetCoursesStudentRepository }
-        
+        { provide: GetCoursesStudentRepository, useClass: DataGetCoursesStudentRepository },
+        { provide: GetCoursesTeachersRepository, useClass: DataGetCoursesTeachersRepository }
     ],
     exports: [
         AddCourseRepository,
@@ -72,7 +74,8 @@ import { UtilModule } from './util/util.module';
         GetCourseTeacherRepository,
         GetCoursesTeacherRepository,
         GetCourseStudentRepository,
-        GetCoursesStudentRepository
+        GetCoursesStudentRepository,
+        GetCoursesTeachersRepository
     ]
 })
 export class DataModule { }

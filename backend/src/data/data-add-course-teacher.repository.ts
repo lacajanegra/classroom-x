@@ -15,6 +15,7 @@ export class DataAddCourseTeacherRepository implements AddCourseTeacherRepositor
 
     async addRelation(courseId: string, userId: string): Promise<CourseTeacherModel> {
         return await this.courseTeacherRepository.createRelation(courseId, userId)
+            .then((response: CourseTeacherEntity) => { return this.courseTeacherRepository.getRelation(response.id, userId) })
             .then((response: CourseTeacherEntity) => { return this.dataCourseTeacherMapper.fromEntityToModel(response) })
     }
 

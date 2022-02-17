@@ -14,8 +14,8 @@ export class DataGetCourseTeacherRepository implements GetCourseTeacherRepositor
         private readonly dataCourseTeacherDetailsMapper: DataCourseTeacherDetailsMapper
     ) { }
 
-    async getCourse(courseId: string, userId: string): Promise<CourseTeacherDetailsModel> {
-        return await this.courseTeacherRepository.getRelation(courseId, userId)
+    async getCourse(courseTeacherId: string, userId: string): Promise<CourseTeacherDetailsModel> {
+        return await this.courseTeacherRepository.getRelationWithStudents(courseTeacherId, userId)
             .then((response: CourseTeacherEntity) => { return this.dataCourseTeacherDetailsMapper.fromEntityToModel(response) })
     }
 

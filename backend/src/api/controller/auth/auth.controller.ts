@@ -1,16 +1,18 @@
 import { Body, Controller, Logger, Post, UseGuards } from '@nestjs/common';
-import { SignInRequestModel } from 'src/domain/model/sign-in-request.model';
 import { SignInService } from 'src/domain/use-case/sign-in/sign-in.service';
-import { UserRequestModel } from 'src/domain/model/user-request.model';
+import { CreateUserRequestDto } from 'src/api/model/create-user-request.dto';
 import { SignUpService } from 'src/domain/use-case/sign-up/sign-up.service';
-import { SignInResponseModel } from 'src/domain/model/sign-in-response.model';
-import { RoleEnum } from "src/domain/model/role.enum"
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/api/decorate/get-user.decorator';
+import { GetUser } from 'src/api/decorator/get-user.decorator';
 import { UserModel } from 'src/domain/model/user.model';
-import { AuthService } from '../../guard/auth.service';
-import { ResetPasswordRequestModel } from 'src/domain/model/reset-password-request.model';
 import { ResetPasswordService } from 'src/domain/use-case/auth/reset-password/reset-password.service';
+import { JwtResponseDto } from '../../model/jwt-response.dto';
+import { ResetPasswordRequestDto } from 'src/api/model/reset-password-request.dto';
+import { LoginCredentialsRequestDto } from '../../model/login-credentials-request.dto';
+import { ApiLoginMapper } from '../../mapper/api-login.mapper';
+import { ApiTokenMapper } from 'src/api/mapper/api-token.mapper';
+import { ApiResetPasswordMapper } from 'src/api/mapper/api-reset-password.mapper';
+import { ApiCreateUserMapper } from '../../mapper/api-create-user.mapper';
 
 @Controller('auth')
 export class AuthController {
@@ -20,38 +22,42 @@ export class AuthController {
     constructor(
         private readonly signUpService: SignUpService,
         private readonly signInService: SignInService,
-        private readonly authService: AuthService,
-        private readonly resetPasswordService: ResetPasswordService
+        private readonly resetPasswordService: ResetPasswordService,
+        private readonly apiCreateUserMapper: ApiCreateUserMapper,
+        private readonly apiLoginMapper: ApiLoginMapper,
+        private readonly apiTokenMapper: ApiTokenMapper,
+        private readonly apiResetPasswordMapper: ApiResetPasswordMapper
+
     ) { }
 
     @Post('signup/teacher')
-    async signUpTeacher(@Body() request: UserRequestModel): Promise<void> {
+    async signUpTeacher(@Body() request: CreateUserRequestDto): Promise<void> {
         this.logger.log(`Register a teacher ${request.username}`)
-        return await this.signUpService.execute(request, RoleEnum.TEACHER)
+        const modelRequest = this.apiCreateUserMapper.fromDtoToTeacherModel(request)
+        return await this.signUpService.execute(modelRequest)
     }
 
     @Post('signup/student')
-    async signUpStudent(@Body() request: UserRequestModel): Promise<void> {
+    async signUpStudent(@Body() request: CreateUserRequestDto): Promise<void> {
         this.logger.log(`Register a student ${request.username}`)
-        return await this.signUpService.execute(request, RoleEnum.STUDENT)
+        const modelRequest = this.apiCreateUserMapper.fromDtoToStudentModel(request)
+        return await this.signUpService.execute(modelRequest)
     }
 
     @Post('signin')
-    async signIn(@Body() request: SignInRequestModel): Promise<SignInResponseModel> {
+    async signIn(@Body() request: LoginCredentialsRequestDto): Promise<JwtResponseDto> {
         this.logger.log(`Sign in the user ${request.username}`)
-        const user = await this.signInService.execute(request)
-        const token = this.authService.createToken(user)
-        const response: SignInResponseModel = {
-            accessToken: token
-        }
-        return response
+        const requestModel = this.apiLoginMapper.fromDtoToModel(request)
+        const userModel = await this.signInService.execute(requestModel)
+        return this.apiTokenMapper.fromModelToDto(userModel)
     }
 
     @Post('reset')
     @UseGuards(AuthGuard())
-    async reset(@GetUser() user: UserModel, @Body() request: ResetPasswordRequestModel): Promise<void> {
+    async reset(@GetUser() user: UserModel, @Body() request: ResetPasswordRequestDto): Promise<void> {
         this.logger.log(`Reset passsword the user ${user.username}`)
-        return await this.resetPasswordService.execute(request, user.id)
+        const requestModel = this.apiResetPasswordMapper.fromDtoToModel(request)
+        return await this.resetPasswordService.execute(requestModel, user.id)
     }
 
     @Post('signout')

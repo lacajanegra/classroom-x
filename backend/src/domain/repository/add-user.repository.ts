@@ -1,6 +1,5 @@
-import { RoleEnum } from '../model/role.enum';
-import { UserRequestModel } from '../model/user-request.model';
+import { CreateUserModel } from '../model/create-user.model';
 
 export abstract class AddUserRepository {
-    abstract addUser(request: UserRequestModel, role: RoleEnum, hash: string): Promise<void>
+    abstract addUser(request: CreateUserModel, hash: string): Promise<void>
 }

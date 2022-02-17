@@ -1,9 +1,9 @@
 import { ConflictException, Injectable, Logger, ServiceUnavailableException } from "@nestjs/common";
 import { EntityRepository, Repository } from "typeorm";
 
+import { CreateUserModel } from "src/domain/model/create-user.model";
 import { UserEntity } from "../../entity/user.entity";
 import { UserRepository } from "../user.repository";
-import { UserRequestModel } from "src/domain/model/user-request.model";
 
 @Injectable()
 @EntityRepository(UserEntity)
@@ -11,8 +11,8 @@ export class DatabaseUserRepository extends Repository<UserEntity> implements Us
 
     private logger = new Logger('DatabaseUserRepository')
 
-    async createUser(username: string, name: string, email: string, expiration: Date, hash: string): Promise<UserEntity> {
-
+    async createUser(request: CreateUserModel, hash: string, expiration: Date): Promise<UserEntity> {
+        const { username, name, email } = request
         const entity = this.create({ username: username, name: name, email: email, password: hash, expiration: expiration })
 
         try {

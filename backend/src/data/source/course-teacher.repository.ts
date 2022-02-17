@@ -4,8 +4,10 @@ export abstract class CourseTeacherRepository {
 
     abstract createRelation(courseId: string, userId: string): Promise<CourseTeacherEntity>
 
-    abstract getRelation(courseId: string, userId: string): Promise<CourseTeacherEntity>
+    abstract getRelation(courseTeacherId: string, userId: string): Promise<CourseTeacherEntity>
 
     abstract getAll(userId: string): Promise<CourseTeacherEntity[]>
+
+    abstract getRelationWithStudents(courseTeacherId: string, userId: string): Promise<CourseTeacherEntity>
 
 }
