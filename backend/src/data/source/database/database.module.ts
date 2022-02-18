@@ -1,6 +1,7 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { Connection, ConnectionOptions, getConnectionOptions } from 'typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-import { Connection } from 'typeorm';
 import { CourseEntity } from '../../entity/course.entity';
 import { CourseRepository } from '../course.repository';
 import { CourseStudentEntity } from '../../entity/course-student.entity';
@@ -16,7 +17,6 @@ import { DatabaseUserRoleRepository } from './database-user-role.repository';
 import { Module } from '@nestjs/common';
 import { RoleEntity } from 'src/data/entity/role.entity';
 import { RoleRepository } from '../role.repository';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from '../../entity/user.entity';
 import { UserRepository } from '../user.repository';
 import { UserRoleEntity } from 'src/data/entity/user-role.entity';
@@ -30,20 +30,28 @@ import { UserRoleRepository } from '../user-role.repository';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
         const hasSsl = configService.get("DB_SSL") === 'true'
-        return {
+        const fullUrl = configService.get("DATABASE_URL") || undefined
+        const connectionOptions: TypeOrmModuleOptions = {
           ssl: hasSsl,
           extra: {
             ssl: hasSsl ? { rejectUnauthorized: false } : null
           },
           type: 'postgres',
           autoLoadEntities: true,
-          synchronize: false,
-          host: configService.get('DB_HOST'),
-          port: configService.get('DB_PORT'),
-          database: configService.get('DB_NAME'),
-          username: configService.get('DB_USER'),
-          password: configService.get('DB_PASS')
+          synchronize: false
         }
+
+        if (fullUrl) {
+          Object.assign(connectionOptions, { url: fullUrl });
+        } else {
+          Object.assign(connectionOptions, { host: configService.get('DB_HOST') })
+          Object.assign(connectionOptions, { port: configService.get('DB_PORT') })
+          Object.assign(connectionOptions, { database: configService.get('DB_NAME') })
+          Object.assign(connectionOptions, { username: configService.get('DB_USER') })
+          Object.assign(connectionOptions, { password: configService.get('DB_PASS') })
+        }
+
+        return connectionOptions
       },
     }),
     TypeOrmModule.forFeature([CourseEntity, CourseStudentEntity, CourseTeacherEntity, UserEntity, RoleEntity, UserRoleEntity])
