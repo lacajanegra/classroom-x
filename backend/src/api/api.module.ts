@@ -1,17 +1,11 @@
-import { AuthModule } from './controller/auth/auth.module';
-import { CourseModule } from './controller/course/course.module';
+import { ApiServiceModule } from './service/api-service.module';
+import { ControllerModule } from './controller/controller.module';
 import { Module } from '@nestjs/common';
-import { StudentModule } from './controller/student/student.module';
-import { TeacherModule } from './controller/teacher/teacher.module';
-import { UserModule } from './controller/user/user.module';
 
 @Module({
     imports: [
-        AuthModule,
-        TeacherModule,
-        CourseModule,
-        StudentModule,
-        UserModule
+        ControllerModule,
+        ApiServiceModule
     ]
 })
 export class ApiModule { }

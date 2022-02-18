@@ -76,7 +76,9 @@ export class DatabaseCourseRepository extends Repository<CourseEntity> implement
 
     }
 
-    async getRelationWithTeachers(): Promise<CourseEntity[]> {
+    async getRelationWithTeachers(userId: string): Promise<CourseEntity[]> {
+
+        // TODO : falta excluir cursos donse ya esta inscrito el alumno
 
         try {
             return await this.find({ relations: ['courseTeachers'] })

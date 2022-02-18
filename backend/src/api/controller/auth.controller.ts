@@ -1,15 +1,17 @@
 import { Body, Controller, Logger, Post, UseGuards } from '@nestjs/common';
 import { CreateUserRequestDto } from 'src/api/model/create-user-request.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/api/decorator/get-user.decorator';
-import { UserModel } from 'src/domain/model/user.model';
-import { JwtResponseDto } from '../../model/jwt-response.dto';
+import { JwtResponseDto } from '../model/jwt-response.dto';
 import { ResetPasswordRequestDto } from 'src/api/model/reset-password-request.dto';
-import { LoginCredentialsRequestDto } from '../../model/login-credentials-request.dto';
+import { LoginCredentialsRequestDto } from '../model/login-credentials-request.dto';
 import { ApiSignInService } from 'src/api/service/api-sign-in.service';
 import { ApiSignUpService } from 'src/api/service/api-sign-up.service';
 import { RoleEnum } from 'src/domain/model/role.enum';
 import { ApiResetPasswordService } from 'src/api/service/api-reset-password.service';
+import { GetUserId } from 'src/api/decorator/get-user-id.decorator';
+import { Status } from '../decorator/status.decorator';
+import { StatusGuard } from '../guard/status.guard';
+import { StatusEnum } from 'src/domain/model/status.enum';
 
 @Controller('auth')
 export class AuthController {
@@ -36,20 +38,21 @@ export class AuthController {
 
     @Post('signin')
     async signIn(@Body() request: LoginCredentialsRequestDto): Promise<JwtResponseDto> {
-        this.logger.log(`Sign in the user ${request.username}`)
+        this.logger.debug(`Sign in the user ${request.username}`)
         return await this.apiSignInService.execute(request)
     }
 
     @Post('reset')
-    @UseGuards(AuthGuard())
-    async reset(@GetUser() user: UserModel, @Body() request: ResetPasswordRequestDto): Promise<void> {
-        this.logger.log(`Reset passsword the user ${user.username}`)
-        return await this.apiResetPasswordService.execute(request, user.id)
+    @UseGuards(AuthGuard(), StatusGuard)
+    @Status(StatusEnum.EXPIRED)
+    async reset(@GetUserId() userId: string, @Body() request: ResetPasswordRequestDto): Promise<void> {
+        this.logger.log(`Reset passsword the userId ${userId}`)
+        return await this.apiResetPasswordService.execute(request, userId)
     }
 
     @Post('signout')
     @UseGuards(AuthGuard())
-    async signOut(@GetUser() user: UserModel) {
-        this.logger.log(`Sign out the user ${user.username}`)
+    async signOut(@GetUserId() userId: string) {
+        this.logger.log(`Sign out the userId ${userId}`)
     }
 }

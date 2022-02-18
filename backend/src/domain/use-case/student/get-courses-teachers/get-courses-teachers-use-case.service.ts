@@ -8,7 +8,7 @@ export class GetCoursesTeachersUseCaseService implements GetCoursesTeachersServi
 
     constructor(private readonly getCoursesTeachersRepository: GetCoursesTeachersRepository) { }
 
-    async execute(): Promise<CourseTeachersModel[]> {
-        return await this.getCoursesTeachersRepository.getCourses()
+    async execute(userId: string): Promise<CourseTeachersModel[]> {
+        return await this.getCoursesTeachersRepository.getCourses(userId)
     }
 }

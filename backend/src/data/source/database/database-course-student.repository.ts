@@ -10,8 +10,8 @@ export class DatabaseCourseStudentRepository extends Repository<CourseStudentEnt
 
     private logger = new Logger('DatabaseCourseStudentRepository')
 
-    async createRelation(courseTeacherId: string, userId: string): Promise<CourseStudentEntity> {
-        const entity = this.create({ courseTeacherId: courseTeacherId, userId: userId })
+    async createRelation(courseTeacherId: string, courseId: string, userId: string): Promise<CourseStudentEntity> {
+        const entity = this.create({ courseTeacherId: courseTeacherId, courseId: courseId, userId: userId })
 
         try {
             return await this.save(entity)

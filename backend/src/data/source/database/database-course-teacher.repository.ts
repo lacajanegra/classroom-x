@@ -58,4 +58,15 @@ export class DatabaseCourseTeacherRepository extends Repository<CourseTeacherEnt
 
     }
 
+    async getRelationInfo(courseTeacherId: string): Promise<CourseTeacherEntity> {
+
+        try {
+            return await this.findOne({ id: courseTeacherId }, { relations: ['teacher', 'course'] })
+        } catch (error) {
+            this.logger.error("Database connection error: ", JSON.stringify(error))
+            throw new ServiceUnavailableException("Database connection error")
+        }
+
+    }
+
 }

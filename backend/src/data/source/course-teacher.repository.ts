@@ -10,4 +10,6 @@ export abstract class CourseTeacherRepository {
 
     abstract getRelationWithStudents(courseTeacherId: string, userId: string): Promise<CourseTeacherEntity>
 
+    abstract getRelationInfo(courseTeacherId: string): Promise<CourseTeacherEntity>
+
 }
