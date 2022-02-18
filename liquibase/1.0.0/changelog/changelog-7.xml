@@ -121,4 +121,21 @@
 
     </changeSet>
 
+    <changeSet id="1.0.0-7.7" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-7.7"/>
+
+        <addForeignKeyConstraint baseColumnNames="course_id"
+                                 baseTableName="course_student"
+                                 constraintName="ForeignKey_CourseStudent_CourseId"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="course"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="course_student" constraintName="ForeignKey_CourseStudent_CourseId"/>
+        </rollback>
+
+    </changeSet>
+
 </databaseChangeLog>

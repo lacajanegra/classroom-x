@@ -84,7 +84,18 @@
     <changeSet id="1.0.0-4.6" author="yadickson.soto">
         <ext:tagDatabase tag="1.0.0-4.6"/>
 
-        <addUniqueConstraint columnNames="course_teacher_id,user_id" constraintName="UniqueCourseStudent" tableName="course_student"/>
+        <addUniqueConstraint columnNames="course_teacher_id,user_id" constraintName="UniqueCourseTeacherStudent" tableName="course_student"/>
+
+        <rollback>
+            <dropUniqueConstraint tableName="course_student" constraintName="UniqueCourseTeacherStudent"/>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="1.0.0-4.7" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-4.7"/>
+
+        <addUniqueConstraint columnNames="course_id,user_id" constraintName="UniqueCourseStudent" tableName="course_student"/>
 
         <rollback>
             <dropUniqueConstraint tableName="course_student" constraintName="UniqueCourseStudent"/>

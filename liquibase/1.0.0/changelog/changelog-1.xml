@@ -129,7 +129,10 @@
             <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()" remarks="identify">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="course_teacher_id" type="uuid" remarks="course identity">
+            <column name="course_teacher_id" type="uuid" remarks="course teacher identity">
+                <constraints nullable="false"/>
+            </column>
+            <column name="course_id" type="uuid" remarks="course identity">
                 <constraints nullable="false"/>
             </column>
             <column name="user_id" type="uuid" remarks="student identity">
