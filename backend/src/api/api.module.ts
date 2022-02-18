@@ -1,4 +1,3 @@
-import { ApiMapperModule } from './mapper/api-mapper.module';
 import { AuthModule } from './controller/auth/auth.module';
 import { CourseModule } from './controller/course/course.module';
 import { Module } from '@nestjs/common';
@@ -12,8 +11,7 @@ import { UserModule } from './controller/user/user.module';
         TeacherModule,
         CourseModule,
         StudentModule,
-        UserModule,
-        ApiMapperModule
+        UserModule
     ]
 })
 export class ApiModule { }
