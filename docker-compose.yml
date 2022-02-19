@@ -20,7 +20,7 @@ services:
     depends_on:
       - database
     volumes:
-      - ./liquibase:/liquibase/changelog
+      - ./database:/liquibase/changelog
     command: --url=jdbc:postgresql://database:5432/${DB_NAME}?user=${DB_USER}&password=${DB_PASS} --changeLogFile=masterchangelog.xml update
   backend:
     container_name: backend
@@ -29,12 +29,12 @@ services:
       context: ./backend
       dockerfile: ./Dockerfile
     ports:
-      - "3000:3000"
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
     networks:
       - dockernet
     environment:
       NODE_ENV: production
-      NODE_PORT: 3000
+      NODE_PORT: ${BACKEND_PORT}
       DB_HOST: database
       DB_PORT: 5432
       DB_NAME: ${DB_NAME}
@@ -44,8 +44,23 @@ services:
       JWT_SECRET: MiSuperMegaClave123456789.*/{}
       JWT_EXPIRES_IN: 3600
     depends_on:
-      - database
       - migration
+  frontend:
+    container_name: frontend
+    image: frontend:1.0.0
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    networks:
+      - dockernet
+    environment:
+      PORT: ${FRONTEND_PORT}
+      BACKEND_HOST: backend
+      BACKEND_PORT: ${BACKEND_PORT}
+    depends_on:
+      - backend
 networks:
   dockernet:
     driver: bridge
