@@ -7,14 +7,14 @@ export class ResetPasswordRequestDto {
 
     @IsNotEmpty()
     @Password()
-    readonly password: string
+    readonly oldPassword: string
 
     @IsNotEmpty()
     @Password()
-    @NotMatch('password')
-    readonly newPassword: string
+    @NotMatch('oldPassword')
+    readonly password: string
 
     @IsNotEmpty()
-    @Match('newPassword')
+    @Match('password')
     readonly passwordConfirm: string;
 }

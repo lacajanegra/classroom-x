@@ -6,8 +6,8 @@ import { ResetPasswordRequestDto } from "../model/reset-password-request.dto";
 export class ApiResetPasswordMapper {
 
     fromDtoToModel(dto: ResetPasswordRequestDto): ResetPasswordModel {
-        const { password, newPassword } = dto
-        const model: ResetPasswordModel = { password: password, newPassword: newPassword }
+        const { oldPassword, password } = dto
+        const model: ResetPasswordModel = { password: oldPassword, newPassword: password }
         return model
     }
 
