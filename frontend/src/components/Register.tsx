@@ -15,7 +15,7 @@ const Register: React.FunctionComponent = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const [message, setMessage] = useState<string>('')
 
-    const [type, setType] = useState<UserType | null>({ id: "", name: "" })
+    const [type, setType] = useState<UserType | null>()
 
     const navigate = useNavigate()
 
