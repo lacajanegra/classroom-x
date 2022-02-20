@@ -1,6 +1,6 @@
 interface ResetPasswordModel {
+    oldPassword: string
     password: string
-    newPassword: string
     passwordConfirm: string
 }
 
