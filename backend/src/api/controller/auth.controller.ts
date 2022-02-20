@@ -1,7 +1,7 @@
 import { Body, Controller, Logger, Post, UseGuards } from '@nestjs/common';
 import { CreateUserRequestDto } from 'src/api/model/create-user-request.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { JwtResponseDto } from '../model/jwt-response.dto';
+import { LoginResponseDto } from '../model/login-response.dto';
 import { ResetPasswordRequestDto } from 'src/api/model/reset-password-request.dto';
 import { LoginCredentialsRequestDto } from '../model/login-credentials-request.dto';
 import { ApiSignInService } from 'src/api/service/api-sign-in.service';
@@ -37,7 +37,7 @@ export class AuthController {
     }
 
     @Post('signin')
-    async signIn(@Body() request: LoginCredentialsRequestDto): Promise<JwtResponseDto> {
+    async signIn(@Body() request: LoginCredentialsRequestDto): Promise<LoginResponseDto> {
         this.logger.debug(`Sign in the user ${request.username}`)
         return await this.apiSignInService.execute(request)
     }
@@ -52,7 +52,8 @@ export class AuthController {
 
     @Post('signout')
     @UseGuards(AuthGuard())
-    async signOut(@GetUserId() userId: string) {
+    @Status(StatusEnum.ACTIVE)
+    async signOut(@GetUserId() userId: string) : Promise<void>{
         this.logger.log(`Sign out the userId ${userId}`)
     }
 }
