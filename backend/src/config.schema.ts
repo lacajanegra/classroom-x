@@ -10,5 +10,5 @@ export const configValidationSchema = Joi.object().keys({
     DB_NAME: Joi.string().when('DATABASE_URL', { is: Joi.exist(), then: Joi.optional().allow(''), otherwise: Joi.required() }),
     DB_SSL: Joi.boolean().required(),
     JWT_SECRET: Joi.string().required(),
-    JWT_EXPIRES_IN: Joi.number().default(3600).required()
+    JWT_EXPIRES_IN: Joi.string().required()
 })

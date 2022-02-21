@@ -9,7 +9,6 @@ import { ApiGetCoursesService } from './api-get-courses.service';
 import { ApiGetCoursesStudentService } from './api-get-courses-student.service';
 import { ApiGetCoursesStudentTeachersService } from './api-get-courses-student-teachers.service';
 import { ApiGetCoursesTeacherService } from './api-get-courses-teacher.service';
-import { ApiGetUserInformationService } from './api-get-user-information.service';
 import { ApiMapperModule } from '../mapper/api-mapper.module';
 import { ApiResetPasswordService } from './api-reset-password.service';
 import { ApiSignInService } from './api-sign-in.service';
@@ -35,7 +34,6 @@ import { Module } from '@nestjs/common';
         ApiGetCoursesService,
         ApiUpdateCourseService,
         ApiDelCourseService,
-        ApiGetUserInformationService,
         ApiAddCourseTeacherService,
         ApiGetCourseTeacherService,
         ApiGetCoursesTeacherService,
@@ -54,7 +52,6 @@ import { Module } from '@nestjs/common';
         ApiGetCoursesService,
         ApiUpdateCourseService,
         ApiDelCourseService,
-        ApiGetUserInformationService,
         ApiAddCourseTeacherService,
         ApiGetCourseTeacherService,
         ApiGetCoursesTeacherService,
@@ -65,4 +62,5 @@ import { Module } from '@nestjs/common';
         ApiAddCourseStudentService
     ]
 })
+
 export class ApiServiceModule { }

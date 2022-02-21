@@ -6,7 +6,6 @@ import { Password } from "../decorator/password.decorator"
 export class ResetPasswordRequestDto {
 
     @IsNotEmpty()
-    @Password()
     readonly oldPassword: string
 
     @IsNotEmpty()

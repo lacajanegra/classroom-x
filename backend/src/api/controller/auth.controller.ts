@@ -1,6 +1,5 @@
 import { Body, Controller, Logger, Post, UseGuards } from '@nestjs/common';
 import { CreateUserRequestDto } from 'src/api/model/create-user-request.dto';
-import { AuthGuard } from '@nestjs/passport';
 import { LoginResponseDto } from '../model/login-response.dto';
 import { ResetPasswordRequestDto } from 'src/api/model/reset-password-request.dto';
 import { LoginCredentialsRequestDto } from '../model/login-credentials-request.dto';
@@ -12,6 +11,7 @@ import { GetUserId } from 'src/api/decorator/get-user-id.decorator';
 import { Status } from '../decorator/status.decorator';
 import { StatusGuard } from '../guard/status.guard';
 import { StatusEnum } from 'src/domain/model/status.enum';
+import { JwtGuard } from '../guard/jwt.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -42,17 +42,17 @@ export class AuthController {
         return await this.apiSignInService.execute(request)
     }
 
-    @Post('reset')
-    @UseGuards(AuthGuard(), StatusGuard)
+    @UseGuards(JwtGuard, StatusGuard)
     @Status(StatusEnum.EXPIRED)
+    @Post('reset')
     async reset(@GetUserId() userId: string, @Body() request: ResetPasswordRequestDto): Promise<void> {
         this.logger.log(`Reset passsword the userId ${userId}`)
         return await this.apiResetPasswordService.execute(request, userId)
     }
 
-    @Post('signout')
-    @UseGuards(AuthGuard())
+    @UseGuards(JwtGuard, StatusGuard)
     @Status(StatusEnum.ACTIVE)
+    @Post('signout')
     async signOut(@GetUserId() userId: string) : Promise<void>{
         this.logger.log(`Sign out the userId ${userId}`)
     }

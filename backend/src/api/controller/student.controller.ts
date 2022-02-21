@@ -1,6 +1,5 @@
 import { Controller, Get, Logger, Param, Post, UseGuards } from '@nestjs/common';
 
-import { AuthGuard } from '@nestjs/passport';
 import { CourseTeachersDto } from 'src/api/model/course-teachers.dto';
 import { RoleEnum } from 'src/domain/model/role.enum';
 import { Roles } from 'src/api/decorator/roles.decorator';
@@ -15,9 +14,10 @@ import { ApiGetCoursesStudentTeachersService } from '../service/api-get-courses-
 import { ApiGetCoursesStudentService } from '../service/api-get-courses-student.service';
 import { ApiGetCourseStudentService } from '../service/api-get-course-student.service';
 import { ApiAddCourseStudentService } from '../service/api-add-course-student.service';
+import { JwtGuard } from '../guard/jwt.guard';
 
 @Controller('student')
-@UseGuards(AuthGuard(), RolesGuard, StatusGuard)
+@UseGuards(JwtGuard, RolesGuard, StatusGuard)
 export class StudentController {
 
     private logger = new Logger('StudentController')

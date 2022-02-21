@@ -6,7 +6,6 @@ import { GuardModule } from 'src/api/guard/guard.module';
 import { Module } from '@nestjs/common';
 import { StudentController } from './student.controller';
 import { TeacherController } from './teacher.controller';
-import { UserController } from './user.controller';
 
 @Module({
   imports: [
@@ -18,8 +17,7 @@ import { UserController } from './user.controller';
     AuthController,
     CourseController,
     StudentController,
-    TeacherController,
-    UserController
+    TeacherController
   ]
 })
 export class ControllerModule { }

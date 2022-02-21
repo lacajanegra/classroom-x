@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, Logger, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { RoleEnum } from '../../domain/model/role.enum';
 import { Roles } from 'src/api/decorator/roles.decorator';
 import { RolesGuard } from 'src/api/guard/roles.guard';
@@ -16,9 +15,10 @@ import { ApiGetCoursesService } from 'src/api/service/api-get-courses.service';
 import { ApiUpdateCourseService } from 'src/api/service/api-update-course.service';
 import { ApiDelCourseService } from 'src/api/service/api-del-course.service';
 import { GetUserId } from 'src/api/decorator/get-user-id.decorator';
+import { JwtGuard } from '../guard/jwt.guard';
 
 @Controller('course')
-@UseGuards(AuthGuard(), RolesGuard, StatusGuard)
+@UseGuards(JwtGuard, RolesGuard, StatusGuard)
 export class CourseController {
 
     private logger = new Logger('CourseController')
