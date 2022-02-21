@@ -3,33 +3,27 @@ import LoginModel from "../model/login.model";
 import ResetPasswordModel from '../model/reset-password.model';
 import UserModel from "../model/user.model";
 import authHeader from "./auth-header";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import backendService from "./backend.service";
-import userService from "./user.service";
 
 class AuthService {
 
     private url: string = backendService.getUrl() + "/auth/"
 
-    register = async (request: CreateUserModel, userType: string): Promise<void> => {
-        await axios.post<void>(this.url + "signup/" + userType, request);
-        userService.clearUser()
+    login = (request: LoginModel): Promise<AxiosResponse<UserModel>> => {
+        return axios.post<UserModel>(this.url + "signin", request)
     }
 
-    login = async (request: LoginModel): Promise<UserModel> => {
-        const response = await axios.post<UserModel>(this.url + "signin", request);
-        userService.setUser(response.data)
-        return response.data
+    reset = (request: ResetPasswordModel): Promise<AxiosResponse<void>> => {
+        return axios.post(this.url + "reset", request, { headers: authHeader() })
     }
 
-    reset = async (request: ResetPasswordModel): Promise<void> => {
-        await axios.post<void>(this.url + "reset", request, { headers: authHeader() });
-        userService.clearUser()
+    register = (request: CreateUserModel, userType: string): Promise<AxiosResponse<void>> => {
+        return axios.post(this.url + "signup/" + userType, request, { headers: authHeader() })
     }
 
-    logout = async (): Promise<void> => {
-        await axios.post<void>(this.url + "signout", {}, { headers: authHeader() })
-        userService.clearUser()
+    logout = (): Promise<AxiosResponse<void>> => {
+        return axios.post(this.url + "signout", {}, { headers: authHeader() })
     }
 }
 

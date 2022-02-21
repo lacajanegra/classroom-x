@@ -3,7 +3,7 @@ import './Form.css'
 import CreateUserModel from '../model/create-user.model';
 import ResetPasswordModel from '../model/reset-password.model';
 import authService from "../services/auth.service";
-import { useFormik, Form, Formik, Field, ErrorMessage } from 'formik';
+import { useFormik, Form, Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import userService from '../services/user.service';
@@ -21,8 +21,9 @@ const ResetPassword: React.FunctionComponent = () => {
         passwordConfirm: ''
     }
 
-    const reset = (request: ResetPasswordModel) => {
+    const reset = (request: ResetPasswordModel, { setErrors, resetForm }: FormikHelpers<ResetPasswordModel>) => {
         setLoading(true)
+        resetForm()
         authService.reset(request)
             .then(() => {
                 userService.clearUser()

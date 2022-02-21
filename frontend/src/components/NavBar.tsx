@@ -1,20 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 
-import { Subscription } from 'rxjs';
-import UserModel from '../model/user.model';
 import authService from "../services/auth.service";
-import { useState } from "react";
 import userService from "../services/user.service";
 
 const NavBar: React.FunctionComponent = () => {
 
-  const [user, setUser] = useState<UserModel>()
-  const subscriptionLogin: Subscription = userService.changeUser().subscribe(setUser);
   const navigate = useNavigate()
 
-  const logout = async () => {
-    await authService.logout()
-    navigate("/login", { replace: true })
+  const logout = () => {
+    authService.logout()
+      .finally(() => { userService.clearUser(); navigate("/login", { replace: true }) })
   }
 
   const loginLink = !userService.isLoggedIn() ? (
@@ -25,7 +20,25 @@ const NavBar: React.FunctionComponent = () => {
 
   const registerLink = !userService.isLoggedIn() ? (
     <li className="nav-item">
-      <Link to={"/register"} className="nav-link">Registrarse</Link>
+      <Link to={"/register"} className="nav-link">Registro</Link>
+    </li>
+  ) : (<span></span>)
+
+  const coursesLink = userService.hasAnyRole(['ADMIN']) ? (
+    <li className="nav-item">
+      <Link to={"/courses"} className="nav-link">Administrar Materias</Link>
+    </li>
+  ) : (<span></span>)
+
+  const teacherLink = userService.hasAnyRole(['TEACHER']) ? (
+    <li className="nav-item">
+      <Link to={"/teacher"} className="nav-link">Materias</Link>
+    </li>
+  ) : (<span></span>)
+
+  const studentLink = userService.hasAnyRole(['STUDENT']) ? (
+    <li className="nav-item">
+      <Link to={"/student"} className="nav-link">Inscripci&oacute;n de Materias</Link>
     </li>
   ) : (<span></span>)
 
@@ -42,6 +55,9 @@ const NavBar: React.FunctionComponent = () => {
         <div className="navbar-nav mr-auto">
           {loginLink}
           {registerLink}
+          {coursesLink}
+          {teacherLink}
+          {studentLink}
         </div>
         <div className="navbar-nav ms-auto ml-auto">
           {logoutLink}

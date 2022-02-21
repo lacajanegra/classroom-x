@@ -16,10 +16,10 @@ const CreateUserSchema: Yup.SchemaOf<CreateUserModel> = Yup.object().shape({
         .email("No es un correo correcto")
         .required("Correo requirido"),
     password: Yup.string()
-        .min(8, "Nueva contraseña debe tener al menos 8 caracteres")
-        .max(32, "Nueva contraseña debe ser mayor a 32 caracteres")
+        .min(8, "Contraseña debe tener al menos 8 caracteres")
+        .max(32, "Contraseña debe ser mayor a 32 caracteres")
         .required("Contraseña requerida")
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&\.\/])[A-Za-z\d\.\/@$!%*#?&]{1,}$/,"Contraseña debe contener mayúsculas, minúsculas, números y símbolos [./@$!%*#?&]"),
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&./])[A-Za-z\d./@$!%*#?&]{1,}$/,"Contraseña debe contener mayúsculas, minúsculas, números y símbolos [./@$!%*#?&]"),
     passwordConfirm: Yup.string()
         .required("Debe confirmar contraseña")
         .when('password', (password, field) => password ? field.required().oneOf([Yup.ref('password')], 'Ambas contraseñas deben coincidir') : field)

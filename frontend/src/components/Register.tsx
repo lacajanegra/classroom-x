@@ -1,6 +1,6 @@
 import './Form.css'
 
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 
 import CreateUserModel from '../model/create-user.model';
 import CreateUserSchema from '../model/create-user.schema';
@@ -37,19 +37,33 @@ const Register: React.FunctionComponent = () => {
         passwordConfirm: ''
     }
 
-    const register = (request: CreateUserModel) => {
+    const register = (request: CreateUserModel, { setErrors, resetForm }: FormikHelpers<CreateUserModel>) => {
         setLoading(true)
+        resetForm()
         const userType = type?.id || 'student'
         authService.register(request, userType)
             .then(() => {
-                userService.clearUser()
-                navigate("/login", { replace: true });
+                navigate("../register", { replace: true });
             }).catch((error) => {
                 console.log(error)
+                setErrors({ username: 'Usuario ya existe' })
             }).finally(() => {
                 setLoading(false)
             })
     }
+
+    const selectType = (
+        <div className="form-group">
+            <label htmlFor="type">Tipo de usuario</label>
+            <Select<UserType> options={options} id="type" name="type"
+                getOptionLabel={(option: UserType) => option.name}
+                getOptionValue={(option: UserType) => option.id}
+                onChange={handleOptionChange}
+                value={type}
+            />
+        </div>
+
+    )
 
     return (
 
@@ -87,15 +101,7 @@ const Register: React.FunctionComponent = () => {
                             <ErrorMessage name="passwordConfirm" component="div" className="alert alert-danger" />
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="type">Tipo de usuario</label>
-                            <Select<UserType> options={options} id="type" name="type"
-                                getOptionLabel={(option: UserType) => option.name}
-                                getOptionValue={(option: UserType) => option.id}
-                                onChange={handleOptionChange}
-                                value={type}
-                            />
-                        </div>
+                        {selectType}
 
                         <div className="form-group">
                             <button type="submit" className="btn btn-primary btn-block" disabled={loading} >

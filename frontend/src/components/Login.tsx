@@ -1,13 +1,14 @@
 import './Form.css'
 
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 
 import LoginModel from "../model/login.model";
 import LoginSchema from '../model/login.schema';
-import UserModel from '../model/user.model';
 import authService from "../services/auth.service";
 import { useNavigate } from 'react-router-dom'
 import { useState } from "react";
+import UserModel from '../model/user.model';
+import { AxiosResponse } from 'axios';
 import userService from '../services/user.service';
 
 const Login: React.FunctionComponent = () => {
@@ -21,14 +22,18 @@ const Login: React.FunctionComponent = () => {
 
     const navigate = useNavigate()
 
-    const login = (request: LoginModel) => {
+    console.log("por aqui pase")
+
+    const login = (request: LoginModel, { setErrors, resetForm }: FormikHelpers<LoginModel>) => {
         setLoading(true)
+        resetForm();
         authService.login(request)
-            .then((response: UserModel) => {
-                userService.setUser(response)
-                navigate("/home", { replace: true });
+            .then((response: AxiosResponse<UserModel>) => {
+                userService.setUser(response.data)
+                navigate("../home", { replace: true });
             }).catch((error) => {
-                console.log(error)
+                userService.clearUser()
+                setErrors({ username: 'Credenciales no validas' })
             }).finally(() => {
                 setLoading(false)
             })
@@ -62,6 +67,7 @@ const Login: React.FunctionComponent = () => {
                                 )}
                                 <span>Login</span>
                             </button>
+                            <ErrorMessage name="message" component="div" className="alert alert-danger" />
                         </div>
                     </Form>
                 </Formik>
@@ -71,3 +77,4 @@ const Login: React.FunctionComponent = () => {
 }
 
 export default Login
+
