@@ -1,6 +1,6 @@
 import './Form.css'
 
-import { ErrorMessage, Field, Form, Formik, FormikHelpers, FormikState } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers, FormikProps } from 'formik';
 
 import CreateUserModel from '../model/create-user.model';
 import CreateUserSchema from '../model/create-user.schema';
@@ -50,7 +50,7 @@ const Register: React.FunctionComponent = () => {
             })
     }
 
-    const usernameElement = ({ errors, touched }: FormikState<CreateUserModel>) => {
+    const usernameElement = ({ errors, touched }: FormikProps<CreateUserModel>) => {
         const hasError: boolean = !(!touched.username || !errors.username)
         return (
             <div className="form-group">
@@ -61,7 +61,7 @@ const Register: React.FunctionComponent = () => {
         )
     }
 
-    const nameElement = ({ errors, touched }: FormikState<CreateUserModel>) => {
+    const nameElement = ({ errors, touched }: FormikProps<CreateUserModel>) => {
         const hasError: boolean = !(!touched.name || !errors.name)
         return (
             <div className="form-group">
@@ -72,7 +72,7 @@ const Register: React.FunctionComponent = () => {
         )
     }
 
-    const emailElement = ({ errors, touched }: FormikState<CreateUserModel>) => {
+    const emailElement = ({ errors, touched }: FormikProps<CreateUserModel>) => {
         const hasError: boolean = !(!touched.email || !errors.email)
         return (
             <div className="form-group">
@@ -83,7 +83,7 @@ const Register: React.FunctionComponent = () => {
         )
     }
 
-    const passwordElement = ({ errors, touched }: FormikState<CreateUserModel>) => {
+    const passwordElement = ({ errors, touched }: FormikProps<CreateUserModel>) => {
         const hasError: boolean = !(!touched.password || !errors.password)
         return (
             <div className="form-group">
@@ -94,7 +94,7 @@ const Register: React.FunctionComponent = () => {
         )
     }
 
-    const passwordConfirmElement = ({ errors, touched }: FormikState<CreateUserModel>) => {
+    const passwordConfirmElement = ({ errors, touched }: FormikProps<CreateUserModel>) => {
         const hasError: boolean = !(!touched.passwordConfirm || !errors.passwordConfirm)
         return (
             <div className="form-group">
@@ -119,7 +119,7 @@ const Register: React.FunctionComponent = () => {
         )
     }
 
-    const buttonElement = ({ isSubmitting }: FormikState<CreateUserModel>) => {
+    const buttonElement = ({ isSubmitting }: FormikProps<CreateUserModel>) => {
         return (
             <div className="form-group">
                 <ErrorMessage name="message" component="div" className="alert alert-danger" />
@@ -143,7 +143,7 @@ const Register: React.FunctionComponent = () => {
                         await register(request, helpers)
                     }}
                 >
-                    {(formik: FormikState<CreateUserModel>) => {
+                    {(formik: FormikProps<CreateUserModel>) => {
                         return (
                             <Form>
                                 {usernameElement(formik)}

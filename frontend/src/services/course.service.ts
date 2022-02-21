@@ -5,10 +5,18 @@ import backendService from './backend.service';
 
 class CourseService {
 
-    private url: string = backendService.getUrl() + "/course/"
+    private url: string = backendService.getUrl() + "/course"
 
     getCourses = (): Promise<AxiosResponse<CourseModel[]>> => {
-        return axios.get(this.url + "all", { headers: authHeader() })
+        return axios.get(this.url + "/all", { headers: authHeader() })
+    }
+
+    addCourse = (request: CourseModel): Promise<AxiosResponse<CourseModel>> => {
+        return axios.post(this.url, request, { headers: authHeader() })
+    }
+
+    editCourse = (request: CourseModel): Promise<AxiosResponse<CourseModel>> => {
+        return axios.patch(this.url + `/${request.id}/name`, request, { headers: authHeader() })
     }
 }
 

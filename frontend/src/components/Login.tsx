@@ -1,6 +1,6 @@
 import './Form.css'
 
-import { ErrorMessage, Field, Form, Formik, FormikHelpers, FormikState, } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers, FormikProps, } from 'formik';
 
 import LoginModel from "../model/login.model";
 import LoginSchema from '../model/login.schema';
@@ -28,7 +28,7 @@ const Login: React.FunctionComponent = () => {
         navigate("/reset-password", { replace: true })
     }
 
-    const login = async (request: LoginModel, { setErrors, setSubmitting }: FormikHelpers<LoginModel>) => {
+    const login = async (request: LoginModel, { setErrors }: FormikHelpers<LoginModel>) => {
         await authService.login(request)
             .then((response: AxiosResponse<UserModel>) => {
                 userService.setUser(response.data)
@@ -40,7 +40,7 @@ const Login: React.FunctionComponent = () => {
             })
     }
 
-    const usernameElement = ({ errors, touched }: FormikState<LoginModel>) => {
+    const usernameElement = ({ errors, touched}: FormikProps<LoginModel>) => {
         const hasError: boolean = !(!touched.username || !errors.username)
         return (
             <div className="form-group">
@@ -51,7 +51,7 @@ const Login: React.FunctionComponent = () => {
         )
     }
 
-    const passwordElement = ({ errors, touched }: FormikState<LoginModel>) => {
+    const passwordElement = ({ errors, touched }: FormikProps<LoginModel>) => {
         const hasError: boolean = !(!touched.password || !errors.password)
         return (
             <div className="form-group">
@@ -62,7 +62,7 @@ const Login: React.FunctionComponent = () => {
         )
     }
 
-    const buttonElement = ({ isSubmitting }: FormikState<LoginModel>) => {
+    const buttonElement = ({ isSubmitting }: FormikProps<LoginModel>) => {
         return (
             <div className="form-group">
                 <ErrorMessage name="message" component="div" className="alert alert-danger" />
@@ -89,7 +89,7 @@ const Login: React.FunctionComponent = () => {
                         await login(request, helpers)
                     }}
                 >
-                    {(formik: FormikState<LoginModel>) => {
+                    {(formik: FormikProps<LoginModel>) => {
                         return (
                             <Form>
                                 {usernameElement(formik)}

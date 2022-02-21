@@ -2,7 +2,7 @@ import './Form.css'
 
 import ResetPasswordModel from '../model/reset-password.model';
 import authService from "../services/auth.service";
-import { Form, Formik, Field, ErrorMessage, FormikHelpers, FormikState } from 'formik';
+import { Form, Formik, Field, ErrorMessage, FormikHelpers, FormikProps } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import userService from '../services/user.service';
 import ResetPasswordSchema from '../model/reset-password.schema';
@@ -31,7 +31,7 @@ const ResetPassword: React.FunctionComponent = () => {
             })
     }
 
-    const oldPasswordElement = ({ errors, touched }: FormikState<ResetPasswordModel>) => {
+    const oldPasswordElement = ({ errors, touched }: FormikProps<ResetPasswordModel>) => {
         const hasError: boolean = !(!touched.oldPassword || !errors.oldPassword)
         return (
             <div className="form-group">
@@ -42,7 +42,7 @@ const ResetPassword: React.FunctionComponent = () => {
         )
     }
 
-    const passwordElement = ({ errors, touched }: FormikState<ResetPasswordModel>) => {
+    const passwordElement = ({ errors, touched }: FormikProps<ResetPasswordModel>) => {
         const hasError: boolean = !(!touched.password || !errors.password)
         return (
             <div className="form-group">
@@ -53,7 +53,7 @@ const ResetPassword: React.FunctionComponent = () => {
         )
     }
 
-    const passwordConfirmElement = ({ errors, touched }: FormikState<ResetPasswordModel>) => {
+    const passwordConfirmElement = ({ errors, touched }: FormikProps<ResetPasswordModel>) => {
         const hasError: boolean = !(!touched.passwordConfirm || !errors.passwordConfirm)
         return (
             <div className="form-group">
@@ -64,7 +64,7 @@ const ResetPassword: React.FunctionComponent = () => {
         )
     }
 
-    const buttonElement = ({ isSubmitting }: FormikState<ResetPasswordModel>) => {
+    const buttonElement = ({ isSubmitting }: FormikProps<ResetPasswordModel>) => {
         return (
             <div className="form-group">
                 <ErrorMessage name="message" component="div" className="alert alert-danger" />
@@ -88,7 +88,7 @@ const ResetPassword: React.FunctionComponent = () => {
                         await reset(request, helpers)
                     }}
                 >
-                    {(formik: FormikState<ResetPasswordModel>) => {
+                    {(formik: FormikProps<ResetPasswordModel>) => {
                         return (
                             <Form>
                                 {oldPasswordElement(formik)}

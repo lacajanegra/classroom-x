@@ -1,6 +1,7 @@
 interface CourseModel {
-    id: string
+    id?: string
     name: string
+    message?: string
 }
 
 export default CourseModel
