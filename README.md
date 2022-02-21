@@ -6,6 +6,8 @@ Debe tener instalado docker-compose
 ## limpiar todo
 
 $ docker-compose down
+$ docker-compose stop
+$ docker-compose rm -s -f
 
 ## Compilar
 
@@ -28,6 +30,6 @@ https://localhost:3000
 https://localhost:4000
 
 login: admin
-password: admin-1234.*Abcd
+password: admin
 
 

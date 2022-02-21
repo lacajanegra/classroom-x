@@ -42,7 +42,7 @@ services:
       DB_PASS: ${DB_PASS}
       DB_SSL: 'false'
       JWT_SECRET: MiSuperMegaClave123456789.*/{}
-      JWT_EXPIRES_IN: 3600
+      JWT_EXPIRES_IN: 3600s
     depends_on:
       - migration
   frontend:
