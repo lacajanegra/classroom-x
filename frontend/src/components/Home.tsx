@@ -5,7 +5,7 @@ const Home: React.FunctionComponent = () => {
 
     const courseList = userService.hasAnyRole(['ADMIN']) ? (
         <Courses />
-    ) : (<span></span>)
+    ) : (null)
 
     return (
         <div>

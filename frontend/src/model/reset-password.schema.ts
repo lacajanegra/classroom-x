@@ -12,7 +12,8 @@ const ResetPasswordSchema: Yup.SchemaOf<ResetPasswordModel> = Yup.object().shape
         .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&./])[A-Za-z\d./@$!%*#?&]{1,}$/,"Contraseña debe contener mayúsculas, minúsculas, números y símbolos [./@$!%*#?&]"),
     passwordConfirm: Yup.string()
         .required("Debe confirmar nueva contraseña")
-        .when('newPassword', (newPassword, field) => newPassword ? field.required().oneOf([Yup.ref('newPassword')], 'Ambas contraseñas deben coincidir') : field)
+        .when('newPassword', (newPassword, field) => newPassword ? field.required().oneOf([Yup.ref('newPassword')], 'Ambas contraseñas deben coincidir') : field),
+        message: Yup.string().optional()
 });
 
 export default ResetPasswordSchema

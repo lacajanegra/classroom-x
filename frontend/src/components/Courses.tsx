@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CourseModel from '../model/course.model';
 import courseService from '../services/course.service'
 
 const Courses: React.FunctionComponent = () => {
 
-    const [loading, setLoading] = useState<boolean>(false)
-    const [courses, setCoures] = useState<CourseModel[]>([])
+    // const [loading, setLoading] = useState<boolean>(false)
+    // const [courses, setCoures] = useState<CourseModel[]>([])
+
 
     //     getCourses() {
     //     courseService.getCourses()
@@ -16,7 +17,7 @@ const Courses: React.FunctionComponent = () => {
 
     return (
         <div>
-            {loading && (
+            {/* {loading && (
                 <span className="spinner-border spinner-border-sm"></span>
             )}
 
@@ -56,7 +57,7 @@ const Courses: React.FunctionComponent = () => {
                         </tbody>
                     </table>
                 </div>
-            }
+            } */}
         </div>
     );
 }

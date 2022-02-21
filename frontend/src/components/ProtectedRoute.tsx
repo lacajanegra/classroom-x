@@ -16,12 +16,10 @@ const ProtectedRoute: React.FunctionComponent<ProtectedRouteProps> = ({ roles, c
         return !(roles === undefined || userService.hasAnyRole(roles))
     }
 
-    if (!userService.isLoggedIn()) {
-        return (<Navigate to={"../login"} state={{ from: location }} replace />)
-    } else if (userService.isExpired()) {
-        return (<Navigate to={"../reset-password"} state={{ from: location }} replace />)
+    if (!userService.isLoggedIn() || userService.isExpired()) {
+        return (<Navigate to={"/login"} state={{ from: location }} replace />)
     } else if (requireRole()) {
-        return (<Navigate to={"../not-found"} state={{ from: location }} replace />)
+        return (<Navigate to={"/not-found"} state={{ from: location }} replace />)
     } else {
         return (children)
     }

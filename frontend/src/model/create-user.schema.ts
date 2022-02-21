@@ -22,7 +22,8 @@ const CreateUserSchema: Yup.SchemaOf<CreateUserModel> = Yup.object().shape({
         .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&./])[A-Za-z\d./@$!%*#?&]{1,}$/,"Contraseña debe contener mayúsculas, minúsculas, números y símbolos [./@$!%*#?&]"),
     passwordConfirm: Yup.string()
         .required("Debe confirmar contraseña")
-        .when('password', (password, field) => password ? field.required().oneOf([Yup.ref('password')], 'Ambas contraseñas deben coincidir') : field)
+        .when('password', (password, field) => password ? field.required().oneOf([Yup.ref('password')], 'Ambas contraseñas deben coincidir') : field),
+        message: Yup.string().optional()
 })
 
 export default CreateUserSchema

@@ -15,8 +15,8 @@ const Container: React.FunctionComponent = () => {
         <Route path="/login" element={<Login />}  />
         <Route path="/register" element={<Register />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/home" element={ <ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/not-found" element={<NotFound />}  />
+        <Route path="/home" element={ <ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </div>

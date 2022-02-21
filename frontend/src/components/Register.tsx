@@ -1,6 +1,6 @@
 import './Form.css'
 
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers, FormikState } from 'formik';
 
 import CreateUserModel from '../model/create-user.model';
 import CreateUserSchema from '../model/create-user.schema';
@@ -13,8 +13,6 @@ import { useState } from "react";
 import userService from '../services/user.service';
 
 const Register: React.FunctionComponent = () => {
-
-    const [loading, setLoading] = useState<boolean>(false)
 
     const [type, setType] = useState<UserType | null>({ id: "student", name: "Estudiante" })
 
@@ -37,85 +35,131 @@ const Register: React.FunctionComponent = () => {
         passwordConfirm: ''
     }
 
-    const register = (request: CreateUserModel, { setErrors, resetForm }: FormikHelpers<CreateUserModel>) => {
-        setLoading(true)
-        resetForm()
+    const registerSuccess = () => {
+        userService.clearUser()
+        navigate("../login", { replace: true });
+    }
+
+    const register = async (request: CreateUserModel, { setErrors }: FormikHelpers<CreateUserModel>) => {
         const userType = type?.id || 'student'
-        authService.register(request, userType)
+        await authService.register(request, userType)
             .then(() => {
-                navigate("../register", { replace: true });
-            }).catch((error) => {
-                console.log(error)
+                registerSuccess()
+            }).catch(() => {
                 setErrors({ username: 'Usuario ya existe' })
-            }).finally(() => {
-                setLoading(false)
             })
     }
 
-    const selectType = (
-        <div className="form-group">
-            <label htmlFor="type">Tipo de usuario</label>
-            <Select<UserType> options={options} id="type" name="type"
-                getOptionLabel={(option: UserType) => option.name}
-                getOptionValue={(option: UserType) => option.id}
-                onChange={handleOptionChange}
-                value={type}
-            />
-        </div>
+    const usernameElement = ({ errors, touched }: FormikState<CreateUserModel>) => {
+        const hasError: boolean = !(!touched.username || !errors.username)
+        return (
+            <div className="form-group">
+                <label htmlFor="username" >Usuario</label>
+                <Field name="username" type="text" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Usuario" />
+                <ErrorMessage name="username" component="div" className={hasError ? 'invalid-feedback' : ''} />
+            </div>
+        )
+    }
 
-    )
+    const nameElement = ({ errors, touched }: FormikState<CreateUserModel>) => {
+        const hasError: boolean = !(!touched.name || !errors.name)
+        return (
+            <div className="form-group">
+                <label htmlFor="name" >Nombre</label>
+                <Field name="name" type="text" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Nombre" />
+                <ErrorMessage name="name" component="div" className={hasError ? 'invalid-feedback' : ''} />
+            </div>
+        )
+    }
+
+    const emailElement = ({ errors, touched }: FormikState<CreateUserModel>) => {
+        const hasError: boolean = !(!touched.email || !errors.email)
+        return (
+            <div className="form-group">
+                <label htmlFor="email" >Correo</label>
+                <Field name="email" type="email" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Correo" />
+                <ErrorMessage name="email" component="div" className={hasError ? 'invalid-feedback' : ''} />
+            </div>
+        )
+    }
+
+    const passwordElement = ({ errors, touched }: FormikState<CreateUserModel>) => {
+        const hasError: boolean = !(!touched.password || !errors.password)
+        return (
+            <div className="form-group">
+                <label htmlFor="password">Contrase&ntilde;a</label>
+                <Field name="password" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Contrase&ntilde;a" />
+                <ErrorMessage name="password" component="div" className={hasError ? 'invalid-feedback' : ''} />
+            </div>
+        )
+    }
+
+    const passwordConfirmElement = ({ errors, touched }: FormikState<CreateUserModel>) => {
+        const hasError: boolean = !(!touched.passwordConfirm || !errors.passwordConfirm)
+        return (
+            <div className="form-group">
+                <label htmlFor="passwordConfirm">Confirmar Contrase&ntilde;a</label>
+                <Field name="passwordConfirm" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Confirmar Contrase&ntilde;a" />
+                <ErrorMessage name="passwordConfirm" component="div" className={hasError ? 'invalid-feedback' : ''} />
+            </div>
+        )
+    }
+
+    const typeElement = () => {
+        return (
+            <div className="form-group">
+                <label htmlFor="type">Tipo de usuario</label>
+                <Select<UserType> options={options} id="type" name="type"
+                    getOptionLabel={(option: UserType) => option.name}
+                    getOptionValue={(option: UserType) => option.id}
+                    onChange={handleOptionChange}
+                    value={type}
+                />
+            </div>
+        )
+    }
+
+    const buttonElement = ({ isSubmitting }: FormikState<CreateUserModel>) => {
+        return (
+            <div className="form-group">
+                <ErrorMessage name="message" component="div" className="alert alert-danger" />
+                <button type="submit" className="btn btn-primary btn-block" disabled={isSubmitting} >
+                    {isSubmitting && (
+                        <span className="spinner-border spinner-border-sm"></span>
+                    )}
+                    <span>Registrar</span>
+                </button>
+            </div>
+        )
+    }
 
     return (
-
         <div className="col-md-12">
             <div className="card card-container">
                 <Formik
                     initialValues={initialValues}
                     validationSchema={CreateUserSchema}
-                    onSubmit={register}
+                    onSubmit={async (request, helpers) => {
+                        await register(request, helpers)
+                    }}
                 >
-                    <Form>
-                        <div className="form-group">
-                            <label htmlFor="username">Usuario</label>
-                            <Field name="username" type="text" className="form-control" />
-                            <ErrorMessage name="username" component="div" className="alert alert-danger" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="name">Nombre</label>
-                            <Field name="name" type="text" className="form-control" />
-                            <ErrorMessage name="name" component="div" className="alert alert-danger" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Correo</label>
-                            <Field name="email" type="email" className="form-control" />
-                            <ErrorMessage name="email" component="div" className="alert alert-danger" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Contrase&ntilde;a</label>
-                            <Field name="password" type="password" className="form-control" />
-                            <ErrorMessage name="password" component="div" className="alert alert-danger" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="passwordConfirm">Confirmar Contrase&ntilde;a</label>
-                            <Field name="passwordConfirm" type="password" className="form-control" />
-                            <ErrorMessage name="passwordConfirm" component="div" className="alert alert-danger" />
-                        </div>
-
-                        {selectType}
-
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-primary btn-block" disabled={loading} >
-                                {loading && (
-                                    <span className="spinner-border spinner-border-sm"></span>
-                                )}
-                                <span>Registrar</span>
-                            </button>
-                        </div>
-                    </Form>
+                    {(formik: FormikState<CreateUserModel>) => {
+                        return (
+                            <Form>
+                                {usernameElement(formik)}
+                                {nameElement(formik)}
+                                {emailElement(formik)}
+                                {passwordElement(formik)}
+                                {passwordConfirmElement(formik)}
+                                {typeElement()}
+                                {buttonElement(formik)}
+                            </Form>
+                        )
+                    }}
                 </Formik>
             </div>
         </div>
-    );
+    )
 }
 
 export default Register
