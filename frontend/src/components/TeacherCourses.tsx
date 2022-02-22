@@ -1,17 +1,17 @@
+import { Link } from 'react-router-dom';
 import CourseModel from '../model/course.model';
-import Course from './Course';
 import TableContainer from './TableContainer';
 
-interface CoursesProps {
+interface TeacherCoursesProps {
     courses: CourseModel[]
     handler: () => {}
 }
 
-const Courses: React.FunctionComponent<CoursesProps> = ({ courses, handler }: CoursesProps) => {
+const TeacherCourses: React.FunctionComponent<TeacherCoursesProps> = ({ courses, handler }: TeacherCoursesProps) => {
 
     return (
         <TableContainer elements={courses} >
-            <table className='table table-sm table-striped'>
+            < table className='table table-sm table-striped' >
                 <thead>
                     <tr>
                         <th scope="col">Nombre</th>
@@ -24,15 +24,19 @@ const Courses: React.FunctionComponent<CoursesProps> = ({ courses, handler }: Co
                             <td>{course.name}</td>
                             <td>
                                 <div className="d-flex flex-row-reverse mb-2">
-                                    <Course course={course} buttonName="Editar" handler={handler} />
+                                    <Link to={`/teacher-course/${course.id}`}>
+                                        <div className="btn btn-outline-primary btn-sm">
+                                            Ver
+                                        </div>
+                                    </Link>
                                 </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-        </TableContainer>
+        </TableContainer >
     )
 }
 
-export default Courses;
+export default TeacherCourses;

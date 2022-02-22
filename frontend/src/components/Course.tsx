@@ -6,13 +6,12 @@ import CourseSchema from '../model/course.schema';
 import courseService from '../services/course.service';
 
 interface CourseProps {
-    id?: string
-    name: string
+    course?: CourseModel
     buttonName: string
     handler: () => {}
 }
 
-const Course: React.FunctionComponent<CourseProps> = ({ id, name, buttonName, handler }: CourseProps) => {
+const Course: React.FunctionComponent<CourseProps> = ({ course, buttonName, handler }: CourseProps) => {
 
     const [show, setShow] = useState(false)
 
@@ -20,8 +19,8 @@ const Course: React.FunctionComponent<CourseProps> = ({ id, name, buttonName, ha
     const handleClose = () => setShow(false)
 
     const initialValues: CourseModel = {
-        id: id,
-        name: name,
+        id: course?.id,
+        name: course?.name || '',
         message: ''
     }
 
@@ -48,7 +47,7 @@ const Course: React.FunctionComponent<CourseProps> = ({ id, name, buttonName, ha
     }
 
     const save = async (request: CourseModel, formik: FormikHelpers<CourseModel>) => {
-        if (!id) await addCourse(request, formik)
+        if (!course?.id) await addCourse(request, formik)
         else await editCourse(request, formik)
     }
 
@@ -69,11 +68,11 @@ const Course: React.FunctionComponent<CourseProps> = ({ id, name, buttonName, ha
                 <button type="button" className="btn btn-secondary btn-sm" onClick={() => { resetForm(); handleClose() }} disabled={isSubmitting}>
                     Cerrar
                 </button>
-                <button type="submit" form={`courseId${id}`} className="btn btn-primary btn-sm" disabled={isSubmitting}>
+                <button type="submit" form={`courseId${course?.id}`} className="btn btn-primary btn-sm" disabled={isSubmitting}>
                     {isSubmitting && (
                         <span className="spinner-border spinner-border-sm"></span>
                     )}
-                    <span>{id ? "Editar" : "Guardar"}</span>
+                    <span>{course?.id ? "Editar" : "Guardar"}</span>
                 </button>
             </div>
         )
@@ -94,11 +93,11 @@ const Course: React.FunctionComponent<CourseProps> = ({ id, name, buttonName, ha
             >
                 {(formik: FormikProps<CourseModel>) => {
                     return (
-                        <Form id={`courseId${id}`}>
+                        <Form id={`courseId${course?.id}`}>
                             <Modal show={show} onHide={handleClose}>
 
                                 <Modal.Header>
-                                    <Modal.Title>{id ? "Editar Materia" : "Nueva Materia"}</Modal.Title>
+                                    <Modal.Title>{course?.id ? "Editar Materia" : "Nueva Materia"}</Modal.Title>
                                     <ErrorMessage name="message" component="div" className="alert alert-danger" />
                                 </Modal.Header>
 

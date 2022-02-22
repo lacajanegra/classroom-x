@@ -37,7 +37,7 @@ class UserService {
 
     hasAnyRole = (roles: string[]): boolean => {
         const user: UserModel = this.getUser()
-        return !!(user && user.roles && user.roles.some(r => roles.indexOf(r) >= 0)) && !this.isExpired()
+        return this.isLoggedIn() && !this.isExpired() && !!(user && user.roles && user.roles.some(r => roles.indexOf(r) >= 0))
     }
 
 }

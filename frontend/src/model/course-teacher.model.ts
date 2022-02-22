@@ -1,6 +1,6 @@
 interface CourseTeacherModel {
     id: string
-    name: string
+    message?: string
 }
 
 export default CourseTeacherModel
