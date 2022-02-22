@@ -6,7 +6,6 @@ import { ApiCourseTeacherForStudentMapper } from './api-course-teacher-for-stude
 import { ApiCourseTeacherMapper } from './api-course-teacher.mapper';
 import { ApiCourseTeacherStudentDetailsMapper } from './api-course-teacher-student-details.mapper';
 import { ApiCourseTeachersForStudentMapper } from './api-course-teachers-for-student.mapper';
-import { ApiCourseTeachersMapper } from './api-course-teachers.mapper';
 import { ApiCoursesFilterMapper } from './api-courses-filter.mapper';
 import { ApiCoursesMapper } from './api-courses.mapper';
 import { ApiCoursesStudentDetailsMapper } from './api-courses-student-details.mapper';
@@ -14,7 +13,6 @@ import { ApiCoursesStudentMapper } from './api-courses-student.mapper';
 import { ApiCoursesTeacherDetailsMapper } from './api-courses-teacher-details.mapper';
 import { ApiCoursesTeacherMapper } from './api-courses-teacher.mapper';
 import { ApiCoursesTeacherStudentDetailsMapper } from './api-courses-teacher-student-details.mapper';
-import { ApiCoursesTeachersMapper } from './api-courses-teachers.mapper';
 import { ApiCreateCourseMapper } from './api-create-course.mapper';
 import { ApiCreateUserMapper } from './api-create-user.mapper';
 import { ApiLoginMapper } from './api-login.mapper';
@@ -23,6 +21,11 @@ import { ApiTokenMapper } from './api-token.mapper';
 import { ApiUserMapper } from './api-user.mapper';
 import { GuardModule } from '../guard/guard.module';
 import { Module } from '@nestjs/common';
+import { ApiUsersMapper } from './api-users.mapper';
+import { ApiCourseToTeachMapper } from './api-course-to-teach.mapper';
+import { ApiCoursesToTeachMapper } from './api-courses-to-teach.mapper';
+import { ApiCourseToLearnMapper } from './api-course-to-learn.mapper';
+import { ApiCoursesToLearnMapper } from './api-courses-to-learn.mapper';
 
 @Module({
     imports: [
@@ -46,12 +49,15 @@ import { Module } from '@nestjs/common';
         ApiCreateCourseMapper,
         ApiCourseStudentMapper,
         ApiCoursesStudentMapper,
-        ApiCourseTeachersMapper,
-        ApiCoursesTeachersMapper,
         ApiCourseTeacherForStudentMapper,
         ApiCourseTeachersForStudentMapper,
         ApiCourseTeacherStudentDetailsMapper,
-        ApiCoursesTeacherStudentDetailsMapper
+        ApiCoursesTeacherStudentDetailsMapper,
+        ApiUsersMapper,
+        ApiCourseToTeachMapper,
+        ApiCoursesToTeachMapper,
+        ApiCourseToLearnMapper,
+        ApiCoursesToLearnMapper
     ],
     exports: [
         ApiLoginMapper,
@@ -71,12 +77,15 @@ import { Module } from '@nestjs/common';
         ApiCreateCourseMapper,
         ApiCourseStudentMapper,
         ApiCoursesStudentMapper,
-        ApiCourseTeachersMapper,
-        ApiCoursesTeachersMapper,
         ApiCourseTeacherForStudentMapper,
         ApiCourseTeachersForStudentMapper,
         ApiCourseTeacherStudentDetailsMapper,
-        ApiCoursesTeacherStudentDetailsMapper
+        ApiCoursesTeacherStudentDetailsMapper,
+        ApiUsersMapper,
+        ApiCourseToTeachMapper,
+        ApiCoursesToTeachMapper,
+        ApiCourseToLearnMapper,
+        ApiCoursesToLearnMapper
     ]
 })
 export class ApiMapperModule { }

@@ -1,23 +1,23 @@
 import { CourseEntity } from '../entity/course.entity';
 import { CourseTeacherEntity } from "../entity/course-teacher.entity";
 import { CourseTeacherModel } from 'src/domain/model/course-teacher.model';
-import { CourseTeachersModel } from 'src/domain/model/course-teachers.model';
 import { DataCoursesTeacherMapper } from './data-courses-teacher.mapper';
 import { Injectable } from "@nestjs/common";
+import { CourseToTeachModel } from 'src/domain/model/course-to-teach.model';
 
 @Injectable()
-export class DataCourseTeachersMapper {
+export class DataCourseToTeachMapper {
 
     constructor(private readonly dataCoursesTeacherMapper: DataCoursesTeacherMapper) { }
 
-    fromEntityToModel(entity: CourseEntity): CourseTeachersModel {
+    fromEntityToModel(entity: CourseEntity): CourseToTeachModel {
 
         if (!entity) {
             return undefined
         }
 
         const { courseTeachers } = entity
-        const model: CourseTeachersModel = {
+        const model: CourseToTeachModel = {
             course: entity,
             teachers: this.getTeachers(courseTeachers)
         }

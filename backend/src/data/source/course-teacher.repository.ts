@@ -12,4 +12,6 @@ export abstract class CourseTeacherRepository {
 
     abstract getRelationInfo(courseTeacherId: string): Promise<CourseTeacherEntity>
 
+    abstract getAllRelation(): Promise<CourseTeacherEntity[]> 
+
 }

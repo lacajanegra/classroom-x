@@ -20,4 +20,15 @@ export class DatabaseRoleRepository extends Repository<RoleEntity> implements Ro
         }
     }
 
+    async getUsersByRole(role: RoleEnum): Promise<RoleEntity> {
+
+        try {
+            return await this.findOne({ name: role }, { relations: ['userRoles'] })
+        } catch (error) {
+            this.logger.error("Database connection error: ", JSON.stringify(error))
+            throw new ServiceUnavailableException("Database connection error")
+        }
+
+    }
+
 }

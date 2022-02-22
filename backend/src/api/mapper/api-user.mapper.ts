@@ -6,8 +6,9 @@ import { UserModel } from '../../domain/model/user.model';
 export class ApiUserMapper {
 
     fromModelToDto(user: UserModel): UserDto {
-        const { name, email, status, roles } = user
+        const { id, name, email, status, roles } = user
         const dto: UserDto = {
+            id: id,
             name: name,
             email: email,
             status: status,

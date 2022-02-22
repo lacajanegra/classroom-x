@@ -5,4 +5,6 @@ export abstract class RoleRepository {
 
     abstract getRoleByName(role: RoleEnum): Promise<RoleEntity>
 
+    abstract getUsersByRole(role: RoleEnum): Promise<RoleEntity>
+
 }

@@ -1,6 +1,5 @@
 import { Controller, Get, Logger, Param, Post, UseGuards } from '@nestjs/common';
 
-import { CourseTeachersDto } from 'src/api/model/course-teachers.dto';
 import { RoleEnum } from 'src/domain/model/role.enum';
 import { Roles } from 'src/api/decorator/roles.decorator';
 import { RolesGuard } from 'src/api/guard/roles.guard';
@@ -10,11 +9,14 @@ import { StatusGuard } from 'src/api/guard/status.guard';
 import { CourseStudentDto } from 'src/api/model/course-student.dto';
 import { CourseStudentDetailsDto } from 'src/api/model/course-student-details.dto';
 import { GetUserId } from 'src/api/decorator/get-user-id.decorator';
-import { ApiGetCoursesStudentTeachersService } from '../service/api-get-courses-student-teachers.service';
+import { ApiGetCoursesToLearnService } from '../service/api-get-courses-to-learn.service';
 import { ApiGetCoursesStudentService } from '../service/api-get-courses-student.service';
 import { ApiGetCourseStudentService } from '../service/api-get-course-student.service';
 import { ApiAddCourseStudentService } from '../service/api-add-course-student.service';
 import { JwtGuard } from '../guard/jwt.guard';
+import { UserDto } from '../model/user.dto';
+import { ApiGetStudentsService } from '../service/api-get-students.service';
+import { CourseDto } from '../model/course.dto';
 
 @Controller('student')
 @UseGuards(JwtGuard, RolesGuard, StatusGuard)
@@ -23,18 +25,27 @@ export class StudentController {
     private logger = new Logger('StudentController')
 
     constructor(
-        private readonly apiGetCoursesStudentTeachersService: ApiGetCoursesStudentTeachersService,
+        private readonly apiGetStudentsService: ApiGetStudentsService,
+        private readonly apiGetCoursesToLearnService: ApiGetCoursesToLearnService,
         private readonly apiGetCoursesStudentService: ApiGetCoursesStudentService,
         private readonly apiGetCourseStudentService: ApiGetCourseStudentService,
         private readonly apiAddCourseStudentService: ApiAddCourseStudentService
     ) { }
 
+    @Roles(RoleEnum.ADMIN)
+    @Status(StatusEnum.ACTIVE)
+    @Get('all')
+    async getStudents(@GetUserId() userId: string): Promise<UserDto[]> {
+        this.logger.debug(`Get all student - userId: ${userId}`)
+        return await this.apiGetStudentsService.execute()
+    }
+
     @Roles(RoleEnum.STUDENT)
     @Status(StatusEnum.ACTIVE)
-    @Get('courses/teachers')
-    async getCoursesTeachers(@GetUserId() userId: string): Promise<CourseTeachersDto[]> {
-        this.logger.debug(`Get all courses student by teachers - userId: ${userId}`)
-        return await this.apiGetCoursesStudentTeachersService.execute(userId)
+    @Get('courses/to-learn')
+    async getCoursesToLearn(@GetUserId() userId: string): Promise<CourseDto[]> {
+        this.logger.debug(`Get all courses to learn - userId: ${userId}`)
+        return await this.apiGetCoursesToLearnService.execute(userId)
     }
 
     @Roles(RoleEnum.STUDENT)

@@ -4,11 +4,9 @@ import { DataCourseStudentMapper } from './data-course-student.mapper';
 import { DataCourseStudentsDetailsMapper } from './data-course-students-details.mapper';
 import { DataCourseTeacherDetailsMapper } from './data-course-teacher-details.mapper';
 import { DataCourseTeacherMapper } from './data-course-teacher.mapper';
-import { DataCourseTeachersMapper } from './data-course-teachers.mapper';
 import { DataCoursesMapper } from './data-courses.mapper';
 import { DataCoursesStudentMapper } from './data-courses-student.mapper';
 import { DataCoursesTeacherMapper } from './data-courses-teacher.mapper';
-import { DataCoursesTeachersMapper } from './data-courses-teachers.mapper';
 import { DataRoleMapper } from './data-role.mapper';
 import { DataRolesMapper } from './data-roles.mapper';
 import { DataStatusMapper } from './data-status.mapper';
@@ -17,6 +15,9 @@ import { DataTeacherMapper } from './data-teacher.mapper';
 import { DataUserMapper } from './data-user.mapper';
 import { Module } from '@nestjs/common';
 import { UtilModule } from '../util/util.module';
+import { DataUsersMapper } from './data-users.mapper';
+import { DataCourseToTeachMapper } from './data-course-to-teach.mapper';
+import { DataCoursesToTeachMapper } from './data-courses-to-teach.mapper';
 
 @Module({
     imports: [UtilModule],
@@ -24,6 +25,7 @@ import { UtilModule } from '../util/util.module';
         DataCourseMapper,
         DataCoursesMapper,
         DataUserMapper,
+        DataUsersMapper,
         DataRoleMapper,
         DataRolesMapper,
         DataStudentMapper,
@@ -36,13 +38,14 @@ import { UtilModule } from '../util/util.module';
         DataTeacherMapper,
         DataCourseStudentDetailsMapper,
         DataCourseStudentsDetailsMapper,
-        DataCourseTeachersMapper,
-        DataCoursesTeachersMapper
+        DataCourseToTeachMapper,
+        DataCoursesToTeachMapper
     ],
     exports: [
         DataCourseMapper,
         DataCoursesMapper,
         DataUserMapper,
+        DataUsersMapper,
         DataRoleMapper,
         DataRolesMapper,
         DataStudentMapper,
@@ -55,8 +58,8 @@ import { UtilModule } from '../util/util.module';
         DataTeacherMapper,
         DataCourseStudentDetailsMapper,
         DataCourseStudentsDetailsMapper,
-        DataCourseTeachersMapper,
-        DataCoursesTeachersMapper
+        DataCourseToTeachMapper,
+        DataCoursesToTeachMapper
     ]
 })
 export class DataMapperModule { }

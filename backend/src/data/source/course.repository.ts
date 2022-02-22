@@ -15,6 +15,6 @@ export abstract class CourseRepository {
 
     abstract updateCourse(entity: CourseEntity): Promise<CourseEntity>
 
-    abstract getRelationWithTeachers(userId: string): Promise<CourseEntity[]>
+    abstract getRelationWithTeachers(): Promise<CourseEntity[]>
 
 }

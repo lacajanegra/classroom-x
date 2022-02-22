@@ -16,6 +16,10 @@ import { ApiGetCourseTeacherService } from '../service/api-get-course-teacher.se
 import { ApiAddCourseTeacherService } from '../service/api-add-course-teacher.service';
 import { ApiUpdateCourseQualificationService } from '../service/api-update-course-qualification.service';
 import { JwtGuard } from '../guard/jwt.guard';
+import { UserDto } from '../model/user.dto';
+import { ApiGetCoursesToTeachService } from '../service/api-get-courses-to-teach.service';
+import { ApiGetTeachersService } from '../service/api-get-teachers.service';
+import { CourseDto } from '../model/course.dto';
 
 @Controller('teacher')
 @UseGuards(JwtGuard, RolesGuard, StatusGuard)
@@ -24,11 +28,29 @@ export class TeacherController {
     private logger = new Logger('TeacherController')
 
     constructor(
+        private readonly apiGetTeachersService: ApiGetTeachersService,
+        private readonly apiGetCoursesToTeachService: ApiGetCoursesToTeachService,
         private readonly apiAddCourseTeacherService: ApiAddCourseTeacherService,
         private readonly apiGetCourseTeacherService: ApiGetCourseTeacherService,
         private readonly apiGetCoursesTeacherService: ApiGetCoursesTeacherService,
         private readonly apiUpdateCourseQualificationService: ApiUpdateCourseQualificationService
     ) { }
+
+    @Roles(RoleEnum.ADMIN)
+    @Status(StatusEnum.ACTIVE)
+    @Get('all')
+    async getTeachers(@GetUserId() userId: string): Promise<UserDto[]> {
+        this.logger.debug(`Get all teachers - userId: ${userId}`)
+        return await this.apiGetTeachersService.execute()
+    }
+
+    @Roles(RoleEnum.TEACHER)
+    @Status(StatusEnum.ACTIVE)
+    @Get('courses/to-teach')
+    async getCoursesToTeach(@GetUserId() userId: string): Promise<CourseDto[]> {
+        this.logger.debug(`Get all courses to teach - userId: ${userId}`)
+        return await this.apiGetCoursesToTeachService.execute(userId)
+    }
 
     @Roles(RoleEnum.TEACHER)
     @Status(StatusEnum.ACTIVE)

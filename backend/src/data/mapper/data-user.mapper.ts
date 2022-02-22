@@ -23,7 +23,7 @@ export class DataUserMapper {
         }
 
         const { id, username, name, email, password, expiration } = entity
-        const roles = entity.userRoles.map(relation => relation.role)
+        const roles = !entity.userRoles ? [] : entity.userRoles.map(relation => relation.role)
 
         const model: UserModel = {
             id: id,

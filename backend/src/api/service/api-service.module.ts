@@ -7,7 +7,7 @@ import { ApiGetCourseStudentService } from './api-get-course-student.service';
 import { ApiGetCourseTeacherService } from './api-get-course-teacher.service';
 import { ApiGetCoursesService } from './api-get-courses.service';
 import { ApiGetCoursesStudentService } from './api-get-courses-student.service';
-import { ApiGetCoursesStudentTeachersService } from './api-get-courses-student-teachers.service';
+import { ApiGetCoursesToLearnService } from './api-get-courses-to-learn.service';
 import { ApiGetCoursesTeacherService } from './api-get-courses-teacher.service';
 import { ApiMapperModule } from '../mapper/api-mapper.module';
 import { ApiResetPasswordService } from './api-reset-password.service';
@@ -18,6 +18,9 @@ import { ApiUpdateCourseService } from './api-update-course.service';
 import { DomainModule } from 'src/domain/domain.module';
 import { GuardModule } from '../guard/guard.module';
 import { Module } from '@nestjs/common';
+import { ApiGetStudentsService } from './api-get-students.service';
+import { ApiGetTeachersService } from './api-get-teachers.service';
+import { ApiGetCoursesToTeachService } from './api-get-courses-to-teach.service';
 
 @Module({
     imports:[
@@ -38,10 +41,13 @@ import { Module } from '@nestjs/common';
         ApiGetCourseTeacherService,
         ApiGetCoursesTeacherService,
         ApiUpdateCourseQualificationService,
-        ApiGetCoursesStudentTeachersService,
+        ApiGetCoursesToLearnService,
+        ApiGetCoursesToTeachService,
         ApiGetCoursesStudentService,
         ApiGetCourseStudentService,
-        ApiAddCourseStudentService
+        ApiAddCourseStudentService,
+        ApiGetStudentsService,
+        ApiGetTeachersService
     ],
     exports: [
         ApiSignInService,
@@ -56,10 +62,13 @@ import { Module } from '@nestjs/common';
         ApiGetCourseTeacherService,
         ApiGetCoursesTeacherService,
         ApiUpdateCourseQualificationService,
-        ApiGetCoursesStudentTeachersService,
+        ApiGetCoursesToLearnService,
+        ApiGetCoursesToTeachService,
         ApiGetCoursesStudentService,
         ApiGetCourseStudentService,
-        ApiAddCourseStudentService
+        ApiAddCourseStudentService,
+        ApiGetStudentsService,
+        ApiGetTeachersService
     ]
 })
 

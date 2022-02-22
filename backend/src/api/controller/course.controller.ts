@@ -31,7 +31,7 @@ export class CourseController {
         private readonly apiDelCourseService: ApiDelCourseService
     ) { }
 
-    @Roles(RoleEnum.ADMIN, RoleEnum.TEACHER)
+    @Roles(RoleEnum.ADMIN)
     @Status(StatusEnum.ACTIVE)
     @Get('all')
     async getCourses(@Query() filter: CoursesFilterRequestDto, @GetUserId() userId: string): Promise<CourseDto[]> {
