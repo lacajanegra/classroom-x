@@ -1,11 +1,10 @@
 import { Form, Formik, FormikProps, ErrorMessage, FormikHelpers, Field } from 'formik';
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
-import CourseTeacherSchema from '../model/course-teacher.schema';
-import teacherService from '../services/teacher.service';
-import CourseTeacherStudentDetailsModel from '../model/course-teacher-student-details.model';
-import CourseQualificationModel from '../model/course-qualification.model';
-import CourseQualificationSchema from '../model/course-qualification.schema';
+import CourseQualificationModel from '../../model/course-qualification.model';
+import CourseQualificationSchema from '../../model/course-qualification.schema';
+import CourseTeacherStudentDetailsModel from '../../model/course-teacher-student-details.model';
+import teacherService from '../../services/teacher.service';
 
 interface TeacherCourseStudentProps {
     id: string,

@@ -1,9 +1,9 @@
 import { Component } from 'react'
-import teacherService from '../services/teacher.service';
-import Title from './Title';
-import CourseTeacherDetailsModel from '../model/course-teacher-details.model';
-import MissingElements from './MissingElements';
+import Title from '../common/Title';
+import CourseTeacherDetailsModel from '../../model/course-teacher-details.model';
 import TeacherCourseStudents from './TeacherCourseStudents';
+import teacherService from '../../services/teacher.service';
+import MissingElements from '../common/MissingElements';
 
 interface TeacherCourseViewProps {
     id: string

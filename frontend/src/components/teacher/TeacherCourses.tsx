@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import CourseModel from '../model/course.model';
-import TableContainer from './TableContainer';
+import CourseModel from '../../model/course.model';
+import TableContainer from '../common/TableContainer';
 
 interface TeacherCoursesProps {
     courses: CourseModel[]

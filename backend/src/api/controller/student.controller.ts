@@ -16,6 +16,7 @@ import { JwtGuard } from '../guard/jwt.guard';
 import { UserDto } from '../model/user.dto';
 import { ApiGetStudentsService } from '../service/api-get-students.service';
 import { CourseDto } from '../model/course.dto';
+import { CourseToLearnDto } from '../model/course-to-learn.dto';
 
 @Controller('student')
 @UseGuards(JwtGuard, RolesGuard, StatusGuard)
@@ -42,7 +43,7 @@ export class StudentController {
     @Roles(RoleEnum.STUDENT)
     @Status(StatusEnum.ACTIVE)
     @Get('courses/to-learn')
-    async getCoursesToLearn(@GetUserId() userId: string): Promise<CourseDto[]> {
+    async getCoursesToLearn(@GetUserId() userId: string): Promise<CourseToLearnDto[]> {
         this.logger.debug(`Get all courses to learn - userId: ${userId}`)
         return await this.apiGetCoursesToLearnService.execute(userId)
     }

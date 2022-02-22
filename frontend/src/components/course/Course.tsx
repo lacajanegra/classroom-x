@@ -1,9 +1,9 @@
 import { Form, Formik, FormikProps, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
-import CourseModel from "../model/course.model";
-import CourseSchema from '../model/course.schema';
-import courseService from '../services/course.service';
+import CourseModel from '../../model/course.model';
+import CourseSchema from '../../model/course.schema';
+import courseService from '../../services/course.service';
 
 interface CourseProps {
     course?: CourseModel

@@ -1,5 +1,5 @@
-import TeacherModel from '../model/teacher.model';
-import TableContainer from './TableContainer';
+import TeacherModel from '../../model/teacher.model';
+import TableContainer from '../common/TableContainer';
 
 interface TeachersProps {
     teachers: TeacherModel[]

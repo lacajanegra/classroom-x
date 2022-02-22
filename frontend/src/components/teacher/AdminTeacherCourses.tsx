@@ -1,10 +1,9 @@
 import { Component } from 'react'
-import CourseModel from '../model/course.model';
-import teacherService from '../services/teacher.service';
-import TeacherCourse from './TeacherAddCourse';
+import CourseModel from '../../model/course.model';
+import teacherService from '../../services/teacher.service';
 import TeacherCourses from './TeacherCourses';
-import Title from './Title';
-import MissingElements from './MissingElements';
+import Title from '../common/Title';
+import MissingElements from '../common/MissingElements';
 import TeacherAddCourse from './TeacherAddCourse';
 
 

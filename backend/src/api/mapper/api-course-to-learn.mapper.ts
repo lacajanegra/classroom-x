@@ -1,16 +1,30 @@
 import { Injectable } from "@nestjs/common";
-import { ApiCourseMapper } from "./api-course.mapper";
-import { CourseDto } from "../model/course.dto";
-import { CourseStudentModel } from "src/domain/model/course-student.model";
 import { CourseToLearnModel } from "src/domain/model/course-to-learn.model";
+import { CourseToLearnDto } from "../model/course-to-learn.dto";
+import { CourseTeacherModel } from "src/domain/model/course-teacher.model";
+import { ApiCourseTeacherToLearnMapper } from "./api-course-teacher-to-learn.mapper";
+import { CourseTeacherDto } from "../model/course-teacher.dto";
 
 @Injectable()
 export class ApiCourseToLearnMapper {
 
-    constructor(private readonly apiCourseMapper: ApiCourseMapper) { }
+    constructor(private readonly apiCourseTeacherToLearnMapper: ApiCourseTeacherToLearnMapper) { }
 
-    fromModelToDto(courseStudent: CourseToLearnModel): CourseDto {
-        return this.apiCourseMapper.fromModelToDto(courseStudent.course)
+    fromModelToDto(courseToLearn: CourseToLearnModel): CourseToLearnDto {
+
+        const { course, teachers } = courseToLearn
+
+        const model: CourseToLearnDto = {
+            id: course.id,
+            name: course.name,
+            teachers: this.getTeachers(teachers)
+        }
+
+        return model
+    }
+
+    private getTeachers(teachers: CourseTeacherModel[]): CourseTeacherDto[] {
+        return teachers.map((teacher) => { return this.apiCourseTeacherToLearnMapper.fromModelToDto(teacher) })
     }
 
 }

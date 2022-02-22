@@ -1,9 +1,9 @@
 import { Component } from 'react'
-import TeacherModel from '../model/teacher.model';
-import teacherService from '../services/teacher.service'
+import TeacherModel from '../../model/teacher.model';
+import teacherService from '../../services/teacher.service'
 import Teachers from './Teachers';
-import Title from './Title';
-import MissingElements from './MissingElements';
+import Title from '../common/Title';
+import MissingElements from '../common/MissingElements';
 
 interface AdminTeachersProps {
 

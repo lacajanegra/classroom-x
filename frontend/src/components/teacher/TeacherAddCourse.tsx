@@ -1,11 +1,11 @@
 import { Form, Formik, FormikProps, ErrorMessage, FormikHelpers } from 'formik';
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
-import CourseModel from '../model/course.model';
-import CourseTeacherModel from "../model/course-teacher.model";
+import CourseModel from '../../model/course.model';
+import CourseTeacherModel from "../../model/course-teacher.model";
 import Select, { SingleValue } from 'react-select';
-import CourseTeacherSchema from '../model/course-teacher.schema';
-import teacherService from '../services/teacher.service';
+import CourseTeacherSchema from '../../model/course-teacher.schema';
+import teacherService from '../../services/teacher.service';
 
 interface TeacherAddCourseProps {
     courses: CourseModel[]

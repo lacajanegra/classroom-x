@@ -1,5 +1,5 @@
-import StudentModel from '../model/student.model';
-import TableContainer from './TableContainer';
+import StudentModel from '../../model/student.model';
+import TableContainer from '../common/TableContainer';
 
 interface StudentsProps {
     students: StudentModel[]

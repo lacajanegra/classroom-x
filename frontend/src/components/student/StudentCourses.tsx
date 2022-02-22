@@ -1,12 +1,11 @@
-import CourseStudentModel from '../model/course-student.model';
-import TableContainer from './TableContainer';
+import CourseStudentModel from '../../model/course-student.model';
+import TableContainer from '../common/TableContainer';
 
 interface StudentCoursesProps {
     courses: CourseStudentModel[]
-    handler: () => {}
 }
 
-const StudentCourses: React.FunctionComponent<StudentCoursesProps> = ({ courses, handler }: StudentCoursesProps) => {
+const StudentCourses: React.FunctionComponent<StudentCoursesProps> = ({ courses }: StudentCoursesProps) => {
 
     return (
         <TableContainer elements={courses} >

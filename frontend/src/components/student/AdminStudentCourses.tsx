@@ -1,9 +1,11 @@
 import { Component } from 'react'
-import Title from './Title';
-import MissingElements from './MissingElements';
-import studentService from '../services/student.service';
-import CourseStudentModel from '../model/course-student.model';
+import Title from '../common/Title';
+import MissingElements from '../common/MissingElements';
 import StudentCourses from './StudentCourses';
+import StudentAddCourse from './StudentAddCourse';
+import CourseStudentModel from '../../model/course-student.model';
+import CourseToLearnModel from '../../model/course-to-learn.model';
+import studentService from '../../services/student.service';
 
 interface AdminStudentCoursesProps {
 
@@ -11,6 +13,7 @@ interface AdminStudentCoursesProps {
 
 interface AdminStudentCoursesState {
     loading: boolean
+    courseToLearn: CourseToLearnModel[]
     courses: CourseStudentModel[]
 }
 
@@ -21,15 +24,29 @@ class AdminStudentCourses extends Component<AdminStudentCoursesProps, AdminStude
 
         this.state = {
             loading: true,
+            courseToLearn: [],
             courses: []
         }
 
-        this.getCourses = this.getCourses.bind(this)
+        this.getAll = this.getAll.bind(this)
     }
 
     componentDidMount() {
         this.setState({ loading: true })
-        this.getCourses();
+        this.getAll();
+    }
+
+    getAll = async () => {
+        await this.getCoursesToLearn()
+        await this.getCourses()
+    }
+
+    getCoursesToLearn = async () => {
+        this.setState({ loading: true })
+        await studentService.getCoursesToLearn()
+            .then((response) => { this.setState({ courseToLearn: response.data }) })
+            .catch((error) => { console.error(error) })
+            .finally(() => { this.setState({ loading: false }) })
     }
 
     getCourses = async () => {
@@ -42,7 +59,7 @@ class AdminStudentCourses extends Component<AdminStudentCoursesProps, AdminStude
 
     render() {
 
-        const { loading, courses } = this.state
+        const { loading, courses, courseToLearn } = this.state
 
         return (
             < div >
@@ -50,10 +67,10 @@ class AdminStudentCourses extends Component<AdminStudentCoursesProps, AdminStude
                 <MissingElements elements={courses} message='A&uacute;n no existen materias a estudiar, puedes agregar nuevas' />
 
                 <div className="d-flex flex-row-reverse mb-2">
-                    {/* <StudentAddCourse courses={courses} handler={this.getCourses} buttonName='Agregar' /> */}
+                    <StudentAddCourse courses={courseToLearn} handler={this.getAll} buttonName='Agregar' />
                 </div >
 
-                <StudentCourses courses={courses} handler={this.getCourses} />
+                <StudentCourses courses={courses} />
             </div >
         );
     }

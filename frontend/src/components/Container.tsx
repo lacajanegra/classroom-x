@@ -3,15 +3,16 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login';
 import NotFound from './NotFound';
-import ProtectedRoute from './ProtectedRoute';
 import Register from './Register';
 import ResetPassword from './ResetPassword';
-import AdminCourses from './AdminCourses';
-import AdminTeachers from './AdminTeachers';
-import AdminStudents from './AdminStudents';
-import AdminTeacherCourses from './AdminTeacherCourses';
-import AdminTeacherCourseView from './AdminTeacherCourseView';
-import AdminStudentCourses from './AdminStudentCourses';
+import AdminCourses from './course/AdminCourses';
+import ProtectedRoute from './common/ProtectedRoute';
+import AdminStudents from './student/AdminStudents';
+import AdminTeachers from './teacher/AdminTeachers';
+import AdminTeacherCourses from './teacher/AdminTeacherCourses';
+import AdminTeacherCourseView from './teacher/AdminTeacherCourseView';
+import AdminStudentCourses from './student/AdminStudentCourses';
+
 
 const Container: React.FunctionComponent = () => {
 

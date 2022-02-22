@@ -16,6 +16,8 @@ import { UtilModule } from '../util/util.module';
 import { DataUsersMapper } from './data-users.mapper';
 import { DataCourseToTeachMapper } from './data-course-to-teach.mapper';
 import { DataCoursesToTeachMapper } from './data-courses-to-teach.mapper';
+import { DataCourseToLearnMapper } from './data-course-to-learn.mapper';
+import { DataCoursesToLearnMapper } from './data-courses-to-learn.mapper';
 
 @Module({
     imports: [UtilModule],
@@ -35,7 +37,9 @@ import { DataCoursesToTeachMapper } from './data-courses-to-teach.mapper';
         DataCourseTeacherDetailsMapper,
         DataTeacherMapper,
         DataCourseToTeachMapper,
-        DataCoursesToTeachMapper
+        DataCoursesToTeachMapper,
+        DataCourseToLearnMapper,
+        DataCoursesToLearnMapper
     ],
     exports: [
         DataCourseMapper,
@@ -53,7 +57,9 @@ import { DataCoursesToTeachMapper } from './data-courses-to-teach.mapper';
         DataCourseTeacherDetailsMapper,
         DataTeacherMapper,
         DataCourseToTeachMapper,
-        DataCoursesToTeachMapper
+        DataCoursesToTeachMapper,
+        DataCourseToLearnMapper,
+        DataCoursesToLearnMapper
     ]
 })
 export class DataMapperModule { }

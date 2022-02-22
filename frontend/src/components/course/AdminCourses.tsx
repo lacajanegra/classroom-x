@@ -1,10 +1,10 @@
 import { Component } from 'react'
-import CourseModel from '../model/course.model';
-import courseService from '../services/course.service'
+import CourseModel from '../../model/course.model';
+import courseService from '../../services/course.service'
 import Course from './Course';
 import Courses from './Courses';
-import MissingElements from './MissingElements';
-import Title from './Title';
+import MissingElements from '../common/MissingElements';
+import Title from '../common/Title';
 
 interface AdminCoursesProps {
 

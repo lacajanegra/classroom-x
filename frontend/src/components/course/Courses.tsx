@@ -1,6 +1,6 @@
-import CourseModel from '../model/course.model';
+import CourseModel from '../../model/course.model';
+import TableContainer from '../common/TableContainer';
 import Course from './Course';
-import TableContainer from './TableContainer';
 
 interface CoursesProps {
     courses: CourseModel[]

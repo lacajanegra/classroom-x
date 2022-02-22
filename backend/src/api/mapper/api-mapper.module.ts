@@ -24,6 +24,7 @@ import { ApiCoursesToTeachMapper } from './api-courses-to-teach.mapper';
 import { ApiCourseToLearnMapper } from './api-course-to-learn.mapper';
 import { ApiCoursesToLearnMapper } from './api-courses-to-learn.mapper';
 import { ApiCourseTeacherStudentMapper } from './api-course-teacher-student.mapper';
+import { ApiCourseTeacherToLearnMapper } from './api-course-teacher-to-learn.mapper';
 
 @Module({
     imports: [
@@ -53,7 +54,8 @@ import { ApiCourseTeacherStudentMapper } from './api-course-teacher-student.mapp
         ApiCourseToTeachMapper,
         ApiCoursesToTeachMapper,
         ApiCourseToLearnMapper,
-        ApiCoursesToLearnMapper
+        ApiCoursesToLearnMapper,
+        ApiCourseTeacherToLearnMapper
     ],
     exports: [
         ApiLoginMapper,
@@ -79,7 +81,8 @@ import { ApiCourseTeacherStudentMapper } from './api-course-teacher-student.mapp
         ApiCourseToTeachMapper,
         ApiCoursesToTeachMapper,
         ApiCourseToLearnMapper,
-        ApiCoursesToLearnMapper
+        ApiCoursesToLearnMapper,
+        ApiCourseTeacherToLearnMapper
     ]
 })
 export class ApiMapperModule { }

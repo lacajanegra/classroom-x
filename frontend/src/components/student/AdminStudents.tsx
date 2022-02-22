@@ -1,9 +1,9 @@
 import { Component } from 'react'
-import StudentModel from '../model/student.model';
-import studentService from '../services/student.service'
+import StudentModel from '../../model/student.model';
+import studentService from '../../services/student.service';
+import MissingElements from '../common/MissingElements';
+import Title from '../common/Title';
 import Students from './Students';
-import Title from './Title';
-import MissingElements from './MissingElements';
 
 interface AdminStudentsProps {
 
