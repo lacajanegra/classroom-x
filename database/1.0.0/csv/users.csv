@@ -1,0 +1,2 @@
+'username'|'name'|'email'|'password'
+admin|admin|admin@classroom.cl|$argon2i$v=19$m=4096,t=3,p=1$9bzrflBiqFfWsMfgxAbCXA$naI3VYdv+cUOYywaR8Le0CJpcoJoU1ihldF4m9oL4KU

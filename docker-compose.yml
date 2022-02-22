@@ -1,0 +1,66 @@
+version: "3.7"
+services:
+  database:
+    container_name: database
+    image: postgres:14-alpine
+    hostname: database
+    ports:
+      - "5432:5432"
+    networks:
+      - dockernet
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+  migration:
+    container_name: migration
+    image: liquibase/liquibase:4.7.1
+    networks:
+      - dockernet
+    depends_on:
+      - database
+    volumes:
+      - ./database:/liquibase/changelog
+    command: --url=jdbc:postgresql://database:5432/${DB_NAME}?user=${DB_USER}&password=${DB_PASS} --changeLogFile=masterchangelog.xml update
+  backend:
+    container_name: backend
+    image: backend:1.0.0
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
+    networks:
+      - dockernet
+    environment:
+      NODE_ENV: production
+      NODE_PORT: ${BACKEND_PORT}
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_SSL: 'false'
+      JWT_SECRET: MiSuperMegaClave123456789.*/{}
+      JWT_EXPIRES_IN: 3600s
+    depends_on:
+      - migration
+  frontend:
+    container_name: frontend
+    image: frontend:1.0.0
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    networks:
+      - dockernet
+    environment:
+      PORT: ${FRONTEND_PORT}
+      BACKEND_HOST: backend
+      BACKEND_PORT: ${BACKEND_PORT}
+    depends_on:
+      - backend
+networks:
+  dockernet:
+    driver: bridge

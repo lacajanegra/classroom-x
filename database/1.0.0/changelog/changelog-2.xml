@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!-- Create default values -->
+
+    <changeSet id="1.0.0-2.0" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-2.0"/>
+    </changeSet>
+
+    <changeSet id="1.0.0-2.1" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-2.1"/>
+
+        <addDefaultValue
+                columnDataType="datetime"
+                columnName="expiration"
+                defaultValueComputed="CURRENT_TIMESTAMP"
+                tableName="user"/>
+
+        <rollback>
+            <dropDefaultValue tableName="user" columnName="expiration"/>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="1.0.0-2.2" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-2.2"/>
+
+        <addDefaultValue
+                columnDataType="int"
+                columnName="qualification"
+                defaultValue="0"
+                tableName="course_student"/>
+
+        <rollback>
+            <dropDefaultValue tableName="course_student" columnName="qualification"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>

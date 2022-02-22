@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+  http://www.liquibase.org/xml/ns/dbchangelog-ext
+  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    
+    <!-- Create tables -->
+
+    <changeSet id="1.0.0-1.0" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-1.0"/>
+    </changeSet>
+
+    <changeSet id="1.0.0-1.1" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-1.1"/>
+
+        <createTable tableName="user" remarks="User table">
+            <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()" remarks="identify">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="username" type="VARCHAR(20)" remarks="username">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)" remarks="name">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(100)" remarks="email">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(256)" remarks="password crypto hash">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiration" type="datetime" remarks="expiration time">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="user"/>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="1.0.0-1.2" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-1.2"/>
+
+        <createTable tableName="role" remarks="Role table">
+            <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()" remarks="identify">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="VARCHAR(10)" remarks="name">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="role"/>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="1.0.0-1.3" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-1.3"/>
+
+        <createTable tableName="user_role" remarks="User-Role table">
+            <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()" remarks="identify">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="user_id" type="uuid" remarks="user identify">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="uuid" remarks="role identify">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="user_role"/>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="1.0.0-1.4" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-1.4"/>
+
+        <createTable tableName="course" remarks="Course table">
+            <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()" remarks="identify">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="VARCHAR(100)" remarks="name">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="course"/>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="1.0.0-1.5" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-1.5"/>
+
+        <createTable tableName="course_teacher" remarks="Course by teacher table">
+            <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()" remarks="identify">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="course_id" type="uuid" remarks="course identity">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="uuid" remarks="own course">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="course_teacher"/>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="1.0.0-1.6" author="yadickson.soto">
+        <ext:tagDatabase tag="1.0.0-1.6"/>
+
+        <createTable tableName="course_student" remarks="Course by student table">
+            <column name="id" type="uuid" defaultValueComputed="uuid_generate_v4()" remarks="identify">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="course_teacher_id" type="uuid" remarks="course teacher identity">
+                <constraints nullable="false"/>
+            </column>
+            <column name="course_id" type="uuid" remarks="course identity">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="uuid" remarks="student identity">
+                <constraints nullable="false"/>
+            </column>
+            <column name="qualification" type="int" remarks="student qualification">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="course_student"/>
+        </rollback>
+
+    </changeSet>
+
+</databaseChangeLog>
