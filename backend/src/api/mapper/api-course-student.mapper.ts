@@ -6,8 +6,8 @@ import { Injectable } from "@nestjs/common";
 export class ApiCourseStudentMapper {
 
     fromModelToDto(courseStudent: CourseStudentModel): CourseStudentDto {
-        const { id, course, teacher } = courseStudent
-        const dto: CourseStudentDto = { id: id, course: course.name, teacher: teacher.name }
+        const { id, course, teacher, qualification } = courseStudent
+        const dto: CourseStudentDto = { id: id, course: course.name, teacher: teacher.name, qualification: qualification }
         return dto
     }
 

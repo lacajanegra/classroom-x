@@ -1,5 +1,5 @@
-import { CourseStudentDetailsModel } from '../model/course-student-details.model';
+import { CourseStudentModel } from 'src/domain/model/course-student.model';
 
 export abstract class GetCourseStudentRepository {
-    abstract getCourse(courseStudentId: string, userId: string): Promise<CourseStudentDetailsModel>
+    abstract getCourse(courseStudentId: string, userId: string): Promise<CourseStudentModel>
 }

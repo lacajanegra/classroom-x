@@ -1,18 +1,15 @@
 import { ApiCourseMapper } from './api-course.mapper';
-import { ApiCourseStudentDetailsMapper } from './api-course-student-details.mapper';
 import { ApiCourseStudentMapper } from './api-course-student.mapper';
 import { ApiCourseTeacherDetailsMapper } from './api-course-teacher-details.mapper';
 import { ApiCourseTeacherForStudentMapper } from './api-course-teacher-for-student.mapper';
 import { ApiCourseTeacherMapper } from './api-course-teacher.mapper';
-import { ApiCourseTeacherStudentDetailsMapper } from './api-course-teacher-student-details.mapper';
 import { ApiCourseTeachersForStudentMapper } from './api-course-teachers-for-student.mapper';
 import { ApiCoursesFilterMapper } from './api-courses-filter.mapper';
 import { ApiCoursesMapper } from './api-courses.mapper';
-import { ApiCoursesStudentDetailsMapper } from './api-courses-student-details.mapper';
 import { ApiCoursesStudentMapper } from './api-courses-student.mapper';
 import { ApiCoursesTeacherDetailsMapper } from './api-courses-teacher-details.mapper';
 import { ApiCoursesTeacherMapper } from './api-courses-teacher.mapper';
-import { ApiCoursesTeacherStudentDetailsMapper } from './api-courses-teacher-student-details.mapper';
+import { ApiCoursesTeacherStudentMapper } from './api-courses-teacher-student.mapper';
 import { ApiCreateCourseMapper } from './api-create-course.mapper';
 import { ApiCreateUserMapper } from './api-create-user.mapper';
 import { ApiLoginMapper } from './api-login.mapper';
@@ -26,6 +23,7 @@ import { ApiCourseToTeachMapper } from './api-course-to-teach.mapper';
 import { ApiCoursesToTeachMapper } from './api-courses-to-teach.mapper';
 import { ApiCourseToLearnMapper } from './api-course-to-learn.mapper';
 import { ApiCoursesToLearnMapper } from './api-courses-to-learn.mapper';
+import { ApiCourseTeacherStudentMapper } from './api-course-teacher-student.mapper';
 
 @Module({
     imports: [
@@ -42,8 +40,6 @@ import { ApiCoursesToLearnMapper } from './api-courses-to-learn.mapper';
         ApiCoursesMapper,
         ApiCourseTeacherMapper,
         ApiCoursesTeacherMapper,
-        ApiCourseStudentDetailsMapper,
-        ApiCoursesStudentDetailsMapper,
         ApiCourseTeacherDetailsMapper,
         ApiCoursesTeacherDetailsMapper,
         ApiCreateCourseMapper,
@@ -51,8 +47,8 @@ import { ApiCoursesToLearnMapper } from './api-courses-to-learn.mapper';
         ApiCoursesStudentMapper,
         ApiCourseTeacherForStudentMapper,
         ApiCourseTeachersForStudentMapper,
-        ApiCourseTeacherStudentDetailsMapper,
-        ApiCoursesTeacherStudentDetailsMapper,
+        ApiCourseTeacherStudentMapper,
+        ApiCoursesTeacherStudentMapper,
         ApiUsersMapper,
         ApiCourseToTeachMapper,
         ApiCoursesToTeachMapper,
@@ -70,8 +66,6 @@ import { ApiCoursesToLearnMapper } from './api-courses-to-learn.mapper';
         ApiCoursesMapper,
         ApiCourseTeacherMapper,
         ApiCoursesTeacherMapper,
-        ApiCourseStudentDetailsMapper,
-        ApiCoursesStudentDetailsMapper,
         ApiCourseTeacherDetailsMapper,
         ApiCoursesTeacherDetailsMapper,
         ApiCreateCourseMapper,
@@ -79,8 +73,8 @@ import { ApiCoursesToLearnMapper } from './api-courses-to-learn.mapper';
         ApiCoursesStudentMapper,
         ApiCourseTeacherForStudentMapper,
         ApiCourseTeachersForStudentMapper,
-        ApiCourseTeacherStudentDetailsMapper,
-        ApiCoursesTeacherStudentDetailsMapper,
+        ApiCourseTeacherStudentMapper,
+        ApiCoursesTeacherStudentMapper,
         ApiUsersMapper,
         ApiCourseToTeachMapper,
         ApiCoursesToTeachMapper,

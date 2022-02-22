@@ -1,21 +1,21 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 
-import { CourseStudentDetailsModel } from 'src/domain/model/course-student-details.model';
 import { CourseStudentEntity } from './entity/course-student.entity';
 import { CourseStudentRepository } from './source/course-student.repository';
-import { DataCourseStudentDetailsMapper } from './mapper/data-course-student-details.mapper';
 import { UpdateQualificationModel } from 'src/domain/model/update-qualification.model';
 import { UpdateQualificationRepository } from 'src/domain/repository/update-qualification.repository';
+import { DataCourseStudentMapper } from './mapper/data-course-student.mapper';
+import { CourseStudentModel } from 'src/domain/model/course-student.model';
 
 @Injectable()
 export class DataUpdateQualificationRepository implements UpdateQualificationRepository {
 
     constructor(
         private readonly courseStudentRepository: CourseStudentRepository,
-        private readonly dataCourseStudentDetailsMapper: DataCourseStudentDetailsMapper
+        private readonly dataCourseStudentMapper: DataCourseStudentMapper
     ) { }
 
-    async updateQualification(request: UpdateQualificationModel, userId: string): Promise<CourseStudentDetailsModel> {
+    async updateQualification(request: UpdateQualificationModel, userId: string): Promise<CourseStudentModel> {
 
         const { courseStudentId, qualification } = request
         const entity = await this.courseStudentRepository.getRelation(courseStudentId, userId)
@@ -26,7 +26,7 @@ export class DataUpdateQualificationRepository implements UpdateQualificationRep
 
         entity.qualification = qualification
         return await this.courseStudentRepository.updateCourse(entity)
-            .then((response: CourseStudentEntity) => { return this.dataCourseStudentDetailsMapper.fromEntityToModel(response) })
+            .then((response: CourseStudentEntity) => { return this.dataCourseStudentMapper.fromEntityToModel(response) })
     }
 
 }

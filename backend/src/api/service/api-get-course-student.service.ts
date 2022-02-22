@@ -1,18 +1,18 @@
-import { ApiCourseStudentDetailsMapper } from "../mapper/api-course-student-details.mapper"
-import { CourseStudentDetailsDto } from "../model/course-student-details.dto"
 import { GetCourseStudentService } from "src/domain/use-case/student/get-course/get-course-student.service"
 import { Injectable } from "@nestjs/common"
+import { ApiCourseStudentMapper } from "../mapper/api-course-student.mapper"
+import { CourseStudentDto } from "../model/course-student.dto"
 
 @Injectable()
 export class ApiGetCourseStudentService {
 
     constructor(
         private readonly getCourseStudentService: GetCourseStudentService,
-        private readonly apiCourseStudentDetailsMapper: ApiCourseStudentDetailsMapper
+        private readonly apiCourseStudentMapper: ApiCourseStudentMapper
     ) { }
 
-    async execute(courseTeacherId: string, userId: string): Promise<CourseStudentDetailsDto> {
+    async execute(courseTeacherId: string, userId: string): Promise<CourseStudentDto> {
         return await this.getCourseStudentService.execute(courseTeacherId, userId)
-            .then((relation) => this.apiCourseStudentDetailsMapper.fromModelToDto(relation))
+            .then((relation) => this.apiCourseStudentMapper.fromModelToDto(relation))
     }
 }

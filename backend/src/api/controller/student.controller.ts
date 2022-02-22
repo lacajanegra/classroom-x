@@ -7,7 +7,6 @@ import { Status } from 'src/api/decorator/status.decorator';
 import { StatusEnum } from 'src/domain/model/status.enum';
 import { StatusGuard } from 'src/api/guard/status.guard';
 import { CourseStudentDto } from 'src/api/model/course-student.dto';
-import { CourseStudentDetailsDto } from 'src/api/model/course-student-details.dto';
 import { GetUserId } from 'src/api/decorator/get-user-id.decorator';
 import { ApiGetCoursesToLearnService } from '../service/api-get-courses-to-learn.service';
 import { ApiGetCoursesStudentService } from '../service/api-get-courses-student.service';
@@ -67,7 +66,7 @@ export class StudentController {
     @Roles(RoleEnum.STUDENT)
     @Status(StatusEnum.ACTIVE)
     @Get('course/:id')
-    async getCourse(@Param('id') courseTeacherId: string, @GetUserId() userId: string): Promise<CourseStudentDetailsDto> {
+    async getCourse(@Param('id') courseTeacherId: string, @GetUserId() userId: string): Promise<CourseStudentDto> {
         this.logger.log(`Get relation courseTeacherId ${courseTeacherId} -> userId: ${userId} - user: ${userId}`)
         return await this.apiGetCourseStudentService.execute(courseTeacherId, userId)
     }

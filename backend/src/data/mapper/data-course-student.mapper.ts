@@ -25,12 +25,13 @@ export class DataCourseStudentMapper {
             return undefined
         }
 
-        const { id, courseTeacher, student } = entity
+        const { id, qualification, courseTeacher, student } = entity
         const model: CourseStudentModel = {
             id: id,
             course: this.getCourse(courseTeacher),
             teacher: this.getTeacher(courseTeacher),
-            student: this.getStudent(student)
+            student: this.getStudent(student),
+            qualification: qualification
         }
 
         return model

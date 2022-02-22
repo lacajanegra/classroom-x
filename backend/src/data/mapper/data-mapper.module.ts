@@ -1,7 +1,5 @@
 import { DataCourseMapper } from './data-course.mapper';
-import { DataCourseStudentDetailsMapper } from './data-course-student-details.mapper';
 import { DataCourseStudentMapper } from './data-course-student.mapper';
-import { DataCourseStudentsDetailsMapper } from './data-course-students-details.mapper';
 import { DataCourseTeacherDetailsMapper } from './data-course-teacher-details.mapper';
 import { DataCourseTeacherMapper } from './data-course-teacher.mapper';
 import { DataCoursesMapper } from './data-courses.mapper';
@@ -36,8 +34,6 @@ import { DataCoursesToTeachMapper } from './data-courses-to-teach.mapper';
         DataCoursesTeacherMapper,
         DataCourseTeacherDetailsMapper,
         DataTeacherMapper,
-        DataCourseStudentDetailsMapper,
-        DataCourseStudentsDetailsMapper,
         DataCourseToTeachMapper,
         DataCoursesToTeachMapper
     ],
@@ -56,8 +52,6 @@ import { DataCoursesToTeachMapper } from './data-courses-to-teach.mapper';
         DataCoursesTeacherMapper,
         DataCourseTeacherDetailsMapper,
         DataTeacherMapper,
-        DataCourseStudentDetailsMapper,
-        DataCourseStudentsDetailsMapper,
         DataCourseToTeachMapper,
         DataCoursesToTeachMapper
     ]

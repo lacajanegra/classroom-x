@@ -7,4 +7,5 @@ export interface CourseStudentModel {
     course: CourseModel
     teacher: TeacherModel
     student: StudentModel
+    qualification: number
 }

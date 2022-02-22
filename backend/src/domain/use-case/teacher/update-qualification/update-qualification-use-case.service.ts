@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-import { CourseStudentDetailsModel } from 'src/domain/model/course-student-details.model';
+import { CourseStudentModel } from 'src/domain/model/course-student.model';
 import { GetCourseTeacherService } from '../get-course/get-course-teacher.service';
 import { UpdateQualificationModel } from 'src/domain/model/update-qualification.model';
 import { UpdateQualificationRepository } from 'src/domain/repository/update-qualification.repository';
@@ -14,10 +14,10 @@ export class UpdateQualificationUseCaseService implements UpdateQualificationSer
         private readonly updateQualificationRepository: UpdateQualificationRepository
     ) { }
 
-    async execute(request: UpdateQualificationModel, userId: string): Promise<CourseStudentDetailsModel> {
+    async execute(request: UpdateQualificationModel, userId: string): Promise<CourseStudentModel> {
         const { courseTeacherId, courseStudentId } = request
         const { students } = await this.getCourseTeacherService.execute(courseTeacherId, userId)
-        const found: CourseStudentDetailsModel = students.find(relation => relation.id === courseStudentId)
+        const found: CourseStudentModel = students.find(relation => relation.id === courseStudentId)
 
         if (!found) {
             throw new NotFoundException(`The courseStudentId "${courseStudentId}" not found."`);
