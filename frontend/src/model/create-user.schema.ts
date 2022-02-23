@@ -12,7 +12,7 @@ const CreateUserSchema: Yup.SchemaOf<CreateUserModel> = Yup.object().shape({
         .min(4, "Nombre debe tener al menos 4 caracteres")
         .max(100, "Nombre no debe ser mayor a 100 caracteres")
         .required("Nombre requirido")
-        .matches(/^[a-zA-Z]+$/,"Nombre debe contener solo letras"),
+        .matches(/^[a-zA-Z ]+$/,"Nombre debe contener solo letras y espacios"),
     email: Yup.string()
         .max(100, "Correo no debe ser mayor a 100 caracteres")
         .email("No es un correo correcto")
