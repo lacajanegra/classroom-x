@@ -6,6 +6,8 @@ import { Form, Formik, Field, ErrorMessage, FormikHelpers, FormikProps } from 'f
 import { useNavigate } from 'react-router-dom';
 import userService from '../services/user.service';
 import ResetPasswordSchema from '../model/reset-password.schema';
+import FormGroup from './common/FormGroup';
+import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 
 const ResetPassword: React.FunctionComponent = () => {
 
@@ -34,33 +36,33 @@ const ResetPassword: React.FunctionComponent = () => {
     const oldPasswordElement = ({ errors, touched }: FormikProps<ResetPasswordModel>) => {
         const hasError: boolean = !(!touched.oldPassword || !errors.oldPassword)
         return (
-            <div className="form-group">
-                <label htmlFor="oldPassword">Contrase&ntilde;a</label>
-                <Field name="oldPassword" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Contrase&ntilde;a" />
-                <ErrorMessage name="oldPassword" component="div" className={hasError ? 'invalid-feedback' : ''} />
-            </div>
+            <FormGroup
+                icon={faLockOpen}
+                input={<Field name="oldPassword" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Contrase&ntilde;a" />}
+                error={<ErrorMessage name="oldPassword" component="div" className={hasError ? 'invalid-feedback' : ''} />}
+            />
         )
     }
 
     const passwordElement = ({ errors, touched }: FormikProps<ResetPasswordModel>) => {
         const hasError: boolean = !(!touched.password || !errors.password)
         return (
-            <div className="form-group">
-                <label htmlFor="password">Nueva Contrase&ntilde;a</label>
-                <Field name="password" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Nueva Contrase&ntilde;a" />
-                <ErrorMessage name="password" component="div" className={hasError ? 'invalid-feedback' : ''} />
-            </div>
+            <FormGroup
+                icon={faLock}
+                input={<Field name="password" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Nueva Contrase&ntilde;a" />}
+                error={<ErrorMessage name="password" component="div" className={hasError ? 'invalid-feedback' : ''} />}
+            />
         )
     }
 
     const passwordConfirmElement = ({ errors, touched }: FormikProps<ResetPasswordModel>) => {
         const hasError: boolean = !(!touched.passwordConfirm || !errors.passwordConfirm)
         return (
-            <div className="form-group">
-                <label htmlFor="passwordConfirm">Confirmar Contrase&ntilde;a</label>
-                <Field name="passwordConfirm" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Confirmar Contrase&ntilde;a" />
-                <ErrorMessage name="passwordConfirm" component="div" className={hasError ? 'invalid-feedback' : ''} />
-            </div>
+            <FormGroup
+                icon={faLock}
+                input={<Field name="passwordConfirm" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Confirmar Contrase&ntilde;a" />}
+                error={<ErrorMessage name="passwordConfirm" component="div" className={hasError ? 'invalid-feedback' : ''} />}
+            />
         )
     }
 

@@ -25,7 +25,8 @@ const CreateUserSchema: Yup.SchemaOf<CreateUserModel> = Yup.object().shape({
     passwordConfirm: Yup.string()
         .required("Debe confirmar contraseña")
         .when('password', (password, field) => password ? field.required().oneOf([Yup.ref('password')], 'Ambas contraseñas deben coincidir') : field),
-        message: Yup.string().optional()
+        message: Yup.string().optional(),
+    type: Yup.string().required("Tipo requerido")
 })
 
 export default CreateUserSchema

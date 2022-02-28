@@ -4,35 +4,30 @@ import { ErrorMessage, Field, Form, Formik, FormikHelpers, FormikProps } from 'f
 
 import CreateUserModel from '../model/create-user.model';
 import CreateUserSchema from '../model/create-user.schema';
-import { OnChangeValue } from 'react-select';
-import Select from 'react-select';
 import UserType from '../model/user-type.model';
 import authService from "../services/auth.service";
 import { useNavigate } from 'react-router-dom';
-import { useState } from "react";
 import userService from '../services/user.service';
+import { faAt, faIdCard, faUser, faLock, faUsers } from '@fortawesome/free-solid-svg-icons';
+import FormGroup from './common/FormGroup';
 
 const Register: React.FunctionComponent = () => {
-
-    const [type, setType] = useState<UserType | null>({ id: "student", name: "Estudiante" })
 
     const navigate = useNavigate()
 
     const options: UserType[] = [
+        { id: "", name: "Tipo" },
         { id: "student", name: "Estudiante" },
         { id: "teacher", name: "Profesor" }
     ]
-
-    const handleOptionChange = (option: OnChangeValue<UserType, false>) => {
-        setType(option)
-    }
 
     const initialValues: CreateUserModel = {
         username: '',
         name: '',
         email: '',
         password: '',
-        passwordConfirm: ''
+        passwordConfirm: '',
+        type: ''
     }
 
     const registerSuccess = () => {
@@ -41,8 +36,7 @@ const Register: React.FunctionComponent = () => {
     }
 
     const register = async (request: CreateUserModel, { setErrors }: FormikHelpers<CreateUserModel>) => {
-        const userType = type?.id || 'student'
-        await authService.register(request, userType)
+        await authService.register(request, request.type)
             .then(() => {
                 registerSuccess()
             }).catch(() => {
@@ -53,69 +47,68 @@ const Register: React.FunctionComponent = () => {
     const usernameElement = ({ errors, touched }: FormikProps<CreateUserModel>) => {
         const hasError: boolean = !(!touched.username || !errors.username)
         return (
-            <div className="form-group">
-                <label htmlFor="username" >Usuario</label>
-                <Field name="username" type="text" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Usuario" />
-                <ErrorMessage name="username" component="div" className={hasError ? 'invalid-feedback' : ''} />
-            </div>
+            <FormGroup
+                icon={faUser}
+                input={<Field name="username" type="text" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Usuario" />}
+                error={<ErrorMessage name="username" component="div" className={hasError ? 'invalid-feedback' : ''} />}
+            />
         )
     }
 
     const nameElement = ({ errors, touched }: FormikProps<CreateUserModel>) => {
         const hasError: boolean = !(!touched.name || !errors.name)
         return (
-            <div className="form-group">
-                <label htmlFor="name" >Nombre</label>
-                <Field name="name" type="text" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Nombre" />
-                <ErrorMessage name="name" component="div" className={hasError ? 'invalid-feedback' : ''} />
-            </div>
+            <FormGroup
+                icon={faIdCard}
+                input={<Field name="name" type="text" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Nombre" />}
+                error={<ErrorMessage name="name" component="div" className={hasError ? 'invalid-feedback' : ''} />}
+            />
         )
     }
 
     const emailElement = ({ errors, touched }: FormikProps<CreateUserModel>) => {
         const hasError: boolean = !(!touched.email || !errors.email)
         return (
-            <div className="form-group">
-                <label htmlFor="email" >Correo</label>
-                <Field name="email" type="email" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Correo" />
-                <ErrorMessage name="email" component="div" className={hasError ? 'invalid-feedback' : ''} />
-            </div>
+            <FormGroup
+                icon={faAt}
+                input={<Field name="email" type="email" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Correo" />}
+                error={<ErrorMessage name="email" component="div" className={hasError ? 'invalid-feedback' : ''} />}
+            />
         )
     }
 
     const passwordElement = ({ errors, touched }: FormikProps<CreateUserModel>) => {
         const hasError: boolean = !(!touched.password || !errors.password)
         return (
-            <div className="form-group">
-                <label htmlFor="password">Contrase&ntilde;a</label>
-                <Field name="password" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Contrase&ntilde;a" />
-                <ErrorMessage name="password" component="div" className={hasError ? 'invalid-feedback' : ''} />
-            </div>
+            <FormGroup
+                icon={faLock}
+                input={<Field name="password" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Contrase&ntilde;a" />}
+                error={<ErrorMessage name="password" component="div" className={hasError ? 'invalid-feedback' : ''} />}
+            />
         )
     }
 
     const passwordConfirmElement = ({ errors, touched }: FormikProps<CreateUserModel>) => {
         const hasError: boolean = !(!touched.passwordConfirm || !errors.passwordConfirm)
         return (
-            <div className="form-group">
-                <label htmlFor="passwordConfirm">Confirmar Contrase&ntilde;a</label>
-                <Field name="passwordConfirm" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Confirmar Contrase&ntilde;a" />
-                <ErrorMessage name="passwordConfirm" component="div" className={hasError ? 'invalid-feedback' : ''} />
-            </div>
+            <FormGroup
+                icon={faLock}
+                input={<Field name="passwordConfirm" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Confirmar Contrase&ntilde;a" />}
+                error={<ErrorMessage name="passwordConfirm" component="div" className={hasError ? 'invalid-feedback' : ''} />}
+            />
         )
     }
 
-    const typeElement = () => {
+    const typeElement = ({ errors, touched }: FormikProps<CreateUserModel>) => {
+        const hasError: boolean = !(!touched.type || !errors.type)
         return (
-            <div className="form-group">
-                <label htmlFor="type">Tipo de usuario</label>
-                <Select<UserType> options={options} id="type" name="type"
-                    getOptionLabel={(option: UserType) => option.name}
-                    getOptionValue={(option: UserType) => option.id}
-                    onChange={handleOptionChange}
-                    value={type}
-                />
-            </div>
+            <FormGroup
+                icon={faUsers}
+                input={<Field as="select" name="type" className={hasError ? 'custom-select is-invalid' : 'custom-select'}>
+                    {options.map((option) => (<option key={option.id} value={option.id} label={option.name} />))}
+                </Field>}
+                error={<ErrorMessage name="type" component="div" className={hasError ? 'invalid-feedback' : ''} />}
+            />
         )
     }
 
@@ -151,7 +144,7 @@ const Register: React.FunctionComponent = () => {
                                 {emailElement(formik)}
                                 {passwordElement(formik)}
                                 {passwordConfirmElement(formik)}
-                                {typeElement()}
+                                {typeElement(formik)}
                                 {buttonElement(formik)}
                             </Form>
                         )
