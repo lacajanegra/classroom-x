@@ -33,9 +33,12 @@ login: admin
 password: admin
 
 
-El administrador puede crear materias
-Cualquier usuario se puede registrar como profesor o estudiante
-Los profesores pueden seleccionar que materias pueden impartir
+El administrador puede crear materias.
+
+Cualquier usuario se puede registrarse como profesor o estudiante.
+
+Los profesores pueden seleccionar que materias pueden impartir.
+
 Los estudiantes pueden seleccionar que materia y profesor pueden tomar como clases a cursar.
 
 :)

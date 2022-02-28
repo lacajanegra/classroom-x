@@ -9,6 +9,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import UserModel from '../model/user.model';
 import { AxiosResponse } from 'axios';
 import userService from '../services/user.service';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLock, faUser, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import FormGroup from './common/FormGroup';
+import { icon } from '@fortawesome/fontawesome-svg-core';
 
 const Login: React.FunctionComponent = () => {
 
@@ -40,25 +44,32 @@ const Login: React.FunctionComponent = () => {
             })
     }
 
-    const usernameElement = ({ errors, touched}: FormikProps<LoginModel>) => {
+    const icon = () => {
+        return (<div className="text-center mb-4">
+            <FontAwesomeIcon icon={faUserCircle} size="5x" />
+        </div>
+        )
+    }
+
+    const usernameElement = ({ errors, touched }: FormikProps<LoginModel>) => {
         const hasError: boolean = !(!touched.username || !errors.username)
         return (
-            <div className="form-group">
-                <label htmlFor="username" >Usuario</label>
-                <Field name="username" type="text" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Usuario" />
-                <ErrorMessage name="username" component="div" className={hasError ? 'invalid-feedback' : ''} />
-            </div>
+            <FormGroup
+                icon={faUser}
+                input={<Field id='username' name="username" type="text" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Usuario" />}
+                error={<ErrorMessage name="username" component="div" className={hasError ? 'invalid-feedback' : ''} />}
+            />
         )
     }
 
     const passwordElement = ({ errors, touched }: FormikProps<LoginModel>) => {
         const hasError: boolean = !(!touched.password || !errors.password)
         return (
-            <div className="form-group">
-                <label htmlFor="password">Contrase&ntilde;a</label>
-                <Field name="password" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Contrase&ntilde;a" />
-                <ErrorMessage name="password" component="div" className={hasError ? 'invalid-feedback' : ''} />
-            </div>
+            <FormGroup
+                icon={faLock}
+                input={<Field id='password' name="password" type="password" className={hasError ? 'form-control is-invalid' : 'form-control'} placeholder="Contrase&ntilde;a" />}
+                error={<ErrorMessage name="password" component="div" className={hasError ? 'invalid-feedback' : ''} />}
+            />
         )
     }
 
@@ -85,13 +96,14 @@ const Login: React.FunctionComponent = () => {
                 <Formik
                     initialValues={initialValues}
                     validationSchema={LoginSchema}
-                    onSubmit={ async (request, helpers) => {
+                    onSubmit={async (request, helpers) => {
                         await login(request, helpers)
                     }}
                 >
                     {(formik: FormikProps<LoginModel>) => {
                         return (
                             <Form>
+                                {icon()}
                                 {usernameElement(formik)}
                                 {passwordElement(formik)}
                                 {buttonElement(formik)}
