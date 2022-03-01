@@ -6,6 +6,7 @@ import StudentAddCourse from './StudentAddCourse';
 import CourseStudentModel from '../../model/course-student.model';
 import CourseToLearnModel from '../../model/course-to-learn.model';
 import studentService from '../../services/student.service';
+import AddButton from '../common/AddButton';
 
 interface AdminStudentCoursesProps {
 
@@ -66,9 +67,9 @@ class AdminStudentCourses extends Component<AdminStudentCoursesProps, AdminStude
                 <Title title='Listado de Materias' loading={loading} />
                 <MissingElements elements={courses} message='A&uacute;n no existen materias a estudiar, puedes agregar nuevas' />
 
-                <div className="d-flex flex-row-reverse mb-2">
+                <AddButton>
                     <StudentAddCourse courses={courseToLearn} handler={this.getAll} buttonName='Agregar' />
-                </div >
+                </AddButton >
 
                 <StudentCourses courses={courses} />
             </div >

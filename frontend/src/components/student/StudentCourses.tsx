@@ -8,26 +8,23 @@ interface StudentCoursesProps {
 const StudentCourses: React.FunctionComponent<StudentCoursesProps> = ({ courses }: StudentCoursesProps) => {
 
     return (
-        <TableContainer elements={courses} >
-            < table className='table table-sm table-striped' >
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Profesor</th>
-                        <th scope="col">Calificaci&oacute;n</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {courses.map((course) => (
-                        <tr key={course.id} >
-                            <td>{course.course}</td>
-                            <td>{course.teacher}</td>
-                            <td>{course.qualification}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </TableContainer >
+        <TableContainer
+            elements={courses}
+            header={
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Profesor</th>
+                    <th scope="col">Calificaci&oacute;n</th>
+                </tr>
+            }
+            body={courses.map((course) => (
+                <tr key={course.id} >
+                    <td>{course.course}</td>
+                    <td>{course.teacher}</td>
+                    <td>{course.qualification}</td>
+                </tr>
+            ))}
+        />
     )
 }
 

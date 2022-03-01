@@ -1,17 +1,23 @@
 interface TableContainerProps {
     elements: any[]
-    children: JSX.Element
+    header: JSX.Element
+    body: JSX.Element[]
 }
 
-const TableContainer: React.FunctionComponent<TableContainerProps> = ({ elements, children }: TableContainerProps) => {
+const TableContainer: React.FunctionComponent<TableContainerProps> = ({ elements, header, body }: TableContainerProps) => {
 
     return (
         < div >
             {elements && elements.length !== 0 &&
                 <div className="table-responsive">
-                    <div>
-                        {children}
-                    </div>
+                    < table className='table table-sm table-striped'>
+                        <thead>
+                            {header}
+                        </thead>
+                        <tbody>
+                            {body}
+                        </tbody>
+                    </table >
                 </div>
             }
         </div >

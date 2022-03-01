@@ -16,7 +16,6 @@ const Register: React.FunctionComponent = () => {
     const navigate = useNavigate()
 
     const options: UserType[] = [
-        { id: "", name: "Tipo" },
         { id: "student", name: "Estudiante" },
         { id: "teacher", name: "Profesor" }
     ]
@@ -105,6 +104,7 @@ const Register: React.FunctionComponent = () => {
             <FormGroup
                 icon={faUsers}
                 input={<Field as="select" name="type" className={hasError ? 'custom-select is-invalid' : 'custom-select'}>
+                    <option value='' label='...' />
                     {options.map((option) => (<option key={option.id} value={option.id} label={option.name} />))}
                 </Field>}
                 error={<ErrorMessage name="type" component="div" className={hasError ? 'invalid-feedback' : ''} />}

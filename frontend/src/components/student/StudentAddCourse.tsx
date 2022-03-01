@@ -1,7 +1,6 @@
-import { Form, Formik, FormikProps, ErrorMessage, FormikHelpers } from 'formik';
+import { Form, Formik, FormikProps, ErrorMessage, FormikHelpers, Field } from 'formik';
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
-import Select, { SingleValue } from 'react-select';
 import CourseToLearnModel from '../../model/course-to-learn.model';
 import CourseToLearnStudentModel from '../../model/course-to-learn-student.model';
 import CourseToLearnStudentSchema from '../../model/course-to-learn-student.schema';
@@ -39,41 +38,36 @@ const StudentAddCourse: React.FunctionComponent<StudentAddCourseProps> = ({ cour
             })
     }
 
-    const coursesElement = ({ errors, touched, handleBlur, setFieldValue }: FormikProps<CourseToLearnStudentModel>) => {
+    const handlerTeachers = (id: string) => {
+        const found = courses.find(course => course.id === id)
+        if (found) {
+            setTeachers(found.teachers);
+        }
+    }
+
+    const coursesElement = ({ errors, touched, handleChange }: FormikProps<CourseToLearnStudentModel>) => {
         const hasError: boolean = !(!touched.courseId || !errors.courseId)
         return (
             <div className="form-group">
                 <label htmlFor="courseId">Materia</label>
-                <Select<CourseToLearnModel>
-                    id="courseId"
-                    options={courses}
-                    getOptionLabel={(option: CourseToLearnModel) => option.name}
-                    getOptionValue={(option: CourseToLearnModel) => option.id || ''}
-                    placeholder="Seleccione un materia"
-                    onChange={(option: SingleValue<CourseToLearnModel>) => { setFieldValue("courseId", option?.id) ; setTeachers(option?.teachers || [])}}
-                    onBlur={handleBlur}
-                    className={hasError ? 'is-invalid' : ''}
-                />
+                <Field as="select" name="courseId" className={hasError ? 'custom-select is-invalid' : 'custom-select'} onChange={(e: React.ChangeEvent<any>) => { handlerTeachers(e.target.value); handleChange(e); }}>
+                    <option value='' label='...' />
+                    {courses.map((option) => (<option key={option.id} value={option.id} label={option.name} />))}
+                </Field>
                 <ErrorMessage name="courseId" component="div" className={hasError ? 'invalid-feedback' : ''} />
             </div>
         )
     }
 
-    const teachersElement = ({ errors, touched, handleBlur, setFieldValue }: FormikProps<CourseToLearnStudentModel>) => {
+    const teachersElement = ({ errors, touched }: FormikProps<CourseToLearnStudentModel>) => {
         const hasError: boolean = !(!touched.teacherId || !errors.teacherId)
         return (
             <div className="form-group">
                 <label htmlFor="teacherId">Profesor</label>
-                <Select<CourseToLearnTeacherModel>
-                    id="teacherId"
-                    options={teachers}
-                    getOptionLabel={(option: CourseToLearnTeacherModel) => option.name}
-                    getOptionValue={(option: CourseToLearnTeacherModel) => option.id || ''}
-                    placeholder="Seleccione un profesor"
-                    onChange={(option: SingleValue<CourseToLearnTeacherModel>) => setFieldValue("teacherId", option?.id)}
-                    onBlur={handleBlur}
-                    className={hasError ? 'is-invalid' : ''}
-                />
+                <Field as="select" name="teacherId" className={hasError ? 'custom-select is-invalid' : 'custom-select'}>
+                    <option value='' label='...' />
+                    {teachers.map((option) => (<option key={option.id} value={option.id} label={option.name} />))}
+                </Field>
                 <ErrorMessage name="teacherId" component="div" className={hasError ? 'invalid-feedback' : ''} />
             </div>
         )

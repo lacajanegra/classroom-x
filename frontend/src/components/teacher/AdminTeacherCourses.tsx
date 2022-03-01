@@ -5,6 +5,7 @@ import TeacherCourses from './TeacherCourses';
 import Title from '../common/Title';
 import MissingElements from '../common/MissingElements';
 import TeacherAddCourse from './TeacherAddCourse';
+import AddButton from '../common/AddButton';
 
 
 interface AdminTeacherCoursesProps {
@@ -66,9 +67,9 @@ class AdminTeacherCourses extends Component<AdminTeacherCoursesProps, AdminTeach
                 <Title title='Listado de Materias' loading={loading} />
                 <MissingElements elements={courses} message='A&uacute;n no existen materias a dictar, puedes agregar nuevas' />
 
-                <div className="d-flex flex-row-reverse mb-2">
+                <AddButton>
                     <TeacherAddCourse courses={courseToTeach} handler={this.getAll} buttonName='Agregar' />
-                </div >
+                </AddButton >
 
                 <TeacherCourses courses={courses} handler={this.getCourses} />
             </div >

@@ -10,32 +10,29 @@ interface TeacherCoursesProps {
 const TeacherCourses: React.FunctionComponent<TeacherCoursesProps> = ({ courses, handler }: TeacherCoursesProps) => {
 
     return (
-        <TableContainer elements={courses} >
-            < table className='table table-sm table-striped' >
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {courses.map((course) => (
-                        <tr key={course.id} >
-                            <td>{course.name}</td>
-                            <td>
-                                <div className="d-flex flex-row-reverse mb-2">
-                                    <Link to={`/teacher-course/${course.id}`}>
-                                        <div className="btn btn-outline-primary btn-sm">
-                                            Ver
-                                        </div>
-                                    </Link>
+        <TableContainer
+            elements={courses}
+            header={
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col"></th>
+                </tr>
+            }
+            body={courses.map((course) => (
+                <tr key={course.id} >
+                    <td>{course.name}</td>
+                    <td>
+                        <div className="d-flex flex-row-reverse">
+                            <Link to={`/teacher-course/${course.id}`}>
+                                <div className="btn btn-outline-primary btn-sm">
+                                    Ver
                                 </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </TableContainer >
+                            </Link>
+                        </div>
+                    </td>
+                </tr>
+            ))}
+        />
     )
 }
 

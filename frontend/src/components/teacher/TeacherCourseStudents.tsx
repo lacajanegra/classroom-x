@@ -11,32 +11,29 @@ interface TeacherCourseStudentsProps {
 const TeacherCourseStudents: React.FunctionComponent<TeacherCourseStudentsProps> = ({ id, students, handler }: TeacherCourseStudentsProps) => {
 
     return (
-        <TableContainer elements={students} >
-            < table className='table table-sm table-striped'>
-                <thead>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Calificaci&oacute;n</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {students.map((student) => (
-                        <tr key={student.id} >
-                            <td>{student.name}</td>
-                            <td>{student.email}</td>
-                            <td>{student.qualification}</td>
-                            <td>
-                                <div className="d-flex flex-row-reverse mb-2">
-                                    <TeacherCourseStudent buttonName='Editar' id={id} student={student} handler={handler} />
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table >
-        </TableContainer>
+        <TableContainer
+            elements={students}
+            header={
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Calificaci&oacute;n</th>
+                    <th scope="col"></th>
+                </tr>
+            }
+            body={students.map((student) => (
+                <tr key={student.id} >
+                    <td>{student.name}</td>
+                    <td>{student.email}</td>
+                    <td>{student.qualification}</td>
+                    <td>
+                        <div className="d-flex flex-row-reverse">
+                            <TeacherCourseStudent buttonName='Editar' id={id} student={student} handler={handler} />
+                        </div>
+                    </td>
+                </tr>
+            ))}
+        />
     )
 }
 

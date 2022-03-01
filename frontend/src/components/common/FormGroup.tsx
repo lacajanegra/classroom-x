@@ -1,3 +1,5 @@
+import './FormGroup.css'
+
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -12,8 +14,8 @@ const FormGroup: React.FunctionComponent<FormGroupProps> = ({ icon, input, error
     return (
         <div className="mb-2">
             <div className="input-group">
-                <div className="input-group-prepend w-20">
-                    <span className="input-group-text w-100"> <FontAwesomeIcon icon={icon} /> </span>
+                <div className="input-group-prepend">
+                    <span className="input-group-text fix-form-icon-width"> <FontAwesomeIcon icon={icon} /> </span>
                 </div>
                 {input}
                 {error}

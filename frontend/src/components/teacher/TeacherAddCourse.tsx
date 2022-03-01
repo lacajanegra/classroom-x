@@ -1,9 +1,8 @@
-import { Form, Formik, FormikProps, ErrorMessage, FormikHelpers } from 'formik';
+import { Form, Formik, FormikProps, ErrorMessage, FormikHelpers, Field } from 'formik';
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import CourseModel from '../../model/course.model';
 import CourseTeacherModel from "../../model/course-teacher.model";
-import Select, { SingleValue } from 'react-select';
 import CourseTeacherSchema from '../../model/course-teacher.schema';
 import teacherService from '../../services/teacher.service';
 
@@ -41,16 +40,10 @@ const TeacherAddCourse: React.FunctionComponent<TeacherAddCourseProps> = ({ cour
         return (
             <div className="form-group">
                 <label htmlFor="id">Materia</label>
-                <Select<CourseModel>
-                    id="id"
-                    options={courses}
-                    getOptionLabel={(option: CourseModel) => option.name}
-                    getOptionValue={(option: CourseModel) => option.id || ''}
-                    placeholder="Seleccione un materia"
-                    onChange={(option: SingleValue<CourseModel>) => setFieldValue("id", option?.id)}
-                    onBlur={handleBlur}
-                    className={hasError ? 'is-invalid' : ''}
-                />
+                <Field as="select" name="id" className={hasError ? 'custom-select is-invalid' : 'custom-select'}>
+                    <option value='' label='...' />
+                    {courses.map((option) => (<option key={option.id} value={option.id} label={option.name} />))}
+                </Field>
                 <ErrorMessage name="id" component="div" className={hasError ? 'invalid-feedback' : ''} />
             </div>
         )
